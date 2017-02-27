@@ -6,7 +6,7 @@ email: bug1024.com@gmail.com
 description: ""
 keyword: ""
 url: "http://bug1024.com"              # your host, for absolute URL
-baseurl: "/jeet-blog"         # for example, '/blog' if your blog hosted on 'host/blog'
+baseurl: "/"         # for example, '/blog' if your blog hosted on 'host/blog'
 
 
 
