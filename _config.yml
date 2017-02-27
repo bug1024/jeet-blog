@@ -75,11 +75,11 @@ featured-condition-size: 1              # A tag will be featured if the size of 
 # Friends
 friends: [
     {
-        title: "Jeet's Blog",
+        title: "Bug1024's Blog",
         href: "http://bug1024.com"
     },
     {
-        title: "www.robospace.cn",
-        href: "RoboSpace"
+        title: "RoboSpace"
+        htre: "http://www.robospace.cn",
     }
 ]
