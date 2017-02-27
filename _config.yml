@@ -1,17 +1,17 @@
 # Site settings
-title: Your Blog
-SEOTitle: 你的博客 | Your Blog
+title: Bug1024
+SEOTitle: Bug1024
 header-img: img/home-bg.jpg
 email: bug1024.com@gmail.com
-description: ""
-keyword: ""
+description: "bug1024的博客，杀猪书生的博客"
+keyword: "bug1024,PHP,杀猪书生"
 url: "http://bug1024.com"              # your host, for absolute URL
 baseurl: "http://bug1024.com"         # for example, '/blog' if your blog hosted on 'host/blog'
 
 
 # SNS settings
 RSS: false
-weibo_username:     杀猪皇帝
+weibo_username:     loveyouloveapple
 github_username:    bug1024
 
 
@@ -63,8 +63,7 @@ kramdown:
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
 sidebar-about-description: "爱生活，爱运动，有点暴力，有点黄"
-sidebar-avatar: /img/avatar-hux.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
-
+sidebar-avatar: /img/avatar.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
 # Featured Tags
@@ -76,13 +75,11 @@ featured-condition-size: 1              # A tag will be featured if the size of 
 # Friends
 friends: [
     {
-        title: "Jeet Blog",
+        title: "Jeet's Blog",
         href: "http://bug1024.com"
-    },{
-        title: "Example Friends",
-        href: "#"
-    },{
-        title: "It helps SEO",
-        href: "#"
+    },
+    {
+        title: "www.robospace.cn",
+        href: "RoboSpace"
     }
 ]
