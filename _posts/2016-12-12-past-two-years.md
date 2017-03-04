@@ -2,7 +2,7 @@
 layout:     post
 title:      "过去两年"
 subtitle:   "转眼两年多过去了"
-date:       2017-12-12
+date:       2016-12-12
 author:     "Bug1024"
 header-img: "img/post-bg-last-two-years.jpg"
 tags:
