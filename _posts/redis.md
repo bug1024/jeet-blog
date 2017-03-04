@@ -4,7 +4,7 @@ title:      "Redis"
 subtitle:   "Redis总结"
 date:       2017-01-07
 author:     "Bug1024"
-header-img: "img/post-bg-unix-linux.jpg"
+header-img: "img/post-bg-redis.jpg"
 tags:
     - Redis
 ---

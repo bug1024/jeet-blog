@@ -4,7 +4,7 @@ title:      "2016年总结"
 subtitle:   "不是总结的总结"
 date:       2017-01-03
 author:     "Bug1024"
-header-img: "img/post-bg-unix-linux.jpg"
+header-img: "img/post-bg-2016summary.jpg"
 tags:
     - Summary
 ---
