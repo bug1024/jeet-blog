@@ -4,7 +4,7 @@ title:      "网站架构"
 subtitle:   "大型网站架构基础"
 date:       2017-01-08
 author:     "Bug1024"
-header-img: "img/post-bg-web-architecture.jpg"
+header-img: "img/post-bg-web-architecture.jpeg"
 tags:
     - 架构
 ---
