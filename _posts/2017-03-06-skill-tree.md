@@ -6,7 +6,7 @@ date:       2017-03-06
 author:     "Bug1024"
 header-img: "img/home-bg-o.jpg"
 tags:
-    - RabbitMQ
+    - 其他
 ---
 
 ## LAMP
