@@ -11,5 +11,5 @@ tags:
 
 ## LAMP
 
-![LAMP技能树](img/post-bg-skill-tree.jpg)
+![LAMP技能树](http://bug1024.com/img/post-bg-skill-tree.jpg)
 
