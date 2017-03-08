@@ -2,7 +2,7 @@
 layout:     post
 title:      "MySQL命令"
 subtitle:   "MySQL常用命令清单"
-date:       2017-03-05
+date:       2017-03-07
 author:     "Bug1024"
 header-img: "img/post-bg-mysql-cheat-sheet.jpeg"
 tags:
