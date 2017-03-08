@@ -4,7 +4,7 @@ title:      "ZooKeeper"
 subtitle:   "分布式应用程序协调服务"
 date:       2017-03-08
 author:     "Bug1024"
-header-img: "img/post-bg-unix-linux.jpg"
+header-img: "img/post-bg-zookeeper.jpg"
 tags:
     - 开源
 ---
