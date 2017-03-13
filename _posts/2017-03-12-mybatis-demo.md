@@ -10,7 +10,7 @@ tags:
 ---
 
 ## 文件结构
-![mybatis](http://bug1024.com/img/mybatis-tree.jpeg)
+![mybatis](http://bug1024.com/img/mybatis-tree.jpeg =250)
 
 ## pom.xml中引入依赖
 ```xml
