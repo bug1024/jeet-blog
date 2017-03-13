@@ -10,7 +10,24 @@ tags:
 ---
 
 ## 文件结构
-![mybatis](http://bug1024.com/img/mybatis-tree.jpeg =250)
+```
+    src
+    ├── main
+    │   ├── java
+    │   │   └── com
+    │   │       └── demo
+    │   │           ├── dao
+    │   │           │   └── UserDao.java
+    │   │           └── entity
+    │   │               └── UserEntity.java
+    │   └── resources
+    │       ├── jdbc.properties
+    │       ├── mapper
+    │       │   └── User.xml
+    │       ├── mybatis-config.xml
+    │       └── spring
+    │           └── spring-dao.xml
+```
 
 ## pom.xml中引入依赖
 ```xml
