@@ -25,6 +25,8 @@ tags:
             // 加载指定的Spring配置文件
             ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:/META-INF/spring/applicationContext.xml");
             context.start();
+            // 保证服务一直开着，利用输入流的阻塞来模拟
+            System.in.read();
         }
     }
 ```
