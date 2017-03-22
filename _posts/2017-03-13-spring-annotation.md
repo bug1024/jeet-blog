@@ -158,3 +158,10 @@ tags:
    * 如果指定了type，则从上下文中找到类型匹配的唯一bean进行装配，找不到或者找到多个，都会抛出异常
    * 如果既没有指定name，又没有指定type，则自动按照byName方式进行装配；如果没有匹配，则回退为一个原始类型进行匹配，如果匹配则自动装配；
 
+## 语法技巧
+
+```java
+    // 将sourceObj的属性拷贝给targetObj
+    BeanUtils.copyProperties(sourceObj, targetObj);
+```
+
