@@ -68,3 +68,16 @@ tags:
 ```sql
     insert into user (username, create_time, status) values(10002, '2017-03-01 12:12:12', 1), (10001, '2017-03-01 12:13:14', 2) on duplicate key update status = values(status);
 ```
+
+## 导入导出
+```sql
+    -- 导出某个库
+    mysqldump -uroot -proot db_name > db_name.sql
+    -- 导出某张表
+    mysqldump -uroot -proot db_name table_name > table_name.sql
+    -- 导出数据库所有表结构
+    mysqldump -uroot -proot db_name  -d --add-drop-table db_name > db.sql
+    -- 导入
+    mysqldump -uroot -proot < import.sql
+    -- 使用source方式导入，source import.sql
+```
