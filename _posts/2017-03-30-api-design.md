@@ -16,6 +16,13 @@ tags:
 ## 参数
 
 ## 返回
+```javascript
+    {
+        "code": 123,
+        "msg": "success",
+        "data": {}
+    }
+```
 
 ## 粒度
 
