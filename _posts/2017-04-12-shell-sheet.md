@@ -11,6 +11,10 @@ tags:
 ---
 
 ## 搜索
+```shell
+    # 打印xxx或yyy的行
+    tail -f info.log |grep -e "xxx" -e "yyy"
+```
 
 ## 运行
 ```shell
