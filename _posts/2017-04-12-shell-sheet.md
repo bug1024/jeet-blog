@@ -12,8 +12,12 @@ tags:
 
 ## 搜索
 ```shell
-    # 打印xxx或yyy的行
-    tail -f info.log |grep -e "xxx" -e "yyy"
+    # 遍历查找当前目录下同时包含xxx和yyy的行
+    grep -r "xxx" . | grep "yyy"
+    # 遍历查找当前目录下包含xxx或者yyy的行
+    grep -r . -e "xxx" -e "yyy"
+    # 遍历查找当前目录下包含xxx但不包含yyy的行
+    grep -r "xxx" . | grep -v "yyy"
 ```
 
 ## 运行
