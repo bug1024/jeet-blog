@@ -64,6 +64,22 @@ tags:
     insert into user (username, create_time, status) values(10000, '2017-03-01 12:12:12', 1), (10001, '2017-03-01 12:13:14', 1);
 ```
 
+## 批量更新
+```sql
+    UPDATE user
+        SET username = CASE id
+            WHEN 1 THEN 3
+            WHEN 2 THEN 4
+            WHEN 3 THEN 5
+        END,
+        status = CASE id
+            WHEN 1 THEN 1
+            WHEN 2 THEN 2
+            WHEN 3 THEN 3
+        END
+    WHERE id IN (1,2,3);
+```
+
 ## 批量插入若存在则更新
 ```sql
     insert into user (username, create_time, status) values(10002, '2017-03-01 12:12:12', 1), (10001, '2017-03-01 12:13:14', 2) on duplicate key update status = values(status);
