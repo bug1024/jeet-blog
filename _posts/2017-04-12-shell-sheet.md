@@ -31,3 +31,13 @@ tags:
     # 不挂起后台运行，并忽略所有输出
     nohup your_command  >/dev/null  2>&1 &
 ```
+
+## Git
+```shell
+    # 不clone历史commit
+    git clone --depth=1 git_repo_url
+    # 切换到远程分支
+    git checkout -b branch_name origin/branch_name
+    # 撤销add过但未commit的文件
+    git reset file
+```
