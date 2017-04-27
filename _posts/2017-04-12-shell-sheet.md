@@ -34,10 +34,18 @@ tags:
 
 ## Git
 ```shell
-    # 不clone历史commit
+    # 不clone历史commit，可加快clone速度
     git clone --depth=1 git_repo_url
     # 切换到远程分支
     git checkout -b branch_name origin/branch_name
     # 撤销add过但未commit的文件
     git reset file
+    # 追加最近一次的commit
+    git commit --amend
+    # push到远程分支, 通常local和remote的分支名是一样的
+    git push origin local_branch_name:remote_branch_name
+    # 删除远程分支
+    git push origin :remote_branch_name
+    # 强推
+    git push -f
 ```
