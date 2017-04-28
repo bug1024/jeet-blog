@@ -10,6 +10,20 @@ tags:
     - Shell
 ---
 
+## 用户
+```shell
+    # 新增用户
+    useradd user1
+    # 设置密码
+    passwd user1
+    # 新建用户组
+    groupadd group1
+    # 用户组新增用户
+    gpasswd -a user1 group1
+    # 修改目录所有者
+    chown -R user1:group1 dir1
+```
+
 ## 搜索
 ```shell
     # 遍历查找当前目录下同时包含xxx和yyy的行
@@ -48,4 +62,23 @@ tags:
     git push origin :remote_branch_name
     # 强推
     git push -f
+```
+
+## 压测
+```shell
+    ab -n100 -c5 http://www.baidu.com/
+    # Request per sencond 每秒处理的请求数量
+    # Time per request 第一个值为每次并发消耗的平均时间，第二个为每次请求所消耗的平均时间
+    # Complete requests 完成的请求数量
+    # Failed requests 失败的请求数量
+```
+
+## 其他
+```shell
+    # TCP ESTABLISHED数量
+    netstat -n|grep ^tcp|awk '{print $NF}'|sort -nr|uniq -c
+
+    #之所以能用到xargs这个命令，关键是由于很多命令不支持|管道来传递参数，而日常工作中有有这个必要，所以就有了xargs命令，例如：
+    find /sbin -perm +700 |ls -l       这个命令是错误的
+    find /sbin -perm +700 |xargs ls -l   这样才是正确的
 ```
