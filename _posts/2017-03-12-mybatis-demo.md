@@ -218,3 +218,18 @@ tags:
     </beans>
 ```
 
+## 批量插入返回自增id
+版本3.3.1之后才支持, 入参的集合名称必须叫collection、list、array
+```java
+    int  batchInsert(List<Area> list);
+```
+
+mapper.xml
+```xml
+    <insert id="batchInsert" useGeneratedKeys="true" keyProperty="id">
+            INSERT INTO account (province, city) VALUES
+            <foreach collection="list" item="area" separator=",">
+                (#{area.province},#{area.city})
+            </foreach>
+    </insert>
+```
