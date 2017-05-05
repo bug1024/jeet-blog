@@ -38,6 +38,14 @@ tags:
     find path -atime -7
 ```
 
+## 端口进程
+```shell
+    # 查看8080端口
+    lsof -i:8080
+    # 查看占用8080端口的进程
+    netstat -pan|grep 8080
+```
+
 ## 运行
 ```shell
     # 标准输出和错误都被重定向到info.log中, 2>&1表示标准错误拷贝了标准输出的行为
