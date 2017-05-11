@@ -10,6 +10,12 @@ tags:
     - Shell
 ---
 
+## 调试
+```shell
+    tcpdump -i eth2 -w capture.cap tcp port 9501 and dst host 172.16.1.31
+    strace -o strace.log -tt -f -e {call} -p {pid}
+```
+
 ## 用户
 ```shell
     # 新增用户
