@@ -68,6 +68,8 @@ tags:
     git checkout -b branch_name origin/branch_name
     # 撤销add过但未commit的文件
     git reset file
+    # checkout远程某个文件
+    git checkout origin/branch_name -- file1 file2
     # 追加最近一次的commit
     git commit --amend
     # push到远程分支, 通常local和remote的分支名是一样的
