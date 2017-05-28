@@ -17,5 +17,8 @@ tags:
     ./ext_skel --extname=your_extname --proto=your_extname.proto
 ```
 
+## 函数声明
+
+## 编译
 
 
