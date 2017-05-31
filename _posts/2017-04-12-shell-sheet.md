@@ -12,8 +12,12 @@ tags:
 
 ## 调试
 ```shell
+    # 抓包
     tcpdump -i eth2 -w capture.cap tcp port 9501 and dst host 172.16.1.31
+    # 跟踪系统调用
     strace -o strace.log -tt -f -e {call} -p {pid}
+    # 开启coredump  Mac下的cordump文件不在当前运行目录下，而是在系统指定目录，通常是/cores
+    ulimit -c unlimited
 ```
 
 ## 用户
