@@ -137,7 +137,7 @@ PHP类实现
     };
 ```
 
- - 函数和方法的异同 函数和方法都是在编译阶段注册到compiler_globals变量中的，二者都使用相同的内核处理函数zend_do_begin_function_declaration() 和zend_do_end_function_declaration()来完成这一过程，不同的的地方在于定义（注册）的实现和调用的实现
+  函数和方法的异同 函数和方法都是在编译阶段注册到compiler_globals变量中的，二者都使用相同的内核处理函数zend_do_begin_function_declaration() 和zend_do_end_function_declaration()来完成这一过程，不同的的地方在于定义（注册）的实现和调用的实现
 
 ## 准备工作
  - 下载源码
@@ -147,8 +147,33 @@ PHP类实现
     ./ext_skel --extname=your_extname --proto=your_extname.proto
 ```
 
+## 扩展中参数的解析
+ 使用zend_parse_parameters方法进行解析，PHP7中推荐使用 Fast Parameter Parsing API
+```c
+    PHP_FUNCTION(array_slice) {
+    // 省略...
+    #ifndef FAST_ZPP
+        if (zend_parse_parameters(ZEND_NUM_ARGS(), "al|zb", &input, &offset, &z_length, &preserve_keys) == FAILURE) {
+            return;
+        }
+    #else
+        ZEND_PARSE_PARAMETERS_START(2, 4) // 最少参数数和最多参数数
+            Z_PARAM_ARRAY(input)
+            Z_PARAM_LONG(offset)
+            Z_PARAM_OPTIONAL
+            Z_PARAM_ZVAL(z_length)
+            Z_PARAM_BOOL(preserve_keys)
+        ZEND_PARSE_PARAMETERS_END();
+    #endif
+    // 省略...
+    }
+```
+
 ## 函数声明
 
 ## 编译
+```shell
+    phpize & ./configure & make
+```
 
 
