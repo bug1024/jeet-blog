@@ -11,31 +11,31 @@ tags:
 
 ## PHP生命周期
  - 模块初始化阶段
-  * 注册常量
-  * 注册核心php.ini
-  * 注册GET、POST等全局变量
-  * 注册内部核心扩展
-  * 根据php.ini注册加载其他扩展
-  * 调用扩展的PHP_MINIT()
+    * 注册常量
+    * 注册核心php.ini
+    * 注册GET、POST等全局变量
+    * 注册内部核心扩展
+    * 根据php.ini注册加载其他扩展
+    * 调用扩展的PHP_MINIT()
  - 请求初始化阶段
-  * 初始化编译器
-  * 初始化EG、全局符号表、include file数组、词法分析器
-  * 初始化SG
-  * 调用扩展的PHP_RINIT()
+    * 初始化编译器
+    * 初始化EG、全局符号表、include file数组、词法分析器
+    * 初始化SG
+    * 调用扩展的PHP_RINIT()
  - 脚本执行阶段
-  * 编译opcode
-  * 执行zvm
+    * 编译opcode
+    * 执行zvm
  - 请求关闭阶段
-  * 调用register_shutdown_fucntion()
-  * 清理EG
-  * 销毁全局变量PG
-  * 调用扩展的PHP_RSHUTDOWN()
-  * 关闭编译器、执行器、内存管理器
+    * 调用register_shutdown_fucntion()
+    * 清理EG
+    * 销毁全局变量PG
+    * 调用扩展的PHP_RSHUTDOWN()
+    * 关闭编译器、执行器、内存管理器
  - 模块关闭阶段
-  * 调用扩展的PHP_MSHUTDOWN()
-  * 清理ini HashTable元素
-  * 关闭output
-  * 释放PG
+    * 调用扩展的PHP_MSHUTDOWN()
+    * 清理ini HashTable元素
+    * 关闭output
+    * 释放PG
 
 ## 内核基础-变量
 变量存储结构
