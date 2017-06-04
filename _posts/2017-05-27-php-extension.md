@@ -167,13 +167,13 @@ PHP类实现
 
   函数和方法的异同 函数和方法都是在编译阶段注册到compiler_globals变量中的，二者都使用相同的内核处理函数zend_do_begin_function_declaration() 和zend_do_end_function_declaration()来完成这一过程，不同的的地方在于定义（注册）的实现和调用的实现
 
-## 准备工作
- - 下载源码
-
-## 生成骨架
-```shell
-    ./ext_skel --extname=your_extname --proto=your_extname.proto
-```
+## 编写扩展的基本步骤
+* 下载php-src源码
+* 通过ext目录下ext_skel脚本生成扩展的基本框架：./ext_skel --extname=your_extname；
+* 修改config.m4配置：设置编译配置参数、设置扩展的源文件、依赖库/函数检查等等；
+* 编写扩展要实现的功能：按照PHP扩展的格式以及PHP提供的API编写功能；
+* 生成configure：扩展编写完成后执行phpize脚本生成configure及其它配置文件；
+* 编译&安装：./configure、make、make install，然后将扩展的.so路径添加到php.ini中。
 
 ## 扩展中参数的解析
  使用zend_parse_parameters方法进行解析，PHP7中推荐使用 Fast Parameter Parsing API
@@ -197,11 +197,4 @@ PHP类实现
     }
 ```
 
-## 函数声明
-
-## 编译
-```shell
-    phpize & ./configure & make
-```
-
-
+未完待续。。。
