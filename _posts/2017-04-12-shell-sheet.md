@@ -96,6 +96,8 @@ tags:
     git push -f
     # 更新远程分支
     git remote update -p
+    # checkout指定文件
+    git checkout origin/remote_branch_name -- file_path
 ```
 
 ## 压测
