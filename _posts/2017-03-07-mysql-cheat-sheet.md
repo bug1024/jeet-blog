@@ -71,13 +71,14 @@ tags:
             WHEN 1 THEN 3
             WHEN 2 THEN 4
             WHEN 3 THEN 5
+            ELSE username
         END,
         status = CASE id
-            WHEN 1 THEN 1
-            WHEN 2 THEN 2
             WHEN 3 THEN 3
+            WHEN 4 THEN 4
+            ELSE status
         END
-    WHERE id IN (1,2,3);
+    WHERE id IN (1, 2, 3, 4);
 ```
 
 ## 批量插入若存在则更新
