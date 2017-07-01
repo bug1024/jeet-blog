@@ -197,4 +197,13 @@ PHP类实现
     }
 ```
 
+## PHP进程通信
+* pcntl扩展：主要的进程扩展，完成进程的创建，子进程的创建，也是当前使用比较广的多进程
+* posix扩展：完成posix兼容机通用api,如获取进程id,杀死进程等。主要依赖 IEEE 1003.1 (POSIX.1) ，兼容posi
+* sysvmsg扩展：实现system v方式的进程间通信之消息队列
+* sysvsem扩展：实现system v方式的信号量
+* sysvshm扩展：实现system v方式的共享内存
+* sockets扩展：实现socket通信，跨机器，跨平台
+* php也有一些封装好的异步进程处理框架：例如swoole,workman等
+
 未完待续。。。
