@@ -46,7 +46,7 @@ tags:
     chown -R user1:group1 dir1
 ```
 
-## 搜索
+## 文本处理
 ```shell
     # 遍历查找当前目录下同时包含xxx和yyy的行
     grep -r "xxx" . | grep "yyy"
@@ -58,6 +58,14 @@ tags:
     find path -atime +7
     # 查找7天内访问过的文件
     find path -atime -7
+    # 消除重复行
+    sort unsort.txt | uniq
+    # 统计各行在文件中出现的次数
+    sort unsort.txt | uniq -c
+    # 找出重复行
+    sort unsort.txt | uniq -d
+    # 统计行数，单词数，字符数
+    wc -[l][w][c] file
 ```
 
 ## 端口进程
