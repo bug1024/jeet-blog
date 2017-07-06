@@ -67,13 +67,61 @@ tags:
     # 统计行数，单词数，字符数
     wc -[l][w][c] file
 ```
+## 磁盘管理
+ ```shell
+    # 查看当前目录所占空间大小
+    du -sh
+    # 查看当前目录下所有子文件夹排序后的大小:
+    du -sh `ls` | sort
+```
 
-## 端口进程
+## 进程管理
 ```shell
     # 查看8080端口
     lsof -i:8080
     # 查看占用8080端口的进程
     netstat -pan|grep 8080
+    # 查看用户username的进程所打开的文件
+    lsof -u username
+    # 查询nginx进程当前打开的文件
+    lsof -c nginx
+    # 查询指定的进程ID(23295)打开的文件：
+    lsof -p 23295
+```
+
+## 性能监控
+```shell
+    # 查看页面交换发生状况 页面发生交换时，服务器的吞吐量会大幅下降，通常是内存不足导致，每秒采样1次，共采样3次
+    # sar不可用时，可以使用以下工具替代：linux下有 vmstat、Unix系统有prstat
+    sar -W 1 3
+```
+
+## 定时任务
+```shell
+    # 实例1：每1分钟执行一次myCommand
+    * * * * * myCommand
+    # 实例2：每小时的第3和第15分钟执行
+    #3,15 * * * * myCommand
+    # 实例3：在上午8点到11点的第3和第15分钟执行
+    3,15 8-11 * * * myCommand
+    # 实例4：每隔两天的上午8点到11点的第3和第15分钟执行
+    3,15 8-11 */2  *  * myCommand
+    # 实例5：每周一上午8点到11点的第3和第15分钟执行
+    3,15 8-11 * * 1 myCommand
+    # 实例6：每晚的21:30重启smb
+    30 21 * * * /etc/init.d/smb restart
+    # 实例7：每月1、10、22日的4 : 45重启smb
+    45 4 1,10,22 * * /etc/init.d/smb restart
+    # 实例8：每周六、周日的1 : 10重启smb
+    10 1 * * 6,0 /etc/init.d/smb restart
+    # 实例9：每天18 : 00至23 : 00之间每隔30分钟重启smb
+    0,30 18-23 * * * /etc/init.d/smb restart
+    # 实例10：每星期六的晚上11 : 00 pm重启smb
+    0 23 * * 6 /etc/init.d/smb restart
+    # 实例11：每一小时重启smb
+    * */1 * * * /etc/init.d/smb restart
+    # 实例12：晚上11点到早上7点之间，每隔一小时重启smb
+    0 23-7 * * * /etc/init.d/smb restart
 ```
 
 ## 运行
