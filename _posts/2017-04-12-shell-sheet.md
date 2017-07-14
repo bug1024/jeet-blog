@@ -163,6 +163,9 @@ tags:
     # Time per request 第一个值为每次并发消耗的平均时间，第二个为每次请求所消耗的平均时间
     # Complete requests 完成的请求数量
     # Failed requests 失败的请求数量
+
+    #wrk 使用的是 HTTP/1.1，缺省开启的是长连接，而 ab 使用的是 HTTP/1.0，缺省开启的是短链接
+    wrk -c 100 -d 10 http://www.baidu.com/
 ```
 
 ## 其他
