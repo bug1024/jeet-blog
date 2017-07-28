@@ -206,4 +206,11 @@ PHP类实现
 * sockets扩展：实现socket通信，跨机器，跨平台
 * php也有一些封装好的异步进程处理框架：例如swoole,workman等
 
+## Zend内存池
+zend针对内存的操作封装了一层，用于替换直接的内存操作：malloc、free等，实现了更高效率的内存利用，其实现主要参考了tcmalloc的设计。
+内存池是内核中最底层的内存操作，定义了三种粒度的内存块：chunk、page、slot，每个chunk的大小为2M，page大小为4KB，一个chunk被切割为512个page，而一个或若干个page被切割为多个slot，所以申请内存时按照不同的申请大小决定具体的分配策略：
+* Huge(chunk): 申请内存大于2M，直接调用系统分配，分配若干个chunk
+* Large(page): 申请内存大于3092B(3/4 page_size)，小于2044KB(511 page_size)，分配若干个page
+* Small(slot): 申请内存小于等于3092B(3/4 page_size)，内存池提前定义好了30种同等大小的内存(8,16,24,32，...3072)，他们分配在不同的page上(不同大小的内存可能会分配在多个连续的page)，申请内存时直接在对应page上查找可用位置
+
 未完待续。。。
