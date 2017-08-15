@@ -62,6 +62,8 @@ tags:
     find path -atime +7
     # 查找7天内访问过的文件
     find path -atime -7
+    # 表示在当前目录及其子目录下查找包含abc字符串的文件行，经常用于搜索代码
+    find . -type f|xargs grep 'abc'
     # 消除重复行
     sort unsort.txt | uniq
     # 统计各行在文件中出现的次数
@@ -98,6 +100,11 @@ tags:
     # 查看页面交换发生状况 页面发生交换时，服务器的吞吐量会大幅下降，通常是内存不足导致，每秒采样1次，共采样3次
     # sar不可用时，可以使用以下工具替代：linux下有 vmstat、Unix系统有prstat
     sar -W 1 3
+    # Linux上的ss命令可以用于替换netstat，ss直接读取解析/proc/net下的统计信息，相比netstat遍历/proc下的每个PID目录，速度快很多
+    ss -t -a 显示所有的TCP Sockets
+    ss -u -a 显示所有的UDP Sockets
+    ss -x src /tmp/a.sock 显示连接到/tmp/a.sock的进程
+    ss -o state [state TCP-STATE] 如ss -o state established显示所有建立的连接
 ```
 
 ## 定时任务
