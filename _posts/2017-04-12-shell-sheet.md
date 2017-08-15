@@ -30,6 +30,10 @@ tags:
     strace -o strace.log -tt -f -e {call} -p {pid}
     # 开启coredump  Mac下的cordump文件不在当前运行目录下，而是在系统指定目录，通常是/cores
     ulimit -c unlimited
+    # 查看MTU
+    cat /sys/class/net/eth0/mtu
+    # -s 包的大小，Specifies the number of data bytes to be sent.
+    ping -c 3 -s 2900 -M do 172.168.0.2
 ```
 
 ## 用户
