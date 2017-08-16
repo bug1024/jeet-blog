@@ -64,6 +64,9 @@ tags:
     find path -atime -7
     # 表示在当前目录及其子目录下查找包含abc字符串的文件行，经常用于搜索代码
     find . -type f|xargs grep 'abc'
+    # 从备份中的日志查询数据
+    bzcat xx.log.bz2 | grep "xxxx"
+    bzgrep "xxxx" xx.log.bz2
     # 消除重复行
     sort unsort.txt | uniq
     # 统计各行在文件中出现的次数
@@ -72,6 +75,8 @@ tags:
     sort unsort.txt | uniq -d
     # 统计行数，单词数，字符数
     wc -[l][w][c] file
+    # 清空文件，文件空间会立刻释放
+    echo "" > a.log
 ```
 ## 磁盘管理
  ```shell
@@ -79,6 +84,8 @@ tags:
     du -sh
     # 查看当前目录下所有子文件夹排序后的大小:
     du -sh `ls` | sort
+    # 查看当前正在写磁盘的进程id信息
+    iotop -o
 ```
 
 ## 进程管理
