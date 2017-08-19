@@ -62,7 +62,7 @@ tags:
     find path -atime +7
     # 查找7天内访问过的文件
     find path -atime -7
-    # 表示在当前目录及其子目录下查找包含abc字符串的文件行，经常用于搜索代码
+    # 表示在当前目录及其子目录下查找普通文件中包含abc字符串的文件行，经常用于搜索代码
     find . -type f|xargs grep 'abc'
     # 从备份中的日志查询数据
     bzcat xx.log.bz2 | grep "xxxx"
