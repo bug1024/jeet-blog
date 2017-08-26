@@ -77,6 +77,8 @@ tags:
     wc -[l][w][c] file
     # 清空文件，文件空间会立刻释放
     echo "" > a.log
+    # awk 转义需要两个反斜杆
+    awk -F'url\\[' '{print $2}'
 ```
 ## 磁盘管理
  ```shell
