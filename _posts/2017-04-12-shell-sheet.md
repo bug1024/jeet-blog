@@ -185,6 +185,7 @@ tags:
     # Failed requests 失败的请求数量
 
     #wrk 使用的是 HTTP/1.1，缺省开启的是长连接，而 ab 使用的是 HTTP/1.0，缺省开启的是短链接
+    #采用多线程 + 异步事件驱动的框架，其中事件机制使用了redis的ae事件框架，协议解析使用了nginx的相关代码
     wrk -c 100 -d 10 http://www.baidu.com/
 ```
 
