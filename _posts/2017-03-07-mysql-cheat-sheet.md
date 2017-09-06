@@ -98,3 +98,8 @@ tags:
     mysqldump -uroot -proot < import.sql
     -- 使用source方式导入，source import.sql
 ```
+
+## 强制使用索引
+```sql
+    select username from user force index(idx_update_time) where update_time > '2017-01-01 10:10:11'
+```
