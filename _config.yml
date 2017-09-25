@@ -73,13 +73,6 @@ featured-condition-size: 0              # A tag will be featured if the size of 
 
 
 # Friends
+#{ title: "Bug1024", href: "http://bug1024.com"},
 friends: [
-    {
-        title: "Bug1024",
-        href: "http://bug1024.com"
-    },
-    {
-        title: "RoboSpace",
-        href: "http://www.robospace.cn"
-    }
 ]
