@@ -121,7 +121,7 @@ tags:
     # 实例1：每1分钟执行一次myCommand
     * * * * * myCommand
     # 实例2：每小时的第3和第15分钟执行
-    #3,15 * * * * myCommand
+    3,15 * * * * myCommand
     # 实例3：在上午8点到11点的第3和第15分钟执行
     3,15 8-11 * * * myCommand
     # 实例4：每隔两天的上午8点到11点的第3和第15分钟执行
@@ -147,8 +147,8 @@ tags:
 ## 运行
 ```shell
     # 标准输出和错误都被重定向到info.log中, 2>&1表示标准错误拷贝了标准输出的行为
-    your_command >info.log &2>1
-    # 不挂起后台运行，并忽略所有输出
+    your_command >info.log 2>&1
+    # 挂起后台运行，并忽略所有输出
     nohup your_command  >/dev/null  2>&1 &
 ```
 
