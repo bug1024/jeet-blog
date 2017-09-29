@@ -199,4 +199,7 @@ tags:
     #之所以能用到xargs这个命令，关键是由于很多命令不支持|管道来传递参数，而日常工作中有有这个必要，所以就有了xargs命令，例如：
     find /sbin -perm +700 |ls -l       这个命令是错误的
     find /sbin -perm +700 |xargs ls -l   这样才是正确的
+    #Mac home目录下创建目录
+    用命令 sudo vim /etc/auto_master 打开文件，把里面的home开始的行删掉或用#注释掉
+    然后用命令 sudo automount 使设置立刻生效
 ```
