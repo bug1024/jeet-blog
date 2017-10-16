@@ -2,6 +2,8 @@
 layout:     post
 title:      "Linux性能调优工具"
 subtitle:   "Linux常见性能排查命令"
+keyword:    "Linux,性能排查"
+description: "Linux性能排查命令"
 date:       2017-10-05
 author:     "Bug1024"
 header-img: "img/post-bg-unix-linux.jpg"
