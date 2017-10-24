@@ -58,6 +58,8 @@ tags:
     grep -r . -e "xxx" -e "yyy"
     # 遍历查找当前目录下包含xxx但不包含yyy的行
     grep -r "xxx" . | grep -v "yyy"
+    # 查处字符串出现次数
+    grep -o "xxx"|wc -l
     # 查找7天内没访问过的文件
     find path -atime +7
     # 查找7天内访问过的文件
