@@ -205,3 +205,6 @@ tags:
     用命令 sudo vim /etc/auto_master 打开文件，把里面的home开始的行删掉或用#注释掉
     然后用命令 sudo automount 使设置立刻生效
 ```
+
+## 参考
+* [awk](https://github.com/learnbyexample/Command-line-text-processing/blob/master/gnu_awk.md)
