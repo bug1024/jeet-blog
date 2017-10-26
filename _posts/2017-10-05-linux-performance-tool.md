@@ -39,6 +39,7 @@ tags:
 
 ## Memory
 * 操作系统角度，内存关注应用进程是否足够，可以使用`free –m`查看内存的使用情况。
+![查看内存](http://bug1024.com/img/free-m.jpeg)
 * 通过`top`查看进程使用的虚拟内存`VIRT`和物理内存`RES`，根据公式VIRT = SWAP + RES可以推算出具体应用使用的交换分区（Swap）情况
 
 ## I/O
