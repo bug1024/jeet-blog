@@ -103,3 +103,9 @@ tags:
 ```sql
     select username from user force index(idx_update_time) where update_time > '2017-01-01 10:10:11'
 ```
+
+## join语句
+* INNER JOIN（内连接或等值连接）：产生同时符合左表和右表的记录。
+* LEFT JOIN（左连接）：左连接从左表产生一套完整的记录，与匹配的记录(右表) ，如果没有匹配，右侧将包含null。
+* RIGHT JOIN（右连接）：与LEFT JOIN相反
+* mysql不支持Full join，不过可以通过UNION 关键字来合并 LEFT JOIN 与 RIGHT JOIN来模拟FULL join.
