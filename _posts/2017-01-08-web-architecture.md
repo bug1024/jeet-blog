@@ -47,6 +47,12 @@ tags:
  - 扩展性(Extensibility)
  - 安全性(Security)
 
+## CAP
+基于水平扩容能力和成本考虑，传统的强一致的解决方案（e.g.单机事务）纷纷被抛弃。其理论依据就是CAP原理，往往为了可用性和分区容错性，忍痛放弃强一致支持，转而追求最终一致性。
+* Consistency：强一致性就是在客户端任何时候看到各节点的数据都是一致的（All nodes see the same data at the same time）。
+* Availability：高可用性就是在任何时候都可以读写（Reads and writes always succeed）。
+* Partition Tolerance：分区容错性是在网络故障、某些节点不能通信的时候系统仍能继续工作（The system continue to operate despite arbitrary message loss or failure of part of the the system）。以实际效果而言，分区相当于对通信的时限要求。系统如果不能在时限内达成数据一致性，就意味着发生了分区的情况，必须就当前操作在C和A之间做出选择。
+
 ## 设计建议
  * 减少单点
     * 去单点首先要识别整个系统所有主链路的单点，如机房（同城异地双机房），应用服务器，DNS服务器，SFTP服务器，LBS，缓存服务器，数据库，消息服务器，代理服务器和专线等，如系统通过专线调用对方服务，需要考虑同时拉联通和电信的专线，联通或电信的专线还是有一定概率会出现问题的，但是同时出问题的概率会小非常多。优先使用软负载，使用硬负载兜底。
