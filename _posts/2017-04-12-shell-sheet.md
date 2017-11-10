@@ -104,6 +104,8 @@ tags:
     lsof -c nginx
     # 查询指定的进程ID(23295)打开的文件：
     lsof -p 23295
+    # 查看打开文件数最多的10个进程
+    lsof +c 10 | awk '{print $1}' | sort | uniq -c | sort -rn | head
 ```
 
 ## 性能监控
