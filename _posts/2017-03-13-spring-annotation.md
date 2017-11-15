@@ -165,3 +165,6 @@ tags:
     BeanUtils.copyProperties(sourceObj, targetObj);
 ```
 
+## 注解关系图
+![关系图](http://bug1024.com/img/annotation.jpg)
+
