@@ -41,3 +41,5 @@ tags:
 * key_buffer_size/max_heap_table_size不用设置过大
 * sort_buffer_size/join_buffer_size/read_buffer_size/read_rmd_buffer_size也不要设置过大
 
+## 参考
+* [比较全面的MySQL优化参考](http://imysql.cn/2015/05/24/mysql-optimization-reference-1.shtml)
