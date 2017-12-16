@@ -41,5 +41,11 @@ tags:
 * key_buffer_size/max_heap_table_size不用设置过大
 * sort_buffer_size/join_buffer_size/read_buffer_size/read_rmd_buffer_size也不要设置过大
 
+## MySQL高可用方案
+### MHA
+MHA（MySQL-Master-HA）是目前广泛使用的MySQL主从复制的高可用方案。MHA设计目标是自动实现主实例宕机后，从机切换为主，并尽量降低切换时延（通常在10-30s内切换完成）。同时，由MHA保证在切换过程中的数据一致性。MHA对MySQL的主从复制集群非常友好，没有对集群做任何侵入性的修改。
+MHA的一个重点特性是：在主实例宕机后，MHA可以自动的判断主从复制集群中哪个从实例的relaylog是最新的，并将最新从实例的差异log“应用”到其余的从实例中，从而保证每个实例的数据一致。通常情况下，MHA需要10s左右检测主实例异常，并将主实例关闭从而避免脑裂。然后再用10s左右将差异的log event同步，并启用新的Master。整个MHA的RTO时间大约在30s。
+
 ## 参考
 * [比较全面的MySQL优化参考](http://imysql.cn/2015/05/24/mysql-optimization-reference-1.shtml)
+* [MySQL 数据库的高可用性分析](https://cloud.tencent.com/developer/article/1004447)
