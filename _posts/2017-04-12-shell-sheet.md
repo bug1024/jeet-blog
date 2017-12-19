@@ -60,6 +60,12 @@ tags:
     grep -r "xxx" . | grep -v "yyy"
     # 查处字符串出现次数
     grep -o "xxx"|wc -l
+    # 显示file文件中匹配foo字串那行以及上下5行
+    grep -C 5 foo file
+    # 显示foo及前5行
+    grep -B 5 foo file
+    # 显示foo及后5行
+    grep -A 5 foo file
     # 查找7天内没访问过的文件
     find path -atime +7
     # 查找7天内访问过的文件
