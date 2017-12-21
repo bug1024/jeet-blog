@@ -66,6 +66,8 @@ tags:
     grep -B 5 foo file
     # 显示foo及后5行
     grep -A 5 foo file
+    # 匹配行带文件名，以下命令会返回类似结果结果：file1:hello file2:hhhhello
+    grep -H hello file*
     # 查找7天内没访问过的文件
     find path -atime +7
     # 查找7天内访问过的文件
