@@ -228,6 +228,8 @@ tags:
     #Mac home目录下创建目录
     用命令 sudo vim /etc/auto_master 打开文件，把里面的home开始的行删掉或用#注释掉
     然后用命令 sudo automount 使设置立刻生效
+    # 判断端口是否通
+    nc -z 10.1.1.1 8081
 ```
 
 ## 参考
