@@ -188,3 +188,6 @@ tags:
 #### 十一、Other（一些官方文档上没有体现的快捷键）
 - `Command + Shift +8` 竖编辑模式
 
+#### 十二、Tips
+- 运行单个文件 File-Project Structure-Modules中把你代码所在文件夹选为Sources然后确定
+
