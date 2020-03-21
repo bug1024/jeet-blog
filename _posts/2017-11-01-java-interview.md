@@ -1,7 +1,7 @@
 ---
 layout:     post
-title:      "Java面试题"
-subtitle:   "Java常见面试题"
+title:      "Java基础知识点"
+subtitle:   "Java基础"
 date:       2017-11-01
 author:     "Bug1024"
 header-img: "img/hill.jpg"
