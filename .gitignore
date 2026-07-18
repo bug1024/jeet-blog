@@ -1,2 +1,5 @@
 .DS_Store
 *.swap
+public/
+resources/
+.hugo_build.lock

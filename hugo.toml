@@ -1,0 +1,65 @@
+baseURL = "https://bug1024.com/"
+title = "Bug1024"
+theme = "PaperMod"
+languageCode = "zh-cn"
+defaultContentLanguage = "zh"
+hasCJKLanguage = true
+paginate = 10
+enableRobotsTXT = true
+summaryLength = 90
+copyright = "Bug1024"
+
+[outputs]
+home = ["HTML", "RSS", "JSON"]
+
+[permalinks.page]
+posts = "/:year/:month/:day/:slug/"
+
+[taxonomies]
+tag = "tags"
+
+[params]
+env = "production"
+author = "Bug1024"
+description = "十年后端，现在 All in AI。写 AI 工程实践、平台架构与工程师成长。"
+defaultTheme = "auto"
+ShowReadingTime = true
+ShowPostNavLinks = true
+ShowBreadCrumbs = true
+ShowCodeCopyButtons = true
+ShowToc = true
+TocOpen = false
+ShowShareButtons = false
+comments = true
+
+[params.homeInfoParams]
+Title = "Bug1024"
+Content = "十年后端，现在 All in AI。这里记录我的 AI 工程实践、平台架构思考与工程师成长。每月一篇，宁缺毋滥。"
+
+[[params.socialIcons]]
+name = "github"
+url = "https://github.com/bug1024"
+
+[[params.socialIcons]]
+name = "rss"
+url = "https://bug1024.com/index.xml"
+
+[[menu.main]]
+name = "文章"
+url = "/posts/"
+weight = 1
+
+[[menu.main]]
+name = "标签"
+url = "/tags/"
+weight = 2
+
+[[menu.main]]
+name = "搜索"
+url = "/search/"
+weight = 3
+
+[[menu.main]]
+name = "关于"
+url = "/about/"
+weight = 4
