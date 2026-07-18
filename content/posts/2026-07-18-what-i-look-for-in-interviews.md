@@ -4,7 +4,8 @@ description: "面试不是知识竞赛。相比记住多少答案，我更关注
 date: 2026-07-18
 author: "Bug1024"
 slug: "what-i-look-for-in-interviews"
-draft: true
+draft: false
+hideInHomepage: true
 tags:
     - 工作与系统
 ---

@@ -4,7 +4,8 @@ description: "新人往往更容易看见旧系统的问题，也最容易忽略
 date: 2026-07-18
 author: "Bug1024"
 slug: "dont-rush-to-criticize-legacy-systems"
-draft: true
+draft: false
+hideInHomepage: true
 tags:
     - 工作与系统
     - 技术实践

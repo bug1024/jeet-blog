@@ -4,7 +4,8 @@ description: "从三次入职记录里，回看自己熟悉新环境的顺序如
 date: 2026-07-18
 author: "Bug1024"
 slug: "joining-a-new-company"
-draft: true
+draft: false
+hideInHomepage: true
 tags:
     - 经历与阶段
     - 工作与系统

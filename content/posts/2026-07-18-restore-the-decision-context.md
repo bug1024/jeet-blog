@@ -4,7 +4,8 @@ description: "复盘不应只用已知结果追问个人责任，还需要还原
 date: 2026-07-18
 author: "Bug1024"
 slug: "restore-the-decision-context"
-draft: true
+draft: false
+hideInHomepage: true
 tags:
     - 工作与系统
 ---

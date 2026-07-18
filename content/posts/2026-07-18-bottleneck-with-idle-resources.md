@@ -4,7 +4,8 @@ description: "一次监控数据处理瓶颈的排查：CPU和内存仍有余量
 date: 2026-07-18
 author: "Bug1024"
 slug: "bottleneck-with-idle-resources"
-draft: true
+draft: false
+hideInHomepage: true
 tags:
     - 技术实践
 ---

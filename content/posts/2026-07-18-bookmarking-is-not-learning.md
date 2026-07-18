@@ -4,7 +4,8 @@ description: "从十多年学习笔记里大量失效的链接和摘录出发，
 date: 2026-07-18
 author: "Bug1024"
 slug: "bookmarking-is-not-learning"
-draft: true
+draft: false
+hideInHomepage: true
 tags:
     - 经历与阶段
 ---

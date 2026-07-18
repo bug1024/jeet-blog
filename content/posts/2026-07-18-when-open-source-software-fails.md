@@ -4,7 +4,8 @@ description: "企业使用开源软件遇到缺陷时，仍需完成证据收集
 date: 2026-07-18
 author: "Bug1024"
 slug: "when-open-source-software-fails"
-draft: true
+draft: false
+hideInHomepage: true
 tags:
     - 技术实践
     - 开源

@@ -1,0 +1,35 @@
+{{ define "main" }}
+    {{ $topics := .Site.Data.topics.topics }}
+    <main class="main career-page topic-index-page" id="main">
+        <div class="career-shell">
+            <header class="career-head topic-index-head">
+                <div class="career-head-copy">
+                    <p class="editorial-eyebrow">阅读索引 · {{ printf "%02d" (len $topics) }}</p>
+                    <h1>{{ .Title }}</h1>
+                    <p>{{ .Description }}</p>
+                </div>
+                <aside class="career-scale" aria-label="当前专题数量">
+                    <strong>{{ printf "%02d" (len $topics) }}</strong>
+                    <span>TOPICS</span>
+                </aside>
+            </header>
+
+            <ol class="topic-directory">
+                {{ range $index, $topic := $topics }}
+                    <li>
+                        <a href="{{ printf "/topics/%s/" $topic.slug | relLangURL }}">
+                            <span class="topic-directory-number">{{ printf "%02d" (add $index 1) }}</span>
+                            <div>
+                                <small>{{ $topic.label }} · {{ if eq $topic.type "sequence" }}顺序阅读{{ else }}自由阅读{{ end }}</small>
+                                <h2>{{ $topic.title }}</h2>
+                                <p>{{ $topic.description }}</p>
+                            </div>
+                            <strong>{{ printf "%02d" $topic.article_count }}<small>篇</small></strong>
+                            <span aria-hidden="true">→</span>
+                        </a>
+                    </li>
+                {{ end }}
+            </ol>
+        </div>
+    </main>
+{{ end }}

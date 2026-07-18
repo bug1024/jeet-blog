@@ -4,7 +4,8 @@ description: "工作并不失败，却逐渐失去进展感。离开学校式的
 date: 2026-07-18
 author: "Bug1024"
 slug: "when-work-feels-stagnant"
-draft: true
+draft: false
+hideInHomepage: true
 tags:
     - 经历与阶段
     - 生活与时间

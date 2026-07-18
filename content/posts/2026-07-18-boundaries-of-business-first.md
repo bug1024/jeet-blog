@@ -4,7 +4,8 @@ description: "业务优先不等于绕开协作流程。结合工作中的补位
 date: 2026-07-18
 author: "Bug1024"
 slug: "boundaries-of-business-first"
-draft: true
+draft: false
+hideInHomepage: true
 tags:
     - 工作与系统
 ---

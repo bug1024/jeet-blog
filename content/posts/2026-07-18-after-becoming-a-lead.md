@@ -4,7 +4,8 @@ description: "从个人开发转向小团队负责人后，工作对象从代码
 date: 2026-07-18
 author: "Bug1024"
 slug: "after-becoming-a-lead"
-draft: true
+draft: false
+hideInHomepage: true
 tags:
     - 工作与系统
     - 经历与阶段

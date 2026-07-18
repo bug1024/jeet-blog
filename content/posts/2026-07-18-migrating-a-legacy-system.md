@@ -4,7 +4,8 @@ description: "在不能要求所有客户端同步升级的情况下，通过服
 date: 2026-07-18
 author: "Bug1024"
 slug: "migrating-a-legacy-system"
-draft: true
+draft: false
+hideInHomepage: true
 tags:
     - 技术实践
     - 工作与系统

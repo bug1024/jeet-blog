@@ -59,6 +59,8 @@
                 <time datetime="{{ .PublishDate.Format "2006-01-02" }}">{{ .PublishDate.Format "2006 / 01 / 02" }}</time>
             </footer>
 
+            {{ partial "components/topic-nav.html" . }}
+
             {{ partial "components/post-copyright.html" . }}
         </article>
 

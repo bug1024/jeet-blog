@@ -102,29 +102,8 @@ button:focus-visible {
 }
 
 .home-hero {
-    min-height: calc(100vh - 60px);
-    max-height: 690px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 88px 0 64px;
-}
-
-.home-hero-kicker {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    color: var(--brand-slate);
-    font-family: "SFMono-Regular", Consolas, monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-}
-
-.home-hero-line {
-    width: 72px;
-    height: 1px;
-    background: var(--brand-line);
+    width: 100%;
+    padding: 64px 0 52px;
 }
 
 .home-hero h1 {
@@ -144,7 +123,28 @@ button:focus-visible {
     grid-template-columns: minmax(0, 1fr) 260px;
     align-items: center;
     gap: 72px;
-    margin: 50px 0 52px;
+    margin-top: 0;
+}
+
+.home-hero-copy {
+    min-width: 0;
+}
+
+.home-hero-intro {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 40px;
+    max-width: 720px;
+    margin-top: 34px;
+}
+
+.home-hero-intro p {
+    max-width: 35em;
+    margin: 0;
+    color: var(--brand-copy);
+    font-size: 1rem;
+    line-height: 1.85;
 }
 
 .home-signal {
@@ -196,23 +196,6 @@ button:focus-visible {
     font-weight: 400;
 }
 
-.home-hero-foot {
-    display: grid;
-    grid-template-columns: minmax(0, 590px) auto;
-    align-items: end;
-    gap: 48px;
-    border-top: 1px solid var(--brand-line);
-    padding-top: 24px;
-}
-
-.home-hero-foot p {
-    max-width: 35em;
-    margin: 0;
-    color: var(--brand-copy);
-    font-size: 1.03rem;
-    line-height: 1.9;
-}
-
 .home-about-link,
 .home-entry-read {
     color: var(--brand-ink);
@@ -232,23 +215,12 @@ button:focus-visible {
     transform: translate(3px, -2px);
 }
 
-.home-topics {
-    display: flex;
-    gap: 10px;
-    margin-top: 44px;
-}
-
-.home-topics span,
 .home-entry-tags span {
     border: 1px solid var(--brand-line);
     border-radius: 999px;
     color: var(--brand-slate);
     font-size: 0.72rem;
     letter-spacing: 0.04em;
-}
-
-.home-topics span {
-    padding: 7px 13px;
 }
 
 .home-decade {
@@ -342,8 +314,8 @@ button:focus-visible {
 .home-section-head {
     display: flex;
     justify-content: space-between;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--brand-ink);
+    align-items: baseline;
+    padding-bottom: 14px;
     color: var(--brand-slate);
     font-family: "SFMono-Regular", Consolas, monospace;
     font-size: 0.72rem;
@@ -680,17 +652,27 @@ button:focus-visible {
 }
 
 .article-finish {
+    position: relative;
     display: flex;
     justify-content: space-between;
     width: 100%;
     max-width: 700px;
     margin: 90px auto 0;
     padding-top: 18px;
-    border-top: 1px solid var(--brand-ink);
     color: var(--brand-slate);
     font-family: "SFMono-Regular", Consolas, monospace;
     font-size: 0.62rem;
     letter-spacing: 0.08em;
+}
+
+.article-finish::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 48px;
+    height: 1px;
+    background: var(--brand-ink);
 }
 
 /* Editorial index pages — the blue module is structure, never wallpaper. */
@@ -1101,6 +1083,636 @@ button:focus-visible {
     color: var(--brand-steel);
 }
 
+/* Career growth — one ordered path through the work archive */
+.home-reading-index,
+.home-selected,
+.home-recent {
+    padding-top: 68px;
+}
+
+.home-reading-index {
+    padding-top: 0;
+}
+
+.home-section-head a {
+    color: var(--brand-slate);
+    text-decoration: none;
+}
+
+.home-section-head a:hover {
+    color: var(--brand-ink);
+}
+
+.home-index-board {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    min-height: 430px;
+    margin: 8px 0 0;
+    padding: 0;
+    border-top: 1px solid var(--brand-ink);
+    list-style: none;
+}
+
+.home-index-board li {
+    position: relative;
+    min-width: 0;
+}
+
+.home-index-board li + li {
+    border-left: 1px solid var(--brand-line);
+}
+
+.home-index-board a {
+    position: relative;
+    display: flex;
+    height: 100%;
+    min-height: 430px;
+    flex-direction: column;
+    padding: 28px 30px 26px;
+    color: var(--brand-ink);
+    text-decoration: none;
+    transition: background-color 180ms ease;
+}
+
+.home-index-board a:hover {
+    background: var(--brand-mist);
+}
+
+.home-index-board .is-primary::before {
+    position: absolute;
+    z-index: 1;
+    top: -1px;
+    left: 0;
+    width: 76px;
+    height: 10px;
+    background: var(--brand-steel);
+    content: "";
+}
+
+.home-index-board header,
+.home-index-board footer,
+.home-index-count {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    font-family: "SFMono-Regular", Consolas, monospace;
+}
+
+.home-index-board header span,
+.home-index-board header small,
+.home-index-board footer,
+.home-index-count small {
+    color: var(--brand-slate);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+}
+
+.home-index-count {
+    justify-content: flex-start;
+    margin-top: 45px;
+}
+
+.home-index-count strong {
+    color: var(--brand-line);
+    font-size: clamp(5rem, 7vw, 7.2rem);
+    font-weight: 500;
+    line-height: 0.82;
+    letter-spacing: -0.09em;
+}
+
+.home-index-board .is-primary .home-index-count strong {
+    font-size: clamp(7rem, 11vw, 10.5rem);
+}
+
+.home-index-count small {
+    margin-left: 14px;
+    writing-mode: vertical-rl;
+}
+
+.home-index-copy {
+    margin-top: auto;
+    padding-top: 42px;
+}
+
+.home-index-copy h2 {
+    margin: 0;
+    font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+    font-size: 1.85rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.035em;
+}
+
+.home-index-board .is-primary .home-index-copy h2 {
+    font-size: 2.45rem;
+}
+
+.home-index-copy p {
+    margin: 16px 0 0;
+    color: var(--brand-copy);
+    font-size: 0.75rem;
+    line-height: 1.75;
+}
+
+.home-index-board footer {
+    margin-top: 26px;
+    padding-top: 14px;
+    border-top: 1px solid var(--brand-line);
+}
+
+.home-index-board footer i {
+    color: var(--brand-ink);
+    font-style: normal;
+    transition: transform 180ms ease;
+}
+
+.home-index-board a:hover footer i {
+    transform: translateX(5px);
+}
+
+.home-selected-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.home-selected-grid article {
+    position: relative;
+    min-height: 330px;
+    padding: 34px 34px 38px 0;
+    border-right: 1px solid var(--brand-line);
+}
+
+.home-selected-grid article + article {
+    padding-left: 34px;
+}
+
+.home-selected-grid article:last-child {
+    padding-right: 0;
+    border-right: 0;
+}
+
+.home-selected-grid article > span,
+.home-selected-grid article > small {
+    color: var(--brand-slate);
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.07em;
+}
+
+.home-selected-grid article > small {
+    float: right;
+}
+
+.home-selected-grid h2 {
+    margin: 48px 0 18px;
+    font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+    font-size: 1.65rem;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.home-selected-grid h2 a,
+.home-selected-grid article > a,
+.home-recent-list a {
+    color: var(--brand-ink);
+    text-decoration: none;
+}
+
+.home-selected-grid p {
+    margin: 0;
+    color: var(--brand-copy);
+    font-size: 0.8rem;
+    line-height: 1.8;
+}
+
+.home-selected-grid article > a {
+    position: absolute;
+    bottom: 34px;
+    font-size: 0.75rem;
+}
+
+.home-recent-list article {
+    display: grid;
+    grid-template-columns: 112px minmax(0, 1fr) 24px;
+    align-items: center;
+    gap: 36px;
+    padding: 30px 0;
+}
+
+.home-recent-list article + article {
+    border-top: 1px solid var(--brand-line);
+}
+
+.home-recent-list time {
+    display: flex;
+    gap: 10px;
+    color: var(--brand-slate);
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 0.66rem;
+}
+
+.home-recent-list time strong {
+    color: var(--brand-ink);
+    font-weight: 600;
+}
+
+.home-recent-list h2 {
+    margin: 0 0 7px;
+    font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.home-recent-list p {
+    margin: 0;
+    color: var(--brand-slate);
+    font-size: 0.76rem;
+    line-height: 1.65;
+}
+
+.career-page {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0 32px 100px;
+}
+
+.career-page *,
+.career-page *::before,
+.career-page *::after {
+    box-sizing: border-box;
+}
+
+.career-shell {
+    width: 100%;
+    max-width: 1040px;
+    margin: 0 auto;
+}
+
+.career-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 170px;
+    align-items: end;
+    gap: 80px;
+    min-height: 330px;
+    padding: 88px 0 54px;
+    border-bottom: 1px solid var(--brand-ink);
+}
+
+.career-head h1 {
+    margin: 14px 0 18px;
+    color: var(--brand-ink);
+    font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+    font-size: clamp(3.4rem, 6.2vw, 5.6rem);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.06em;
+}
+
+.career-head-copy > p:last-child {
+    max-width: 38em;
+    margin: 0;
+    color: var(--brand-copy);
+    font-size: 1rem;
+    line-height: 1.9;
+}
+
+.career-scale {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 15px 0 0;
+    border-top: 9px solid var(--brand-steel);
+    font-family: "SFMono-Regular", Consolas, monospace;
+}
+
+.career-scale strong {
+    font-size: 3.8rem;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.08em;
+}
+
+.career-scale span {
+    margin-top: 7px;
+    color: var(--brand-slate);
+    font-size: 0.66rem;
+    letter-spacing: 0.12em;
+}
+
+.career-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 72px;
+    padding: 52px 0 72px 210px;
+}
+
+.career-intro p {
+    margin: 0;
+    color: var(--brand-copy);
+    font-size: 0.93rem;
+    line-height: 1.9;
+}
+
+.career-stage {
+    display: grid;
+    grid-template-columns: 210px minmax(0, 1fr);
+    padding: 78px 0 86px;
+}
+
+.career-stage-head {
+    padding-right: 48px;
+}
+
+.career-stage-index {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+    color: var(--brand-slate);
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 0.7rem;
+}
+
+.career-stage-index i {
+    width: 44px;
+    height: 1px;
+    background: var(--brand-line);
+}
+
+.career-stage:first-child .career-stage-index i {
+    height: 7px;
+    background: var(--brand-steel);
+}
+
+.career-stage-head h2 {
+    margin: 0 0 16px;
+    font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+    font-size: 1.72rem;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+.career-stage-head p {
+    margin: 0;
+    color: var(--brand-slate);
+    font-size: 0.78rem;
+    line-height: 1.75;
+}
+
+.career-articles {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.career-articles li {
+    display: grid;
+    grid-template-columns: 38px minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 16px;
+    padding: 21px 0 22px;
+}
+
+.career-articles li + li {
+    border-top: 1px solid var(--brand-line);
+}
+
+.career-articles li > span {
+    padding-top: 4px;
+    color: var(--brand-slate);
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 0.66rem;
+}
+
+.career-articles a {
+    color: var(--brand-ink);
+    text-decoration: none;
+}
+
+.career-articles strong {
+    display: block;
+    font-size: 1.02rem;
+    font-weight: 600;
+}
+
+.career-articles small {
+    display: block;
+    margin-top: 8px;
+    color: var(--brand-slate);
+    font-size: 0.76rem;
+    font-weight: 400;
+    line-height: 1.65;
+}
+
+.career-articles li:hover strong {
+    color: var(--brand-steel);
+}
+
+.career-article-nav {
+    max-width: 720px;
+    margin: 54px auto 0;
+    padding: 0 0 4px;
+}
+
+.career-article-nav header,
+.career-article-nav nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 36px;
+}
+
+.career-article-nav header {
+    align-items: center;
+    font-size: 0.72rem;
+}
+
+.career-article-nav header a {
+    color: var(--brand-ink);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.career-article-nav header span,
+.career-article-nav > p {
+    color: var(--brand-slate);
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+}
+
+.career-article-progress {
+    height: 2px;
+    margin: 16px 0 13px;
+    background: var(--brand-line);
+}
+
+.career-article-progress span {
+    display: block;
+    height: 100%;
+    background: var(--brand-steel);
+}
+
+.career-article-nav > p {
+    margin: 0 0 28px;
+}
+
+.career-article-nav nav a {
+    width: 46%;
+    color: var(--brand-ink);
+    text-decoration: none;
+}
+
+.career-article-nav nav a:last-child {
+    text-align: right;
+}
+
+.career-article-nav nav small,
+.career-article-nav nav strong {
+    display: block;
+}
+
+.career-article-nav nav small {
+    margin-bottom: 7px;
+    color: var(--brand-slate);
+    font-size: 0.64rem;
+    font-weight: 400;
+}
+
+.career-article-nav nav strong {
+    font-size: 0.82rem;
+    font-weight: 500;
+    line-height: 1.55;
+}
+
+.career-head .editorial-eyebrow a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.topic-directory {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.topic-directory li + li {
+    border-top: 1px solid var(--brand-line);
+}
+
+.topic-directory a {
+    display: grid;
+    grid-template-columns: 62px 250px minmax(0, 1fr) 74px 24px;
+    align-items: center;
+    gap: 26px;
+    min-height: 180px;
+    color: var(--brand-ink);
+    text-decoration: none;
+}
+
+.topic-directory-number,
+.topic-directory small {
+    color: var(--brand-slate);
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 0.62rem;
+    font-weight: 400;
+    letter-spacing: 0.07em;
+}
+
+.topic-directory h2 {
+    margin: 9px 0 0;
+    font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: -0.04em;
+}
+
+.topic-directory p {
+    margin: 0;
+    color: var(--brand-copy);
+    font-size: 0.82rem;
+    line-height: 1.8;
+}
+
+.topic-directory a > strong {
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 1.7rem;
+    font-weight: 500;
+    letter-spacing: -0.06em;
+}
+
+.topic-directory a > strong small {
+    margin-left: 4px;
+}
+
+.topic-directory a > span:last-child {
+    transition: transform 180ms ease;
+}
+
+.topic-directory a:hover > span:last-child {
+    transform: translateX(5px);
+}
+
+.topic-related {
+    display: grid;
+    grid-template-columns: 210px minmax(0, 1fr);
+    padding: 78px 0 86px;
+}
+
+.topic-related header {
+    padding-right: 48px;
+}
+
+.topic-related h2 {
+    margin: 22px 0 15px;
+    font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+    font-size: 1.7rem;
+    font-weight: 600;
+}
+
+.topic-related header > p:last-child {
+    margin: 0;
+    color: var(--brand-slate);
+    font-size: 0.78rem;
+    line-height: 1.75;
+}
+
+.topic-related ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.topic-related li + li {
+    border-top: 1px solid var(--brand-line);
+}
+
+.topic-related li a {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr) auto;
+    gap: 18px;
+    padding: 20px 0;
+    color: var(--brand-ink);
+    text-decoration: none;
+}
+
+.topic-related li span {
+    color: var(--brand-slate);
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 0.62rem;
+}
+
+.topic-related li strong {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.topic-related li i {
+    font-style: normal;
+}
+
 @media (max-width: 720px) {
     .home-main {
         padding: 0 20px 56px;
@@ -1172,28 +1784,18 @@ button:focus-visible {
     }
 
     .home-hero {
-        min-height: auto;
-        padding: 80px 0 58px;
-    }
-
-    .home-hero-kicker {
-        gap: 10px;
-        font-size: 0.64rem;
-    }
-
-    .home-hero-line {
-        width: 28px;
+        padding: 64px 0 38px;
     }
 
     .home-hero-stage {
         grid-template-columns: 1fr;
         gap: 30px;
-        margin: 42px 0 46px;
+        margin-top: 0;
     }
 
     .home-hero h1 {
         margin: 0;
-        font-size: clamp(2.65rem, 13vw, 4.2rem);
+        font-size: clamp(2.5rem, 11.5vw, 3.7rem);
         letter-spacing: -0.06em;
     }
 
@@ -1224,35 +1826,218 @@ button:focus-visible {
         align-items: flex-start;
     }
 
-    .home-hero-foot {
-        grid-template-columns: 1fr;
-        gap: 24px;
+    .home-hero-intro {
+        display: block;
+        margin-top: 28px;
     }
 
-    .home-topics {
-        flex-wrap: wrap;
+    .home-hero-intro p {
+        font-size: 0.94rem;
+    }
+
+    .home-hero-intro .home-about-link {
+        display: inline-block;
+        margin-top: 18px;
+    }
+
+    .home-reading-index,
+    .home-selected,
+    .home-recent {
+        padding-top: 56px;
+    }
+
+    .home-reading-index {
+        padding-top: 0;
+    }
+
+    .home-index-board {
+        grid-template-columns: 1fr 1fr;
+        min-height: 0;
+        margin-top: 6px;
+    }
+
+    .home-index-board .is-primary {
+        grid-column: 1 / -1;
+    }
+
+    .home-index-board li + li {
+        border-left: 0;
+    }
+
+    .home-index-board li:nth-child(3) {
+        border-left: 1px solid var(--brand-line);
+    }
+
+    .home-index-board a {
+        min-height: 270px;
+        padding: 22px 18px 20px;
+    }
+
+    .home-index-board .is-primary a {
+        min-height: 330px;
+        padding: 25px 22px 22px;
+    }
+
+    .home-index-count {
+        margin-top: 32px;
+    }
+
+    .home-index-count strong,
+    .home-index-board .is-primary .home-index-count strong {
+        font-size: 5.2rem;
+    }
+
+    .home-index-copy {
+        padding-top: 30px;
+    }
+
+    .home-index-copy h2,
+    .home-index-board .is-primary .home-index-copy h2 {
+        font-size: 1.55rem;
+    }
+
+    .home-index-copy p {
+        display: none;
+    }
+
+    .home-index-board footer {
+        margin-top: 18px;
+    }
+
+    .home-selected-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .home-selected-grid article,
+    .home-selected-grid article + article,
+    .home-selected-grid article:last-child {
+        min-height: 270px;
+        padding: 30px 0 36px;
+        border-right: 0;
+        border-bottom: 1px solid var(--brand-line);
+    }
+
+    .home-selected-grid article:last-child {
+        border-bottom: 0;
+    }
+
+    .home-selected-grid h2 {
         margin-top: 34px;
     }
 
-    .home-decade {
-        margin-top: 38px;
+    .home-recent-list article {
+        grid-template-columns: 1fr 18px;
+        gap: 18px;
+        padding: 27px 0;
     }
 
-    .home-decade-plot {
-        grid-template-columns: repeat(11, minmax(22px, 1fr));
-        overflow: hidden;
+    .home-recent-list time {
+        grid-column: 1;
+        margin-bottom: -8px;
     }
 
-    .home-decade-label {
-        font-size: 0;
+    .home-recent-list article > div {
+        grid-column: 1;
     }
 
-    .home-decade-year:nth-child(odd) .home-decade-label {
-        font-size: 0.56rem;
+    .home-recent-list article > a {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        align-self: center;
     }
 
-    .home-journal {
-        padding-top: 58px;
+    .career-page {
+        padding: 0 20px 72px;
+    }
+
+    .career-head {
+        grid-template-columns: 1fr;
+        gap: 34px;
+        min-height: 0;
+        padding: 64px 0 38px;
+    }
+
+    .career-head h1 {
+        font-size: clamp(2.8rem, 14vw, 4rem);
+    }
+
+    .career-scale {
+        width: 92px;
+        align-items: flex-start;
+        border-top-width: 7px;
+    }
+
+    .career-scale strong {
+        font-size: 2.6rem;
+    }
+
+    .career-intro {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 36px 0 48px;
+    }
+
+    .career-stage {
+        grid-template-columns: 1fr;
+        gap: 34px;
+        padding: 52px 0 58px;
+    }
+
+    .career-stage-head {
+        padding-right: 0;
+    }
+
+    .career-stage-index {
+        margin-bottom: 18px;
+    }
+
+    .career-articles li {
+        grid-template-columns: 28px minmax(0, 1fr) auto;
+        gap: 11px;
+    }
+
+    .career-articles small {
+        display: none;
+    }
+
+    .career-article-nav {
+        margin-top: 42px;
+    }
+
+    .career-article-nav nav {
+        gap: 20px;
+    }
+
+    .career-article-nav nav a {
+        width: 48%;
+    }
+
+    .topic-directory a {
+        grid-template-columns: 28px minmax(0, 1fr) 52px 18px;
+        gap: 12px;
+        min-height: 142px;
+    }
+
+    .topic-directory h2 {
+        font-size: 1.6rem;
+    }
+
+    .topic-directory p {
+        display: none;
+    }
+
+    .topic-directory a > strong {
+        font-size: 1.25rem;
+    }
+
+    .topic-related {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 52px 0 58px;
+    }
+
+    .topic-related header {
+        padding-right: 0;
     }
 
     .home-section-head p:last-child {

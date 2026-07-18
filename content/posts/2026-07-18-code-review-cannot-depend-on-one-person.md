@@ -4,7 +4,8 @@ description: "负责人集中评审可以快速统一代码标准，也可能逐
 date: 2026-07-18
 author: "Bug1024"
 slug: "code-review-cannot-depend-on-one-person"
-draft: true
+draft: false
+hideInHomepage: true
 tags:
     - 工作与系统
     - 技术实践

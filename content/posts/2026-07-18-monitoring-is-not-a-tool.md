@@ -4,7 +4,8 @@ description: "从指标采集到报警责任人和故障处理流程，监控能
 date: 2026-07-18
 author: "Bug1024"
 slug: "monitoring-is-not-a-tool"
-draft: true
+draft: false
+hideInHomepage: true
 tags:
     - 技术实践
     - 工作与系统

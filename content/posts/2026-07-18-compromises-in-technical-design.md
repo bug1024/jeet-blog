@@ -4,7 +4,8 @@ description: "以一次动态表单设计为例，讨论配置、模板、硬编
 date: 2026-07-18
 author: "Bug1024"
 slug: "compromises-in-technical-design"
-draft: true
+draft: false
+hideInHomepage: true
 tags:
     - 技术实践
     - 工作与系统

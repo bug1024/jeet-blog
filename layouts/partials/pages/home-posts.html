@@ -1,108 +1,106 @@
 <main class="main home-main" id="main">
     <div class="home-shell">
-        {{ if eq .Paginator.PageNumber 1 }}
-            <section class="home-hero" aria-labelledby="home-intro-title">
-                <div class="home-hero-kicker">
-                    <span>Bug1024</span>
-                    <span class="home-hero-line" aria-hidden="true"></span>
-                    <span>持续记录于 2016—至今</span>
-                </div>
-                <div class="home-hero-stage">
+        {{ $allPosts := where .Site.RegularPages "Section" "in" .Site.Params.mainSections }}
+        {{ $recentPosts := $allPosts }}
+        {{ if .Site.Params.enableHideInHomepage }}
+            {{ $recentPosts = where $recentPosts ".Params.hideInHomepage" "ne" true }}
+        {{ end }}
+        {{ $recentPosts = first 3 (sort $recentPosts "Date" "desc") }}
+        {{ $topics := .Site.Data.topics.topics }}
+
+        <section class="home-hero" aria-labelledby="home-intro-title">
+            <div class="home-hero-stage">
+                <div class="home-hero-copy">
                     <h1 id="home-intro-title">
                         记人与事，<br>
                         <em>也谈工作与生活。</em>
                     </h1>
-                    <aside class="home-signal" aria-label="Bug1024 写作坐标">
-                        <span class="home-signal-block" aria-hidden="true"></span>
-                        <div class="home-signal-number">1024</div>
-                        <div class="home-signal-meta">
-                            <span>2016—NOW</span>
-                            <span>记录 · 判断 · 选择</span>
-                        </div>
-                    </aside>
-                </div>
-                <div class="home-hero-foot">
-                    <p>工作中的系统与人，生活里的选择与时间。偶尔也谈技术。</p>
-                    <a href="{{ "/about/" | relLangURL }}" class="home-about-link">认识我 <span aria-hidden="true">↗</span></a>
-                </div>
-                <div class="home-topics" aria-label="主要写作方向">
-                    <span>工作与系统</span>
-                    <span>人生与时间</span>
-                    <span>技术余响</span>
-                </div>
-                {{ $allPosts := where .Site.RegularPages "Section" "in" .Site.Params.mainSections }}
-                <div class="home-decade" aria-label="2016 年至今的写作记录">
-                    <div class="home-decade-head">
-                        <span>写作年轮</span>
-                        <span>{{ len $allPosts }} 篇 · 2016—{{ now.Year }}</span>
-                    </div>
-                    <div class="home-decade-plot">
-                        {{ range $year := seq 2016 now.Year }}
-                            {{ $yearPosts := where $allPosts "Date.Year" $year }}
-                            {{ $count := len $yearPosts }}
-                            {{ $barHeight := add 7 (mul $count 2) }}
-                            <div class="home-decade-year{{ if eq $year now.Year }} is-current{{ end }}" title="{{ $year }} 年 · {{ $count }} 篇">
-                                <div class="home-decade-bar-wrap">
-                                    {{ if gt $count 0 }}<span class="home-decade-count">{{ $count }}</span>{{ end }}
-                                    <span class="home-decade-bar" style="height: {{ $barHeight }}px"></span>
-                                </div>
-                                <span class="home-decade-label">{{ $year }}</span>
-                            </div>
-                        {{ end }}
+                    <div class="home-hero-intro">
+                        <p>工作中的系统与人，生活里的选择与时间，偶尔也谈技术。</p>
+                        <a href="{{ "/about/" | relLangURL }}" class="home-about-link">关于作者 <span aria-hidden="true">↗</span></a>
                     </div>
                 </div>
-            </section>
-        {{ end }}
+                <aside class="home-signal" aria-label="Bug1024 写作坐标">
+                    <span class="home-signal-block" aria-hidden="true"></span>
+                    <div class="home-signal-number">1024</div>
+                    <div class="home-signal-meta">
+                        <span>2016—NOW</span>
+                        <span>记录 · 判断 · 选择</span>
+                    </div>
+                </aside>
+            </div>
+        </section>
 
-        {{ $pages := where .Site.RegularPages "Section" "in" .Site.Params.mainSections }}
-        {{ if .Site.Params.enableHideInHomepage }}
-            {{ $pages = where $pages ".Params.hideInHomepage" "ne" true }}
-        {{ end }}
-        {{ $paginator := .Paginate $pages }}
-
-        <section class="home-journal" aria-labelledby="journal-title">
+        <section class="home-reading-index" aria-labelledby="reading-index-title">
             <header class="home-section-head">
-                <p id="journal-title">最近书写</p>
-                <p>{{ len $pages }} 篇记录，仍在继续</p>
+                <p id="reading-index-title">阅读索引</p>
+                <a href="{{ "/topics/" | relLangURL }}">全部专题 <span aria-hidden="true">→</span></a>
             </header>
+            <ol class="home-index-board">
+                {{ range $index, $topic := $topics }}
+                    <li{{ if eq $index 0 }} class="is-primary"{{ end }}>
+                        <a href="{{ printf "/topics/%s/" $topic.slug | relLangURL }}">
+                            <header>
+                                <span>{{ printf "%02d" (add $index 1) }}</span>
+                                <small>{{ $topic.label }} / {{ if eq $topic.type "sequence" }}顺序阅读{{ else }}自由阅读{{ end }}</small>
+                            </header>
+                            <div class="home-index-count">
+                                <strong>{{ printf "%02d" $topic.article_count }}</strong>
+                                <small>篇</small>
+                            </div>
+                            <div class="home-index-copy">
+                                <h2>{{ $topic.title }}</h2>
+                                <p>{{ $topic.description }}</p>
+                            </div>
+                            <footer>
+                                <span>进入专题</span>
+                                <i aria-hidden="true">→</i>
+                            </footer>
+                        </a>
+                    </li>
+                {{ end }}
+            </ol>
+        </section>
 
-            <div class="home-timeline">
-                {{ range $index, $page := $paginator.Pages }}
-                    <article class="home-entry h-entry{{ if and (eq $.Paginator.PageNumber 1) (eq $index 0) }} home-entry-featured{{ end }}">
-                        <div class="home-entry-date">
-                            <time datetime="{{ .Date.Format "2006-01-02" }}" class="dt-published">
-                                <strong>{{ .Date.Format "2006" }}</strong>
-                                <span>{{ .Date.Format "01 / 02" }}</span>
-                            </time>
-                        </div>
-                        <div class="home-entry-marker" aria-hidden="true"><span></span></div>
-                        <div class="home-entry-content">
-                            {{ with .Params.tags }}
-                                <div class="home-entry-tags">
-                                    {{ range first 2 . }}<span>{{ . }}</span>{{ end }}
-                                </div>
-                            {{ end }}
-                            <h2 class="p-name">
-                                <a href="{{ .RelPermalink }}" class="u-url">{{ .LinkTitle }}</a>
-                            </h2>
-                            <p class="p-summary">{{ .Summary | plainify | htmlUnescape | truncate 150 }}</p>
-                            <a href="{{ .RelPermalink }}" class="home-entry-read" aria-label="阅读《{{ .LinkTitle }}》">阅读全文 <span aria-hidden="true">→</span></a>
-                        </div>
-                    </article>
+        <section class="home-selected" aria-labelledby="selected-title">
+            <header class="home-section-head">
+                <p id="selected-title">从这里开始</p>
+                <p>三篇文章，分别对应现在、工作与过去</p>
+            </header>
+            <div class="home-selected-grid">
+                {{ $selectedSlugs := slice "why-i-restart" "after-several-work-reviews" "old-writings-2010" }}
+                {{ range $index, $slug := $selectedSlugs }}
+                    {{ $matches := where $allPosts "Params.slug" $slug }}
+                    {{ with index $matches 0 }}
+                        <article>
+                            <span>{{ printf "%02d" (add $index 1) }}</span>
+                            <small>{{ with .Params.tags }}{{ index . 0 }}{{ else }}文章{{ end }}</small>
+                            <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
+                            <p>{{ .Description }}</p>
+                            <a href="{{ .RelPermalink }}" aria-label="阅读《{{ .LinkTitle }}》">阅读 <span aria-hidden="true">→</span></a>
+                        </article>
+                    {{ end }}
                 {{ end }}
             </div>
         </section>
 
-        {{ if or $paginator.HasPrev $paginator.HasNext }}
-            <nav class="home-pagination" aria-label="文章翻页">
-                {{ if $paginator.HasPrev }}
-                    <a href="{{ $paginator.Prev.URL }}" rel="prev">← 较新的记录</a>
-                {{ else }}<span></span>{{ end }}
-                <span>第 {{ $paginator.PageNumber }} / {{ $paginator.TotalPages }} 页</span>
-                {{ if $paginator.HasNext }}
-                    <a href="{{ $paginator.Next.URL }}" rel="next">更早的记录 →</a>
-                {{ else }}<span></span>{{ end }}
-            </nav>
-        {{ end }}
+        <section class="home-recent" aria-labelledby="recent-title">
+            <header class="home-section-head">
+                <p id="recent-title">最近写作</p>
+                <a href="{{ "/posts/" | relLangURL }}">按时间查看全部文章 <span aria-hidden="true">→</span></a>
+            </header>
+            <div class="home-recent-list">
+                {{ range $recentPosts }}
+                    <article>
+                        <time datetime="{{ .Date.Format "2006-01-02" }}"><strong>{{ .Date.Format "2006" }}</strong><span>{{ .Date.Format "01 / 02" }}</span></time>
+                        <div>
+                            <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
+                            <p>{{ .Description }}</p>
+                        </div>
+                        <a href="{{ .RelPermalink }}" aria-label="阅读《{{ .LinkTitle }}》">→</a>
+                    </article>
+                {{ end }}
+            </div>
+        </section>
     </div>
 </main>

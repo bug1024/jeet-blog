@@ -4,7 +4,8 @@ description: "忙碌、学习和计划都能带来正在前进的感觉，但行
 date: 2026-07-18
 author: "Bug1024"
 slug: "doing-more-is-not-producing-more"
-draft: true
+draft: false
+hideInHomepage: true
 tags:
     - 生活与时间
     - 工作与系统

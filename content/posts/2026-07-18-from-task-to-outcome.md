@@ -4,7 +4,8 @@ description: "回看自己如何从按要求完成开发，逐渐开始关注需
 date: 2026-07-18
 author: "Bug1024"
 slug: "from-task-to-outcome"
-draft: true
+draft: false
+hideInHomepage: true
 tags:
     - 工作与系统
     - 经历与阶段

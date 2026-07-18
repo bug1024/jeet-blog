@@ -117,22 +117,28 @@ enableRobotsTXT = true
         pre = "internal"
         post = "archive"
     [[menu.main]]
+        pageref = "/topics/"
+        name = "专题"
+        weight = 2
+        pre = "internal"
+        post = "archive"
+    [[menu.main]]
         pageref = "/tags/"
         name = "标签"
-        weight = 2
+        weight = 3
         pre = "internal"
         post = "tags"
     [[menu.main]]
         pageref = "/about/"
         name = "关于"
-        weight = 3
+        weight = 4
         pre = "internal"
         post = "user-circle"
     [[menu.main]]
-        weight = 4
+        weight = 5
         identifier = "theme-switcher"
     [[menu.main]]
-        weight = 5
+        weight = 6
         identifier = "search"
         post = "search"
 
@@ -161,10 +167,11 @@ enableRobotsTXT = true
 
     # Homepage
     homeLayout = "posts"
+    enableHideInHomepage = true
 
     # Site Info
     siteLogo = "/icons/web-app-manifest-512x512.png"
-    siteDescription = "工作中的系统与人，生活里的选择与时间。偶尔也谈技术。"
+    siteDescription = "工作中的系统与人，生活里的选择与时间，偶尔也谈技术。"
     siteCreatedTime = "2016-12-12T00:00:00+08:00"
 
     # Brand metadata for search engines and social sharing

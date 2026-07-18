@@ -4,7 +4,8 @@ description: "功能上线容易展示，稳定性、风险控制和长期维护
 date: 2026-07-18
 author: "Bug1024"
 slug: "why-technical-work-is-hard-to-see"
-draft: true
+draft: false
+hideInHomepage: true
 tags:
     - 工作与系统
 ---

@@ -1,0 +1,117 @@
+topics:
+  - slug: "career-growth"
+    title: "职业成长记录"
+    label: "工作与系统"
+    type: "sequence"
+    article_count: 34
+    description: "从第一次实习到承担团队责任，整理过去十余年工作与学习中留下的记录。"
+    intro:
+      - "这些文章来自不同时期留下的学习笔记、项目记录和工作复盘。它们按经历的先后关系重新编排，记录关注点怎样从完成具体任务，逐渐扩展到系统、业务、协作和团队责任。"
+      - "这不是一套职业方法论。处在不同阶段的人，可以从与自己当前问题最接近的部分开始读。"
+    groups:
+      - name: "进入行业"
+        note: "从学生进入真实的软件团队，开始建立工作和学习的方法。"
+        articles:
+          - slug: "first-internship-notes"
+          - slug: "joining-a-new-company"
+          - slug: "ten-years-of-learning"
+          - slug: "bookmarking-is-not-learning"
+          - slug: "what-technical-depth-meant"
+      - name: "独立解决问题"
+        note: "从完成开发任务，走向处理线上故障、系统风险与现实约束。"
+        articles:
+          - slug: "first-jvm-crash"
+          - slug: "bottleneck-with-idle-resources"
+          - slug: "monitoring-is-not-a-tool"
+          - slug: "migrating-a-legacy-system"
+          - slug: "when-open-source-software-fails"
+          - slug: "what-belongs-in-a-release-checklist"
+          - slug: "what-a-technical-review-reviews"
+          - slug: "compromises-in-technical-design"
+          - slug: "dont-rush-to-criticize-legacy-systems"
+      - name: "理解业务与系统"
+        note: "技术判断离开单一的代码尺度，开始面对业务、流程、组织和历史条件。"
+        articles:
+          - slug: "from-consumer-to-enterprise-software"
+          - slug: "cost-of-customization"
+          - slug: "boundaries-of-business-first"
+          - slug: "how-long-projects-lose-control"
+          - slug: "restore-the-decision-context"
+      - name: "承担结果"
+        note: "工作对象从个人任务扩展到结果、团队、平台与价值表达。"
+        articles:
+          - slug: "from-task-to-outcome"
+          - slug: "after-becoming-a-lead"
+          - slug: "code-review-cannot-depend-on-one-person"
+          - slug: "what-i-look-for-in-interviews"
+          - slug: "platforms-need-adoption"
+          - slug: "why-technical-work-is-hard-to-see"
+          - slug: "after-several-work-reviews"
+      - name: "重新理解成长"
+        note: "当能力和责任持续增加，重新判断忙碌、产出与阶段感。"
+        articles:
+          - slug: "doing-more-is-not-producing-more"
+          - slug: "when-work-feels-stagnant"
+    related:
+      title: "同期记录"
+      note: "几篇直接写于当时的文章，保留了尚未经过重新组织的现场。"
+      articles:
+        - slug: "past-two-years"
+        - slug: "2016summary"
+        - slug: "2017-middle-summary"
+        - slug: "time-manage"
+        - slug: "grow"
+        - slug: "2017summary"
+
+  - slug: "life-stages"
+    title: "阶段记录"
+    label: "人生与时间"
+    type: "collection"
+    article_count: 7
+    description: "保留不同时期写下的个人文字，也记录城市、工作和生活发生的变化。"
+    intro:
+      - "有些文章适合在多年后重新整理，有些则应该保留写下它们时的语气。这组文字跨越了学生时期、福州、北京，以及重新开始写博客的现在。"
+      - "它们没有共同结论，只是几个阶段留下的原始切面。"
+    groups:
+      - name: "早期文字"
+        note: "尚未进入职业生活时留下的文字。"
+        articles:
+          - slug: "old-writings-2010"
+      - name: "福州到北京"
+        note: "从毕业、工作到离开福州，生活的重心开始变化。"
+        articles:
+          - slug: "past-two-years"
+          - slug: "2016summary"
+      - name: "北京第一年"
+        note: "换城市、换技术栈，也重新安排工作与生活。"
+        articles:
+          - slug: "2017-middle-summary"
+          - slug: "thought"
+          - slug: "2017summary"
+      - name: "重新开始"
+        note: "博客停更多年以后，对写作方式的一次重新说明。"
+        articles:
+          - slug: "why-i-restart"
+
+  - slug: "technical-archive"
+    title: "技术存档"
+    label: "技术余响"
+    type: "collection"
+    article_count: 6
+    description: "博客早期保留下来的技术实践与学习记录，集中存放，不再承担博客的主要方向。"
+    intro:
+      - "这些文章主要写于职业早期，记录当时遇到的问题和建立技术基础的过程。部分工具和版本已经变化，分析问题的路径仍可作为参考。"
+      - "未来这里仍可能增加少量技术文章，但只保留来自真实实践、值得长期存放的内容。"
+    groups:
+      - name: "系统与运行时"
+        note: "从网站边界到服务端进程模型。"
+        articles:
+          - slug: "web-architecture"
+          - slug: "php-fpm"
+          - slug: "php-thread-safe"
+      - name: "连接与数据"
+        note: "围绕原子操作、I/O复用和客户端连接管理的记录。"
+        articles:
+          - slug: "lua-redis"
+          - slug: "io-multiplexing"
+          - slug: "okhttp"

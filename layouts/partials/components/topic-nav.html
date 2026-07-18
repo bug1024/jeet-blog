@@ -1,0 +1,41 @@
+{{ $currentSlug := .Params.slug }}
+{{ $pages := where .Site.RegularPages "Section" "posts" }}
+{{ range $topic := .Site.Data.topics.topics }}
+    {{ if eq $topic.type "sequence" }}
+        {{ $items := slice }}
+        {{ range $groupIndex, $group := $topic.groups }}
+            {{ range $group.articles }}
+                {{ $items = $items | append (dict "slug" .slug "group" $group.name "groupIndex" (add $groupIndex 1)) }}
+            {{ end }}
+        {{ end }}
+        {{ $currentIndex := -1 }}
+        {{ range $index, $item := $items }}
+            {{ if eq $item.slug $currentSlug }}{{ $currentIndex = $index }}{{ end }}
+        {{ end }}
+        {{ if ge $currentIndex 0 }}
+            {{ $current := index $items $currentIndex }}
+            <aside class="career-article-nav" aria-label="{{ $topic.title }}阅读顺序">
+                <header>
+                    <a href="{{ printf "/topics/%s/" $topic.slug | relLangURL }}">{{ $topic.title }}</a>
+                    <span>第 {{ add $currentIndex 1 }} / {{ len $items }} 篇</span>
+                </header>
+                <div class="career-article-progress" aria-hidden="true">
+                    <span style="width: {{ div (mul (add $currentIndex 1) 100.0) (len $items) }}%"></span>
+                </div>
+                <p>阶段 {{ printf "%02d" $current.groupIndex }} · {{ $current.group }}</p>
+                <nav>
+                    {{ if gt $currentIndex 0 }}
+                        {{ $previous := index $items (sub $currentIndex 1) }}
+                        {{ $previousPage := index (where $pages "Params.slug" $previous.slug) 0 }}
+                        <a href="{{ $previousPage.RelPermalink }}"><small>上一篇</small><strong>{{ $previousPage.LinkTitle }}</strong></a>
+                    {{ else }}<span></span>{{ end }}
+                    {{ if lt $currentIndex (sub (len $items) 1) }}
+                        {{ $next := index $items (add $currentIndex 1) }}
+                        {{ $nextPage := index (where $pages "Params.slug" $next.slug) 0 }}
+                        <a href="{{ $nextPage.RelPermalink }}"><small>下一篇</small><strong>{{ $nextPage.LinkTitle }}</strong></a>
+                    {{ else }}<span></span>{{ end }}
+                </nav>
+            </aside>
+        {{ end }}
+    {{ end }}
+{{ end }}

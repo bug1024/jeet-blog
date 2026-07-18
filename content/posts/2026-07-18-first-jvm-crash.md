@@ -4,7 +4,8 @@ description: "一次线上服务反复崩溃的排查记录：从止损、JVM调
 date: 2026-07-18
 author: "Bug1024"
 slug: "first-jvm-crash"
-draft: true
+draft: false
+hideInHomepage: true
 tags:
     - 技术实践
     - Java

@@ -4,7 +4,8 @@ description: "从面向消费者的系统转向企业软件后，我对系统复
 date: 2026-07-18
 author: "Bug1024"
 slug: "from-consumer-to-enterprise-software"
-draft: true
+draft: false
+hideInHomepage: true
 tags:
     - 工作与系统
     - 技术实践

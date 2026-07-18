@@ -4,7 +4,8 @@ description: "一次企业系统定制化改造带来的不只是开发工时，
 date: 2026-07-18
 author: "Bug1024"
 slug: "cost-of-customization"
-draft: true
+draft: false
+hideInHomepage: true
 tags:
     - 工作与系统
     - 技术实践

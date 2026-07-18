@@ -4,7 +4,8 @@ description: "技术平台除了建设功能，还要处理接入成本、默认
 date: 2026-07-18
 author: "Bug1024"
 slug: "platforms-need-adoption"
-draft: true
+draft: false
+hideInHomepage: true
 tags:
     - 工作与系统
     - 技术实践

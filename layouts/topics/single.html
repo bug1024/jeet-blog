@@ -1,0 +1,79 @@
+{{ define "main" }}
+    {{ $topicSlug := .Params.topic }}
+    {{ $matches := where .Site.Data.topics.topics "slug" $topicSlug }}
+    {{ $topic := index $matches 0 }}
+    {{ $pages := where .Site.RegularPages "Section" "posts" }}
+    {{ $groupCount := len $topic.groups }}
+
+    <main class="main career-page topic-detail" id="main">
+        <div class="career-shell">
+            <header class="career-head">
+                <div class="career-head-copy">
+                    <p class="editorial-eyebrow"><a href="{{ "/topics/" | relLangURL }}">专题</a> · {{ printf "%02d" $topic.article_count }} 篇</p>
+                    <h1>{{ $topic.title }}</h1>
+                    <p>{{ $topic.description }}</p>
+                </div>
+                <aside class="career-scale" aria-label="专题分组数量">
+                    <strong>{{ printf "%02d" $groupCount }}</strong>
+                    <span>GROUPS</span>
+                </aside>
+            </header>
+
+            <div class="career-intro">
+                {{ range $topic.intro }}<p>{{ . }}</p>{{ end }}
+            </div>
+
+            <div class="career-stages">
+                {{ $articleNumber := 0 }}
+                {{ range $groupIndex, $group := $topic.groups }}
+                    <section class="career-stage" id="group-{{ add $groupIndex 1 }}">
+                        <header class="career-stage-head">
+                            <div class="career-stage-index">
+                                <span>{{ printf "%02d" (add $groupIndex 1) }}</span>
+                                <i aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <h2>{{ $group.name }}</h2>
+                                <p>{{ $group.note }}</p>
+                            </div>
+                        </header>
+                        <ol class="career-articles">
+                            {{ range $group.articles }}
+                                {{ $articleNumber = add $articleNumber 1 }}
+                                {{ $pageMatches := where $pages "Params.slug" .slug }}
+                                {{ with index $pageMatches 0 }}
+                                    <li>
+                                        <span>{{ printf "%02d" $articleNumber }}</span>
+                                        <a href="{{ .RelPermalink }}">
+                                            <strong>{{ .LinkTitle }}</strong>
+                                            <small>{{ .Description }}</small>
+                                        </a>
+                                        <span aria-hidden="true">→</span>
+                                    </li>
+                                {{ end }}
+                            {{ end }}
+                        </ol>
+                    </section>
+                {{ end }}
+            </div>
+
+            {{ with $topic.related }}
+                <section class="topic-related">
+                    <header>
+                        <p class="editorial-eyebrow">补充阅读</p>
+                        <h2>{{ .title }}</h2>
+                        <p>{{ .note }}</p>
+                    </header>
+                    <ol>
+                        {{ range .articles }}
+                            {{ $pageMatches := where $pages "Params.slug" .slug }}
+                            {{ with index $pageMatches 0 }}
+                                <li><a href="{{ .RelPermalink }}"><span>{{ .Date.Format "2006" }}</span><strong>{{ .LinkTitle }}</strong><i aria-hidden="true">→</i></a></li>
+                            {{ end }}
+                        {{ end }}
+                    </ol>
+                </section>
+            {{ end }}
+        </div>
+    </main>
+{{ end }}

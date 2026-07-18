@@ -4,7 +4,8 @@ description: "代码完成只是上线准备的一部分。配置、数据、依
 date: 2026-07-18
 author: "Bug1024"
 slug: "what-belongs-in-a-release-checklist"
-draft: true
+draft: false
+hideInHomepage: true
 tags:
     - 技术实践
     - 工作与系统

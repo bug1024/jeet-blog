@@ -4,7 +4,8 @@ description: "技术评审除了检查方案，还承担需求确认、信息同
 date: 2026-07-18
 author: "Bug1024"
 slug: "what-a-technical-review-reviews"
-draft: true
+draft: false
+hideInHomepage: true
 tags:
     - 工作与系统
 ---

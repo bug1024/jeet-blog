@@ -4,7 +4,8 @@ description: "长周期项目通常不是突然延期，而是在需求变化、
 date: 2026-07-18
 author: "Bug1024"
 slug: "how-long-projects-lose-control"
-draft: true
+draft: false
+hideInHomepage: true
 tags:
     - 工作与系统
 ---
