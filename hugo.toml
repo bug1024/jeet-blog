@@ -1,58 +1,217 @@
+##########################################
+# Site Settings
+
 baseURL = "https://bug1024.com/"
+title = "Bug1024"
 languageCode = "zh-cn"
-defaultContentLanguage = "zh"
 hasCJKLanguage = true
 timeZone = "Asia/Shanghai"
-theme = "terminal"
-pagination.pagerSize = 10
+copyright = "© 2026 Bug1024"
+
+theme = "meme"
+
+defaultContentLanguage = "zh-cn"
+defaultContentLanguageInSubdir = false
+
+titleCaseStyle = "none"
+pluralizeListTitles = false
+summaryLength = 70
+enableEmoji = false
+footnoteReturnLinkContents = "↩"
 enableRobotsTXT = true
-summaryLength = 90
 
-[outputs]
-home = ["HTML", "RSS"]
-
+# URL structure（旧文链接保持不变）
 [permalinks.page]
-posts = "/:year/:month/:day/:slug/"
+    posts = "/:year/:month/:day/:slug/"
+[permalinks]
+    tags = "/tags/:slug/"
 
 [taxonomies]
-tag = "tags"
+    tag = "tags"
 
-[markup.goldmark.renderer]
-unsafe = true
+[frontmatter]
+    lastmod = ["lastmod", ":git", ":fileModTime", ":default"]
+
+[pagination]
+    pagerSize = 10
+    path = 'page'
+
+[markup]
+    [markup.goldmark]
+        [markup.goldmark.extensions]
+            definitionList = true
+            footnote = true
+            linkify = true
+            strikethrough = true
+            table = true
+            taskList = true
+            typographer = true
+        [markup.goldmark.parser]
+            attribute = true
+            autoHeadingID = true
+            autoHeadingIDType = "github"
+        [markup.goldmark.renderer]
+            hardWraps = false
+            unsafe = true
+            xHTML = false
+    [markup.highlight]
+        codeFences = true
+        guessSyntax = false
+        lineNos = true
+        lineNumbersInTable = true
+        noClasses = false
+    [markup.tableOfContents]
+        startLevel = 2
+        endLevel = 6
+        ordered = true
+
+[minify.tdewolff.html]
+    keepWhitespace = false
+
+[related]
+    threshold = 80
+    includeNewer = true
+    toLower = true
+    [[related.indices]]
+        name = "tags"
+        weight = 95
+    [[related.indices]]
+        name = "date"
+        weight = 10
+        pattern = "2006"
+
+# Feed 与搜索索引
+[mediaTypes."application/atom+xml"]
+    suffixes = ["xml"]
+
+[outputFormats.SectionsAtom]
+    mediaType = "application/atom+xml"
+    baseName = "atom"
+
+[outputFormats.SectionsRSS]
+    mediaType = "application/rss+xml"
+    baseName = "rss"
+
+[outputFormats.SearchIndex]
+    mediaType = "application/json"
+    baseName = "search"
+
+[outputs]
+    page = ["HTML"]
+    home = ["HTML", "RSS", "SectionsAtom", "SectionsRSS", "SearchIndex"]
+    section = ["HTML"]
+    taxonomy = ["HTML"]
+    term = ["HTML"]
+
+[services.rss]
+    limit = -1
+
+##########################################
+# Menu Settings
+
+[menu]
+    [[menu.main]]
+        pageref = "/posts/"
+        name = "文章"
+        weight = 1
+        pre = "internal"
+        post = "archive"
+    [[menu.main]]
+        pageref = "/tags/"
+        name = "标签"
+        weight = 2
+        pre = "internal"
+        post = "tags"
+    [[menu.main]]
+        pageref = "/about/"
+        name = "关于"
+        weight = 3
+        pre = "internal"
+        post = "user-circle"
+    [[menu.main]]
+        weight = 4
+        identifier = "theme-switcher"
+    [[menu.main]]
+        weight = 5
+        identifier = "search"
+        post = "search"
+
+##########################################
+# Theme Settings
 
 [params]
-contentTypeName = "posts"
-showMenuItems = 3
-centerTheme = true
-fullWidthTheme = false
+    # Header
+    enableHeader = true
+    displayHeaderInHome = true
+    headerBackground = "none"
+    headerLayout = "flex"
+    enableNavToggle = true
+    siteBrandSVG = false
+    siteBrandSVGWidth = 250
+    siteBrandSVGHeight = 100
+    siteBrandSVGFill = "#fff"
+    siteBrandFontSize = 1.2
+    siteBrandFontColor = "var(--color-contrast-high)"
+    homeLinksPadding = 1
+    fofPoster = ""
 
-[languages]
-  [languages.zh]
-    title = "Bug1024"
-    copyright = "© 2026 Bug1024"
-    [languages.zh.params]
-      subtitle = "十年后端，现在 All in AI。写 AI 工程实践、平台架构与工程师成长。"
-      keywords = "AI,LLM,Agent,后端,架构,工程师成长"
-      menuMore = "更多"
-      readMore = "阅读全文"
-      readOtherPosts = "其他文章"
-      newerPosts = "较新的文章"
-      olderPosts = "较早的文章"
-      missingContentMessage = "页面不存在……"
-      missingBackButtonLabel = "回到首页"
-      [languages.zh.params.logo]
-        logoText = "Bug1024"
-        logoHomeLink = "/"
-    [languages.zh.menu]
-      [[languages.zh.menu.main]]
-        identifier = "posts"
-        name = "文章"
-        url = "/posts/"
-      [[languages.zh.menu.main]]
-        identifier = "tags"
-        name = "标签"
-        url = "/tags/"
-      [[languages.zh.menu.main]]
-        identifier = "about"
-        name = "关于"
-        url = "/about/"
+    # Menu Bar
+    enableMenu = true
+    displayMenuInHome = true
+
+    # Homepage
+    homeLayout = "posts"
+
+    # Site Info
+    siteLogo = "/img/avatar.jpg"
+    siteDescription = "写技术，也写技术之外。记录变化、选择与日常生活中值得反复想的事。"
+    siteCreatedTime = "2016-12-12T00:00:00+08:00"
+
+    # Category（不用 categories，只保留 tags）
+    categoryBy = "sections"
+
+    # Tags Page
+    enableTagCloud = true
+    fontUnit = "em"
+    largestFontSize = 2
+    smallestFontSize = 1
+
+    # List Page
+    listWidth = 36
+    displayListTitle = true
+    listDateFormat = "1月2日"
+    listDatePosition = "right"
+    groupByMonth = false
+    chineseZodiac = false
+    i18nYear = true
+    i18nMonth = false
+
+    displayTaxonomyTermCount = true
+
+    mainSections = ["posts"]
+
+    # Atom & RSS（全文输出）
+    includeContent = true
+
+    # Dark Mode
+    enableDarkMode = true
+    defaultTheme = "light"
+    hideThemeToggle = false
+    overrideSystemPreferences = false
+
+    # Comments（giscus，点击加载）
+    enableComments = true
+    autoLoadComments = false
+    enableGiscus = true
+    giscusRepo = "bug1024/jeet-blog"
+    giscusRepoId = "MDEwOlJlcG9zaXRvcnk4MzI5MzE0Mw=="
+    giscusCategory = "Announcements"
+    giscusCategoryId = "DIC_kwDOBPbz184DBaKE"
+    giscusMapping = "pathname"
+    giscusStrict = false
+    giscusReactionsEnabled = true
+    giscusEmitMetaData = false
+    giscusInputPosition = "bottom"
+    giscusTheme = "light"
+    giscusThemeDark = "dark"
+    giscusLang = "zh-CN"
