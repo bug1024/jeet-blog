@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 80" role="img" aria-labelledby="title desc">
+  <title id="title">BUG1024</title>
+  <desc id="desc">BUG1024 反白几何字标，G 的右侧有一个钢蓝色错位模块</desc>
+  <g fill="none" stroke="#EDF2F1" stroke-width="9" stroke-linecap="square" stroke-linejoin="round">
+    <path d="M8 10v60m0-60h20c10 0 17 5 17 15s-7 15-17 15H8m20 0c11 0 19 5 19 15s-8 15-19 15H8"/>
+    <path d="M66 10v43c0 11 6 17 17 17s17-6 17-17V10"/>
+    <path d="M160 25c-1-10-7-15-18-15h-4c-12 0-19 7-19 19v22c0 12 7 19 19 19h4c12 0 19-7 19-19V42h-18"/>
+    <path d="M184 19l13-9v60"/>
+    <rect x="220" y="10" width="39" height="60" rx="15"/>
+    <path d="M279 27c0-11 7-17 18-17h1c11 0 18 6 18 16 0 8-4 13-11 19l-27 25h39"/>
+    <path d="M371 70V10l-34 43h42M371 10"/>
+  </g>
+  <rect x="168" y="37.5" width="15" height="9" rx="1" fill="#8EAFBA"/>
+</svg>

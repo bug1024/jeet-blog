@@ -1,0 +1,51 @@
+{{ define "main" }}
+    {{ if and (eq .Kind "section") .Content }}
+        {{ partial "pages/post.html" . }}
+    {{ else }}
+        <main class="main list editorial-list" id="main">
+            <div class="main-inner">
+                <header class="editorial-page-head">
+                    <div>
+                        <p class="editorial-eyebrow">{{ if eq .Kind "term" }}主题索引{{ else }}写作存档{{ end }}</p>
+                        <h1 class="list-title">{{ .Title }}</h1>
+                    </div>
+                    <p class="editorial-page-note">
+                        {{ if eq .Kind "term" }}关于“{{ .Title }}”的文章，共 {{ len .Pages }} 篇。{{ else }}按时间存放写过的文字，新的在前，旧的也保留。{{ end }}
+                    </p>
+                    <span class="editorial-blue-block" aria-hidden="true"></span>
+                </header>
+
+                {{ .Scratch.Delete "pages" }}
+                {{ if eq .Kind "section" }}
+                    {{ $sectionPage := .CurrentSection }}
+                    {{ range .Site.RegularPages }}
+                        {{ if .IsDescendant $sectionPage }}{{ $.Scratch.Add "pages" (slice .) }}{{ end }}
+                    {{ end }}
+                {{ else if eq .Kind "term" }}
+                    {{ .Scratch.Set "pages" .Pages }}
+                {{ end }}
+
+                {{ $pages := .Scratch.Get "pages" }}
+                <div class="editorial-archive">
+                    {{ range $groupIndex, $group := $pages.GroupByDate "2006" }}
+                        <section class="archive-year-group{{ if eq $groupIndex 0 }} is-latest{{ end }}">
+                            <header class="archive-year">
+                                <h2>{{ $group.Key }}</h2>
+                                <span>{{ len $group.Pages }} 篇</span>
+                            </header>
+                            <ol class="archive-entries">
+                                {{ range $group.Pages }}
+                                    <li>
+                                        <time datetime="{{ .PublishDate.Format "2006-01-02" }}">{{ .PublishDate.Format "01 / 02" }}</time>
+                                        <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+                                        {{ with .Params.tags }}<span class="archive-tag">{{ index . 0 }}</span>{{ end }}
+                                    </li>
+                                {{ end }}
+                            </ol>
+                        </section>
+                    {{ end }}
+                </div>
+            </div>
+        </main>
+    {{ end }}
+{{ end }}

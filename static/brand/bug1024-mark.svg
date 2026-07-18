@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 64" role="img" aria-labelledby="title desc">
+  <title id="title">Bug1024 标志</title>
+  <desc id="desc">一个被钢蓝色错位模块打断的几何字母 G</desc>
+  <path d="M50 20c-2-8-8-12-17-12h-3C17 8 10 16 10 29v7c0 13 7 20 20 20h4c12 0 19-7 19-19v-7H35" fill="none" stroke="#111A21" stroke-width="8" stroke-linecap="square" stroke-linejoin="round"/>
+  <rect x="59" y="26" width="11" height="8" rx="1" fill="#365B6D"/>
+</svg>

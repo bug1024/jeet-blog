@@ -20,9 +20,9 @@ enableEmoji = false
 footnoteReturnLinkContents = "↩"
 enableRobotsTXT = true
 
-# URL structure（旧文链接保持不变）
+# 文章统一使用稳定、无日期的 URL
 [permalinks.page]
-    posts = "/:year/:month/:day/:slug/"
+    posts = "/posts/:slug/"
 [permalinks]
     tags = "/tags/:slug/"
 
@@ -163,9 +163,14 @@ enableRobotsTXT = true
     homeLayout = "posts"
 
     # Site Info
-    siteLogo = "/img/avatar.jpg"
-    siteDescription = "写技术，也写技术之外。记录变化、选择与日常生活中值得反复想的事。"
+    siteLogo = "/icons/web-app-manifest-512x512.png"
+    siteDescription = "工作中的系统与人，生活里的选择与时间。偶尔也谈技术。"
     siteCreatedTime = "2016-12-12T00:00:00+08:00"
+
+    # Brand metadata for search engines and social sharing
+    jsonLD = true
+    openGraph = true
+    twitterCards = true
 
     # Category（不用 categories，只保留 tags）
     categoryBy = "sections"

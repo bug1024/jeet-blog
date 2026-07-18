@@ -1,0 +1,78 @@
+<main class="main single article-page" id="main">
+    <div class="main-inner">
+        {{ $attrs := partial "utils/data-attributes.html" . }}
+        {{ $postNumber := 0 }}
+        {{ $allPosts := sort (where .Site.RegularPages "Section" "posts") "Date" "asc" }}
+        {{ range $index, $post := $allPosts }}
+            {{ if eq $post.RelPermalink $.RelPermalink }}{{ $postNumber = add $index 1 }}{{ end }}
+        {{ end }}
+
+        <article class="content post h-entry article-post"
+        {{- with .Params.languageCode }} lang="{{ . }}"{{ end }}
+        {{- if $attrs.smallCaps }} data-small-caps="true"{{ end }}
+        {{- with $attrs.align }} data-align="{{ . }}"{{ end }}
+        {{- with $attrs.type }} data-type="{{ . }}"{{ end }}
+        {{- with $attrs.layout }} data-layout="{{ . }}"{{ end }}
+        {{- if $attrs.indent }} data-indent="true"{{ end }}
+        {{- if $attrs.tocNum }} data-toc-num="true"{{ end }}>
+
+            <header class="article-hero">
+                <div class="article-hero-copy">
+                    <div class="article-kicker">
+                        {{ with .Params.tags }}<a href="{{ printf "/tags/%s/" (urlize (index . 0)) | relLangURL }}">{{ index . 0 }}</a>{{ else }}<span>文章</span>{{ end }}
+                        <span class="article-kicker-line" aria-hidden="true"></span>
+                        <time datetime="{{ .PublishDate.Format "2006-01-02" }}">{{ .PublishDate.Format "2006 / 01 / 02" }}</time>
+                    </div>
+                    <h1 class="post-title p-name">{{ (partial "utils/title.html" (dict "$" $ "title" $.Title)).htmlTitle }}</h1>
+                    {{ with .Params.subtitle }}
+                        {{- $raw := . -}}
+                        <div class="post-subtitle p-name">{{ partial "utils/markdownify.html" (dict "$" $ "raw" $raw "isContent" false) }}</div>
+                    {{ end }}
+                    {{ with .Params.description }}
+                        {{- $raw := . -}}
+                        <div class="post-description p-summary">{{ partial "utils/markdownify.html" (dict "$" $ "raw" $raw "isContent" false) }}</div>
+                    {{ end }}
+                </div>
+
+                <aside class="article-coordinate" aria-label="文章坐标">
+                    <span class="article-coordinate-type">POST</span>
+                    <strong>{{ printf "%03d" $postNumber }}</strong>
+                    <div class="article-coordinate-meta">
+                        <time datetime="{{ .PublishDate.Format "2006-01-02" }}">
+                            <span>{{ .PublishDate.Format "2006" }}</span>
+                            <span>{{ .PublishDate.Format "01 / 02" }}</span>
+                        </time>
+                        <span>{{ .ReadingTime }} 分钟阅读</span>
+                    </div>
+                </aside>
+            </header>
+
+            {{ $enableTOC := .Params.toc | default .Site.Params.enableTOC -}}
+            {{- if $enableTOC -}}{{- partial "utils/toc.html" . -}}{{- end -}}
+
+            <div class="post-body e-content article-body">
+                {{ partial "utils/content.html" . }}
+            </div>
+
+            <footer class="article-finish">
+                <span>POST {{ printf "%03d" $postNumber }}</span>
+                <time datetime="{{ .PublishDate.Format "2006-01-02" }}">{{ .PublishDate.Format "2006 / 01 / 02" }}</time>
+            </footer>
+
+            {{ partial "components/post-copyright.html" . }}
+        </article>
+
+        {{ if and .Site.Params.enableGoogleAdUnits (eq hugo.Environment "production") -}}
+            {{ partial "third-party/google-adsense-unit.html" . }}
+        {{- end }}
+        {{ partial "components/post-updated-badge.html" . }}
+        {{ partial "components/post-gitinfo.html" . }}
+        {{ partial "components/post-share.html" . }}
+        {{ partial "components/related-posts.html" . }}
+        {{ partial "components/post-tags.html" . }}
+        {{ partial "components/minimal-footer.html" . }}
+        {{ partial "components/minimal-footer-about.html" . }}
+        {{ partial "components/post-nav.html" . }}
+        {{ partial "components/comments.html" . }}
+    </div>
+</main>

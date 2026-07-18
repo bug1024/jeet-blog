@@ -1,0 +1,48 @@
+{{ define "main" }}
+<main class="main single about-page" id="main">
+    <div class="main-inner">
+        <header class="editorial-page-head about-page-head">
+            <div>
+                <p class="editorial-eyebrow">关于本站与我</p>
+                <h1 class="post-title">我所经历<br>与关心的</h1>
+            </div>
+            <p class="editorial-page-note">一个人如何理解复杂的系统，又如何在其中保留自己的判断。</p>
+            <span class="editorial-blue-block" aria-hidden="true"></span>
+        </header>
+        <div class="about-layout">
+            <aside class="about-journey" aria-label="福州、北京、南京三段人生轨迹">
+                <ol>
+                    <li class="journey-origin">
+                        <span class="journey-node" aria-hidden="true"></span>
+                        <div><time>2010—2016</time><strong>福州</strong><em>出发</em></div>
+                    </li>
+                    <li class="journey-building">
+                        <span class="journey-node" aria-hidden="true"></span>
+                        <div><time>2016—2023</time><strong>北京</strong><em>建立</em></div>
+                    </li>
+                    <li class="journey-present">
+                        <span class="journey-node" aria-hidden="true"></span>
+                        <div><time>2023—至今</time><strong>南京</strong><em>自知</em></div>
+                    </li>
+                </ol>
+                <div class="about-writing-since"><span>2016—NOW</span><small>持续记录</small></div>
+                <nav class="about-directory" aria-label="本页目录">
+                    <span>本页</span>
+                    <a href="#经历"><small>01</small>经历</a>
+                    <a href="#工作与系统"><small>02</small>工作与系统</a>
+                    <a href="#生活与时间"><small>03</small>生活与时间</a>
+                    <a href="#关于写作"><small>04</small>关于写作</a>
+                </nav>
+            </aside>
+            <article class="content post about-article">
+                <div class="post-body e-content">{{ .Content }}</div>
+            </article>
+        </div>
+        <nav class="about-next" aria-label="继续阅读">
+            <span>继续阅读</span>
+            <a href="{{ "/tags/有感而发/" | relLangURL }}">人生与时间</a>
+            <a href="{{ "/posts/" | relLangURL }}">全部文章 <span aria-hidden="true">→</span></a>
+        </nav>
+    </div>
+</main>
+{{ end }}

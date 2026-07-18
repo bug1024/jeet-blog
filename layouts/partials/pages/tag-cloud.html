@@ -1,0 +1,25 @@
+<main class="main list editorial-list tag-index" id="main">
+    <div class="main-inner">
+        <header class="editorial-page-head">
+            <div>
+                <p class="editorial-eyebrow">内容坐标</p>
+                <h1 class="list-title">{{ .Title }}</h1>
+            </div>
+            <p class="editorial-page-note">标签不是分类柜，而是这些年反复关心过的事。</p>
+            <span class="editorial-blue-block" aria-hidden="true"></span>
+        </header>
+        <div class="tag-index-grid">
+            {{ range $index, $term := .Data.Terms.ByCount }}
+                {{ $page := $.Site.GetPage (printf "/%s/%s" $.Type $term.Name) }}
+                {{ with $page }}
+                    <a class="tag-index-item" href="{{ .RelPermalink }}">
+                        <span class="tag-index-order">{{ printf "%02d" (add $index 1) }}</span>
+                        <strong>{{ .LinkTitle | default .Data.Term }}</strong>
+                        <span class="tag-index-line" aria-hidden="true"></span>
+                        <span class="tag-index-count">{{ $term.Count }} 篇</span>
+                    </a>
+                {{ end }}
+            {{ end }}
+        </div>
+    </div>
+</main>

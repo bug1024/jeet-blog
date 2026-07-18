@@ -1,0 +1,24 @@
+{
+  "name": "Bug1024",
+  "short_name": "Bug1024",
+  "description": "记人与事，也谈工作与生活。",
+  "icons": [
+    {
+      "src": "./icons/web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icons/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "theme_color": "#F8FAF9",
+  "background_color": "#F8FAF9",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "start_url": "./"
+}
