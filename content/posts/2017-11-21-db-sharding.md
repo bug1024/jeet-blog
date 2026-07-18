@@ -6,6 +6,7 @@ author:     "Bug1024"
 tags:
     - MySQL
 slug: "db-sharding"
+draft: true
 ---
 
 众所周知，当业务量达到一定程度时，单库单表已经无法hold住压力，这个时候往往需要根据业务进行分库分表。

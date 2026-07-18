@@ -6,6 +6,7 @@ author:     "Bug1024"
 tags:
     - PHP
 slug: "php-extension"
+draft: true
 ---
 
 ## PHP生命周期

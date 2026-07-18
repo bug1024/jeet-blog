@@ -7,6 +7,7 @@ tags:
     - Linux
     - Shell
 slug: "shell-sheet"
+draft: true
 ---
 
 ## 内置变量

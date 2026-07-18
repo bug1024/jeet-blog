@@ -6,6 +6,7 @@ author:     "Bug1024"
 tags:
     - MySQL
 slug: "mysql-innodb"
+draft: true
 ---
 
 ## MySQL实例

@@ -6,6 +6,7 @@ author:     "Bug1024"
 tags:
     - Java
 slug: "java-collection-map"
+draft: true
 ---
 
 ## 关系
@@ -55,4 +56,3 @@ slug: "java-collection-map"
  - 如果涉及到堆栈，队列等操作，应该考虑用List，对于需要快速插入，删除元素，应该使用LinkedList，如果需要快速随机访问元素，应该使用ArrayList。
  - 如果程序在单线程环境中，或者访问仅仅在一个线程中进行，考虑非同步的类，其效率较高，如果多个线程可能同时操作一个类，应该使用同步的类。
  - 要特别注意对哈希表的操作，作为key的对象要正确复写equals和hashCode方法。
-

@@ -6,6 +6,7 @@ author:     "Bug1024"
 tags:
     - Java
 slug: "mybatis-demo"
+draft: true
 ---
 
 ## 文件结构

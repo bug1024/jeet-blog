@@ -6,6 +6,7 @@ author:     "Bug1024"
 tags:
     - MySQL
 slug: "mysql-data-type"
+draft: true
 ---
 
 ## 前言
@@ -36,5 +37,4 @@ slug: "mysql-data-type"
 |TIMESTAMP        |[1970-01-01 08:00:01, 2038-01-19 11:14:07]                                         | 4bytes                    |5.6.4开始 4 bytes + fractional seconds storage|
 
 备注：5.6.4开始，时间类型支持微秒(最大6位)，所占的存储空间原来基础上加上微秒部分
-
 

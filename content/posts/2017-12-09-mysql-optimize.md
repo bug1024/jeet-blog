@@ -6,6 +6,7 @@ author:     "Bug1024"
 tags:
     - MySQL
 slug: "mysql-optimize"
+draft: true
 ---
 
 ## 硬件层相关优化

@@ -6,6 +6,7 @@ author:     "Bug1024"
 tags:
     - IDE
 slug: "intelllij-idea-keymap"
+draft: true
 ---
 # IntelliJ IDEA For Mac 快捷键
 
@@ -189,4 +190,3 @@ slug: "intelllij-idea-keymap"
 
 #### 十二、Tips
 - 运行单个文件 File-Project Structure-Modules中把你代码所在文件夹选为Sources然后确定
-

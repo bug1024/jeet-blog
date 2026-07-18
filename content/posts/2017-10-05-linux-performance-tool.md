@@ -7,6 +7,7 @@ author:     "Bug1024"
 tags:
     - Linux
 slug: "linux-performance-tool"
+draft: true
 ---
 
 ## 监控指标

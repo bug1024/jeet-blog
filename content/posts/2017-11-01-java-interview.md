@@ -6,6 +6,7 @@ author:     "Bug1024"
 tags:
     - Java
 slug: "java-interview"
+draft: true
 ---
 
 ## 基本概念

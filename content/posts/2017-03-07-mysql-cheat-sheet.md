@@ -6,6 +6,7 @@ author:     "Bug1024"
 tags:
     - MySQL
 slug: "mysql-cheat-sheet"
+draft: true
 ---
 
 ## 创建表

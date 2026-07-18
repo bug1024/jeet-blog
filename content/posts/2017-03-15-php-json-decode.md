@@ -6,6 +6,7 @@ author:     "Bug1024"
 tags:
     - PHP
 slug: "php-json-decode"
+draft: true
 ---
 
 判断一个字符串是否是合法的json串通常有以下两种方式
@@ -35,5 +36,4 @@ slug: "php-json-decode"
  - 所有 JSON 都是合法的 JS 脚本（反之非必然），但在 JS 中为了安全考虑通常是使用 JSON.parse() 来解析成 JS 对象
 
 JSON 的值通常有三种类型：简单值(字符串, 数字, 布尔, NULL), 对象，数组，其中NULL解码后仍是NULL，这也是不推荐使用方法1的原因
-
 

@@ -7,6 +7,7 @@ tags:
     - Java
     - Spring
 slug: "spring-annotation"
+draft: true
 ---
 
 ## Spring简介
@@ -166,4 +167,3 @@ slug: "spring-annotation"
 
 ## 注解关系图
 ![关系图](http://bug1024.com/img/annotation.jpg)
-

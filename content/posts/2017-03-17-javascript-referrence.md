@@ -6,6 +6,7 @@ author:     "Bug1024"
 tags:
     - JavaScript
 slug: "javascript-referrence"
+draft: true
 ---
 
 > 为规范前端开发代码，提高代码质量，特制定此文档，其中**声明**，**安全**和**分号**这三节是必须执行的，组件类必须遵循**注释规范**。
@@ -1107,4 +1108,3 @@ slug: "javascript-referrence"
 - [innerHTML vs textContent for script text](http://jsperf.com/innerhtml-vs-textcontent-for-script-text)
 - [Long String Concatenation](http://jsperf.com/ya-string-concat)
 - Loading...
-
