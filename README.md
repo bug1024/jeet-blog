@@ -1,9 +1,11 @@
 # Bug1024 的博客
 
-Hugo + PaperMod，GitHub Actions 自动部署到 GitHub Pages。
+Hugo + Meme，GitHub Actions 自动部署到 GitHub Pages。
 访问地址：https://bug1024.com
 
 ## 写作
+
+Codex 创建或修改文章前应先读取 [`docs/content/article-authoring.md`](docs/content/article-authoring.md)。
 
 ```bash
 hugo new content/posts/YYYY-MM-DD-my-topic.md   # 新建文章（自动生成 slug，写完把 draft 改为 false）

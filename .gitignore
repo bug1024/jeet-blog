@@ -1,5 +1,15 @@
 .DS_Store
+
+# Editor temporary files
+*.swp
+*.swo
 *.swap
+*~
+
+# Hugo generated files
 public/
 resources/
 .hugo_build.lock
+
+# Local agent working files
+.superpowers/
