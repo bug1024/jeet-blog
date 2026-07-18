@@ -146,6 +146,9 @@ enableRobotsTXT = true
 # Theme Settings
 
 [params]
+    # Baidu Analytics（仅在 production 环境加载）
+    baiduAnalyticsId = "168394afd624334a34743e979ca01aef"
+
     # Header
     enableHeader = true
     displayHeaderInHome = true
