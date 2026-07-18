@@ -1,16 +1,15 @@
 baseURL = "https://bug1024.com/"
-title = "Bug1024"
-theme = "PaperMod"
 languageCode = "zh-cn"
 defaultContentLanguage = "zh"
 hasCJKLanguage = true
-paginate = 10
+timeZone = "Asia/Shanghai"
+theme = "terminal"
+pagination.pagerSize = 10
 enableRobotsTXT = true
 summaryLength = 90
-copyright = "Bug1024"
 
 [outputs]
-home = ["HTML", "RSS", "JSON"]
+home = ["HTML", "RSS"]
 
 [permalinks.page]
 posts = "/:year/:month/:day/:slug/"
@@ -18,48 +17,42 @@ posts = "/:year/:month/:day/:slug/"
 [taxonomies]
 tag = "tags"
 
+[markup.goldmark.renderer]
+unsafe = true
+
 [params]
-env = "production"
-author = "Bug1024"
-description = "十年后端，现在 All in AI。写 AI 工程实践、平台架构与工程师成长。"
-defaultTheme = "auto"
-ShowReadingTime = true
-ShowPostNavLinks = true
-ShowBreadCrumbs = true
-ShowCodeCopyButtons = true
-ShowToc = true
-TocOpen = false
-ShowShareButtons = false
-comments = true
+contentTypeName = "posts"
+showMenuItems = 3
+centerTheme = true
+fullWidthTheme = false
 
-[params.homeInfoParams]
-Title = "Bug1024"
-Content = "十年后端，现在 All in AI。这里记录我的 AI 工程实践、平台架构思考与工程师成长。每月一篇，宁缺毋滥。"
-
-[[params.socialIcons]]
-name = "github"
-url = "https://github.com/bug1024"
-
-[[params.socialIcons]]
-name = "rss"
-url = "https://bug1024.com/index.xml"
-
-[[menu.main]]
-name = "文章"
-url = "/posts/"
-weight = 1
-
-[[menu.main]]
-name = "标签"
-url = "/tags/"
-weight = 2
-
-[[menu.main]]
-name = "搜索"
-url = "/search/"
-weight = 3
-
-[[menu.main]]
-name = "关于"
-url = "/about/"
-weight = 4
+[languages]
+  [languages.zh]
+    title = "Bug1024"
+    copyright = "© 2026 Bug1024"
+    [languages.zh.params]
+      subtitle = "十年后端，现在 All in AI。写 AI 工程实践、平台架构与工程师成长。"
+      keywords = "AI,LLM,Agent,后端,架构,工程师成长"
+      menuMore = "更多"
+      readMore = "阅读全文"
+      readOtherPosts = "其他文章"
+      newerPosts = "较新的文章"
+      olderPosts = "较早的文章"
+      missingContentMessage = "页面不存在……"
+      missingBackButtonLabel = "回到首页"
+      [languages.zh.params.logo]
+        logoText = "Bug1024"
+        logoHomeLink = "/"
+    [languages.zh.menu]
+      [[languages.zh.menu.main]]
+        identifier = "posts"
+        name = "文章"
+        url = "/posts/"
+      [[languages.zh.menu.main]]
+        identifier = "tags"
+        name = "标签"
+        url = "/tags/"
+      [[languages.zh.menu.main]]
+        identifier = "about"
+        name = "关于"
+        url = "/about/"
