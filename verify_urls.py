@@ -8,6 +8,7 @@ import sys
 missing = []
 seen = {}
 duplicates = []
+published = 0
 posts = sorted(
     path for path in glob.glob("content/posts/*.md")
     if os.path.basename(path) != "_index.md"
@@ -23,6 +24,10 @@ for f in posts:
     if slug in seen:
         duplicates.append((slug, seen[slug], f))
     seen[slug] = f
+    draft = re.search(r'^draft:\s*true\s*$', frontmatter, re.MULTILINE | re.IGNORECASE)
+    if draft:
+        continue
+    published += 1
     path = os.path.join("public", "posts", slug, "index.html")
     if not os.path.exists(path):
         missing.append(path)
@@ -38,4 +43,7 @@ if missing:
     for p in missing:
         print(" ", p)
     sys.exit(1)
-print(f"OK: 全部 {len(posts)} 篇文章使用 /posts/:slug/，且 slug 唯一")
+print(
+    f"OK: 全部 {len(posts)} 篇文章使用 /posts/:slug/，且 slug 唯一；"
+    f"已验证 {published} 篇非草稿文章的构建产物"
+)
