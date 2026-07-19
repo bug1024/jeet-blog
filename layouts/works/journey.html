@@ -3,24 +3,26 @@
 <main class="main journey-work" id="main" data-journey>
     <canvas class="journey-canvas" data-journey-canvas aria-hidden="true"></canvas>
 
-    <div class="journey-hud" data-journey-hud aria-hidden="true">
-        <span data-hud-coord></span>
-        <span data-hud-alt></span>
-        <span data-hud-chapter></span>
-    </div>
+    <nav class="journey-timeline" aria-label="足迹阶段">
+        <button type="button" data-journey-go="-1" aria-label="查看地图介绍"><i></i><span>起点</span></button>
+        {{ range $index, $chapter := $journey.chapters }}
+            <button type="button" data-journey-go="{{ $index }}" aria-label="查看 {{ $chapter.period }} {{ $chapter.place }}"><i></i><span>{{ $chapter.period }}</span></button>
+        {{ end }}
+        <button type="button" data-journey-go="99" aria-label="查看完整轨迹"><i></i><span>全图</span></button>
+    </nav>
 
-    <div class="journey-flow">
-        <section class="journey-hero" data-journey-hero>
+    <div class="journey-flow" data-journey-flow tabindex="0" aria-label="足迹地图，可使用上下方向键切换阶段">
+        <section class="journey-scene journey-hero" data-journey-scene="-1" data-journey-hero>
             <div class="journey-hero-copy">
                 <p class="journey-eyebrow"><span>{{ .Params.workNumber }}</span><span>{{ .Params.workType }}</span><span>{{ $journey.span }}</span></p>
                 <h1>{{ .Title }}</h1>
                 <div class="journey-lede">{{ .Content }}</div>
-                <p class="journey-hint"><i aria-hidden="true"></i>向下滚动，从第一盏灯开始</p>
+                <button class="journey-start" type="button" data-journey-next>从起点开始<span aria-hidden="true">↓</span></button>
             </div>
         </section>
 
         {{ range $index, $chapter := $journey.chapters }}
-            <section class="journey-chapter" data-journey-chapter="{{ $index }}">
+            <section class="journey-scene journey-chapter" data-journey-scene="{{ $index }}" data-journey-chapter="{{ $index }}">
                 <article class="journey-card">
                     <header>
                         <span class="journey-card-period">{{ $chapter.period }}</span>
@@ -39,24 +41,32 @@
                             </ul>
                         </footer>
                     {{ end }}
+                    <nav class="journey-card-nav" aria-label="阶段切换">
+                        <button type="button" data-journey-prev><span aria-hidden="true">←</span> 上一站</button>
+                        <span>{{ printf "%02d" (add $index 1) }} / {{ printf "%02d" (len $journey.chapters) }}</span>
+                        <button type="button" data-journey-next>下一站 <span aria-hidden="true">→</span></button>
+                    </nav>
                 </article>
             </section>
         {{ end }}
 
-        <section class="journey-finale" data-journey-finale>
+        <section class="journey-scene journey-finale" data-journey-scene="99" data-journey-finale>
             <div class="journey-finale-inner">
-                <p class="journey-eyebrow"><span>FULL TRAJECTORY</span><span>{{ $journey.span }}</span></p>
-                <h2>这些年，走过的都亮着</h2>
-                <dl class="journey-stats">
-                    <div><dt>落脚过的地名</dt><dd><b data-stat-places>0</b>个</dd></div>
-                    <div><dt>画出的轨迹</dt><dd><b data-stat-legs>0</b>段</dd></div>
-                    <div><dt>走过的路</dt><dd>约<b data-stat-km>0</b>公里</dd></div>
-                    <div><dt>时间跨度</dt><dd><b data-stat-years>0</b>年</dd></div>
-                </dl>
-                <p class="journey-epilogue">地图还在画。下一盏灯，不知道会亮在哪里。</p>
-                <a class="journey-back" href="{{ "/works/" | relURL }}">返回作品列表</a>
+                <p class="journey-eyebrow"><span>完整轨迹</span><span>{{ $journey.span }}</span></p>
+                <h2>从尤溪小学，到南京</h2>
+                <p class="journey-summary">9 个阶段 · 32 个地名</p>
+                <p class="journey-epilogue">地图先画到这里。以后有新的停留，再继续补上。</p>
+                <div class="journey-finale-actions">
+                    <button type="button" data-journey-prev><span aria-hidden="true">←</span> 返回南京</button>
+                    <a class="journey-back" href="{{ "/works/" | relURL }}">返回作品列表</a>
+                </div>
             </div>
         </section>
+    </div>
+
+    <div class="journey-mobile-status" aria-live="polite">
+        <span data-journey-mobile-period>{{ $journey.span }}</span>
+        <span data-journey-mobile-count>地图介绍</span>
     </div>
 
     <script type="application/json" id="journey-data">{{ $journey | jsonify | safeJS }}</script>

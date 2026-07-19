@@ -7,7 +7,6 @@
         {{ end }}
         {{ $recentPosts = first 3 (sort $recentPosts "Date" "desc") }}
         {{ $topics := .Site.Data.topics.topics }}
-        {{ $works := where .Site.RegularPages "Section" "works" }}
 
         <section class="home-hero" aria-labelledby="home-intro-title">
             <div class="home-hero-stage">
@@ -62,24 +61,6 @@
                 {{ end }}
             </ol>
         </section>
-
-        {{ range first 1 ($works.ByDate.Reverse) }}
-        <section class="home-works" aria-labelledby="home-works-title">
-            <header class="home-section-head">
-                <p id="home-works-title">最近作品</p>
-                <a href="{{ "/works/" | relLangURL }}">查看全部作品 <span aria-hidden="true">→</span></a>
-            </header>
-            <a class="home-work-feature" href="{{ .RelPermalink }}">
-                <figure><img src="{{ .Params.cover | relURL }}" alt="{{ .Params.coverAlt }}" loading="lazy" decoding="async"></figure>
-                <div>
-                    <p><span>{{ .Params.workNumber }}</span><span>{{ .Params.workType }} / {{ .Params.workYear }}</span></p>
-                    <h2>{{ .Title }}</h2>
-                    <p>{{ .Description }}</p>
-                    <strong>查看作品 <i aria-hidden="true">→</i></strong>
-                </div>
-            </a>
-        </section>
-        {{ end }}
 
         <section class="home-selected" aria-labelledby="selected-title">
             <header class="home-section-head">
