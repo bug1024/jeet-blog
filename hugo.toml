@@ -123,11 +123,11 @@ enableRobotsTXT = true
         pre = "internal"
         post = "archive"
     [[menu.main]]
-        pageref = "/tags/"
-        name = "标签"
+        pageref = "/works/"
+        name = "作品"
         weight = 3
         pre = "internal"
-        post = "tags"
+        post = "archive"
     [[menu.main]]
         pageref = "/about/"
         name = "关于"

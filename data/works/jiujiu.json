@@ -1,0 +1,62 @@
+{
+  "title": "小白啾啾森林成长记",
+  "season": "第一季",
+  "opening": [
+    {
+      "title": "封面",
+      "position": "封面",
+      "pages": ["/works/jiujiu/cover.webp"],
+      "alts": ["小白啾啾森林成长记第一季封面"]
+    },
+    {
+      "title": "献给女儿",
+      "position": "献词",
+      "pages": ["/works/jiujiu/dedication.webp"],
+      "alts": ["小白啾啾森林成长记献词页，写给作者的女儿"]
+    },
+    {
+      "title": "三十个成长故事",
+      "position": "目录",
+      "pages": ["/works/jiujiu/contents.webp"],
+      "alts": ["小白啾啾森林成长记第一季目录，共三十章"]
+    }
+  ],
+  "ending": {
+    "title": "成长还在继续",
+    "position": "结束页",
+    "pages": ["/works/jiujiu/ending.webp"],
+    "alts": ["小白啾啾森林成长记第一季结束页"]
+  },
+  "chapters": [
+    {"title":"小白啾啾出生啦","pages":["chapter-01.webp"]},
+    {"title":"小白啾啾第一次照镜子","pages":["chapter-02.webp"]},
+    {"title":"小白啾啾找到名字","pages":["chapter-03.webp"]},
+    {"title":"小白啾啾第一次交朋友","pages":["chapter-04.webp"]},
+    {"title":"小白啾啾想加入游戏","pages":["chapter-05.webp"]},
+    {"title":"小白啾啾和朋友吵架","pages":["chapter-06-a.webp","chapter-06-b.webp"]},
+    {"title":"小白啾啾学会等待","pages":["chapter-07.webp"]},
+    {"title":"小白啾啾输了比赛","pages":["chapter-08-a.webp","chapter-08-b.webp"]},
+    {"title":"小白啾啾生气了","pages":["chapter-09.webp"]},
+    {"title":"小白啾啾画错了","pages":["chapter-10.webp"]},
+    {"title":"小白啾啾害怕黑夜","pages":["chapter-11.webp"]},
+    {"title":"小白啾啾学飞","pages":["chapter-12-a.webp","chapter-12-b.webp"]},
+    {"title":"小白啾啾第一次游泳","pages":["chapter-13-a.webp","chapter-13-b.webp"]},
+    {"title":"小白啾啾骑树枝车","pages":["chapter-14.webp"]},
+    {"title":"小白啾啾第一次登山","pages":["chapter-15-a.webp","chapter-15-b.webp"]},
+    {"title":"小白啾啾保护小花花","pages":["chapter-16.webp"]},
+    {"title":"小白啾啾照顾小蝴蝶","pages":["chapter-17.webp"]},
+    {"title":"小白啾啾帮助迷路朋友","pages":["chapter-18-a.webp","chapter-18-b.webp"]},
+    {"title":"小白啾啾成为小队长","pages":["chapter-19-a.webp","chapter-19-b.webp"]},
+    {"title":"小白啾啾制定游戏规则","pages":["chapter-20-a.webp","chapter-20-b.webp"]},
+    {"title":"小白啾啾学会倾听","pages":["chapter-21.webp"]},
+    {"title":"小白啾啾和兔兔去探险","pages":["chapter-22-a.webp","chapter-22-b.webp"]},
+    {"title":"小白啾啾和妈妈的一天","pages":["chapter-23.webp"]},
+    {"title":"小白啾啾想念家人","pages":["chapter-24.webp"]},
+    {"title":"神秘森林地图","pages":["chapter-25-a.webp","chapter-25-b.webp"]},
+    {"title":"会发光的友谊种子","pages":["chapter-26-a.webp","chapter-26-b.webp"]},
+    {"title":"秘密花园","pages":["chapter-27-a.webp","chapter-27-b.webp"]},
+    {"title":"小白啾啾寻找彩虹","pages":["chapter-28-a.webp","chapter-28-b.webp"]},
+    {"title":"小白啾啾梦想飞向天空","pages":["chapter-29-a.webp","chapter-29-b.webp"]},
+    {"title":"小白啾啾成为森林小英雄","pages":["chapter-30-a.webp","chapter-30-b.webp"]}
+  ]
+}

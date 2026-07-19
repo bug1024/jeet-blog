@@ -1,0 +1,49 @@
+{{ define "main" }}
+{{ $book := .Site.Data.works.jiujiu }}
+<main class="main storybook-work" id="main" data-storybook>
+    <div class="storybook-shell">
+        <header class="storybook-hero">
+            <div class="storybook-intro">
+                <p class="storybook-meta"><span>{{ .Params.workNumber }}</span><span>{{ .Params.workType }}</span><span>{{ .Params.workYear }}</span></p>
+                <h1>{{ .Title }}</h1>
+                <div class="storybook-summary">{{ .Content }}</div>
+                <div class="storybook-actions">
+                    <button class="storybook-start" type="button" data-storybook-start>开始阅读</button>
+                    <a href="#chapters">查看目录</a>
+                </div>
+                <small>第一季 · 30 章 · 横屏阅读效果更佳</small>
+            </div>
+            <figure class="storybook-cover">
+                <img src="{{ .Params.cover | relURL }}" alt="{{ .Params.coverAlt }}" width="1448" height="1086" decoding="async">
+            </figure>
+        </header>
+
+        <section class="storybook-chapters" id="chapters" aria-labelledby="storybook-chapter-title">
+            <header>
+                <p>第一季</p>
+                <h2 id="storybook-chapter-title">三十个成长故事</h2>
+            </header>
+            <ol>
+                {{ range $index, $chapter := $book.chapters }}
+                    <li><button type="button" data-storybook-chapter="{{ $index }}"><span>{{ printf "%02d" (add $index 1) }}</span><strong>{{ $chapter.title }}</strong><i>阅读</i></button></li>
+                {{ end }}
+            </ol>
+        </section>
+    </div>
+
+    <section class="storybook-reader" data-storybook-reader hidden aria-hidden="true" aria-label="绘本阅读器">
+        <header class="storybook-reader-bar">
+            <button type="button" data-storybook-close aria-label="关闭绘本阅读器">关闭</button>
+            <div><span data-storybook-position>封面</span><strong data-storybook-title></strong></div>
+            <button type="button" data-storybook-directory>目录</button>
+        </header>
+        <div class="storybook-pages" data-storybook-pages></div>
+        <nav class="storybook-reader-nav" aria-label="章节导航">
+            <button type="button" data-storybook-prev><span>←</span><small>上一章</small></button>
+            <button type="button" data-storybook-next><small>下一章</small><span>→</span></button>
+        </nav>
+    </section>
+    <script type="application/json" id="storybook-data">{{ $book | jsonify | safeJS }}</script>
+    <script src="{{ "/js/storybook-reader.js" | relURL }}" defer></script>
+</main>
+{{ end }}

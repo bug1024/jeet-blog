@@ -1,0 +1,34 @@
+{{ define "main" }}
+<main class="main works-page" id="main">
+    <div class="works-shell">
+        <header class="works-head">
+            <div>
+                <p class="editorial-eyebrow">做过的东西</p>
+                <h1>{{ .Title }}</h1>
+            </div>
+            <p>{{ .Description }}</p>
+        </header>
+
+        <ol class="works-directory">
+            {{ range .Pages.ByDate.Reverse }}
+                <li>
+                    <a href="{{ .RelPermalink }}">
+                        <figure>
+                            <img src="{{ .Params.cover | relURL }}" alt="{{ .Params.coverAlt }}" loading="lazy" decoding="async">
+                        </figure>
+                        <div class="works-card-copy">
+                            <header>
+                                <span>{{ .Params.workNumber }}</span>
+                                <small>{{ .Params.workType }} / {{ .Params.workYear }}</small>
+                            </header>
+                            <h2>{{ .Title }}</h2>
+                            <p>{{ .Description }}</p>
+                            <footer><span>查看作品</span><i aria-hidden="true">→</i></footer>
+                        </div>
+                    </a>
+                </li>
+            {{ end }}
+        </ol>
+    </div>
+</main>
+{{ end }}

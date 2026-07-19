@@ -2228,6 +2228,671 @@ button:focus-visible {
     }
 }
 
+/* Works — things made, not another article archive */
+.home-works {
+    padding-top: 68px;
+}
+
+.home-work-feature {
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.75fr);
+    min-height: 430px;
+    margin-top: 8px;
+    border-top: 1px solid var(--brand-ink);
+    border-bottom: 1px solid var(--brand-line);
+    color: var(--brand-ink);
+    text-decoration: none;
+}
+
+.home-work-feature figure {
+    margin: 0;
+    overflow: hidden;
+    background: #f4efdb;
+}
+
+.home-work-feature img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 350ms ease;
+}
+
+.home-work-feature:hover img {
+    transform: scale(1.012);
+}
+
+.home-work-feature > div {
+    display: flex;
+    flex-direction: column;
+    padding: 32px 34px;
+    border-left: 1px solid var(--brand-line);
+}
+
+.home-work-feature > div > p:first-child {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    color: var(--brand-slate);
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+}
+
+.home-work-feature h2 {
+    margin: auto 0 18px;
+    font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+    font-size: 2.15rem;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.035em;
+}
+
+.home-work-feature > div > p:nth-of-type(2) {
+    margin: 0;
+    color: var(--brand-copy);
+    font-size: 0.8rem;
+    line-height: 1.8;
+}
+
+.home-work-feature strong {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 34px;
+    padding-top: 15px;
+    border-top: 1px solid var(--brand-line);
+    font-size: 0.72rem;
+    font-weight: 500;
+}
+
+.home-work-feature strong i {
+    font-style: normal;
+    transition: transform 180ms ease;
+}
+
+.home-work-feature:hover strong i {
+    transform: translateX(5px);
+}
+
+.works-page {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0 32px 96px;
+}
+
+.works-shell {
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
+}
+
+.works-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 0.55fr);
+    align-items: end;
+    gap: 80px;
+    padding: 74px 0 42px;
+    border-bottom: 1px solid var(--brand-ink);
+}
+
+.works-head h1 {
+    margin: 12px 0 0;
+    font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+    font-size: clamp(3.4rem, 6vw, 5.8rem);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.06em;
+}
+
+.works-head > p {
+    margin: 0;
+    color: var(--brand-copy);
+    font-size: 0.82rem;
+    line-height: 1.8;
+}
+
+.works-directory {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.works-directory > li > a {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
+    min-height: 440px;
+    padding: 38px 0;
+    border-bottom: 1px solid var(--brand-line);
+    color: var(--brand-ink);
+    text-decoration: none;
+}
+
+.works-directory figure {
+    margin: 0;
+    overflow: hidden;
+    background: #f4efdb;
+}
+
+.works-directory img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 350ms ease;
+}
+
+.works-directory a:hover img {
+    transform: scale(1.012);
+}
+
+.works-card-copy {
+    display: flex;
+    flex-direction: column;
+    padding: 6px 0 6px 42px;
+}
+
+.works-card-copy header,
+.works-card-copy footer {
+    display: flex;
+    justify-content: space-between;
+    color: var(--brand-slate);
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+}
+
+.works-card-copy h2 {
+    margin: auto 0 18px;
+    font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+    font-size: 2.35rem;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.04em;
+}
+
+.works-card-copy > p {
+    margin: 0;
+    color: var(--brand-copy);
+    font-size: 0.82rem;
+    line-height: 1.8;
+}
+
+.works-card-copy footer {
+    margin-top: 34px;
+    padding-top: 15px;
+    border-top: 1px solid var(--brand-line);
+}
+
+.works-card-copy footer i {
+    color: var(--brand-ink);
+    font-style: normal;
+    transition: transform 180ms ease;
+}
+
+.works-directory a:hover footer i {
+    transform: translateX(5px);
+}
+
+/* W-001 — the work keeps its own visual world */
+.storybook-work {
+    --storybook-green: #315a3a;
+    --storybook-leaf: #71905a;
+    --storybook-orange: #df7041;
+    --storybook-paper: #fffdf7;
+    --storybook-wash: #f3efd9;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    color: #203326;
+}
+
+.storybook-shell {
+    width: calc(100% - 64px);
+    max-width: 1180px;
+    margin: 0 auto;
+}
+
+.storybook-hero {
+    display: grid;
+    grid-template-columns: minmax(320px, 0.72fr) minmax(0, 1.28fr);
+    align-items: center;
+    gap: 72px;
+    min-height: 650px;
+    padding: 64px 0 70px;
+}
+
+.storybook-meta {
+    display: flex;
+    gap: 16px;
+    margin: 0 0 36px;
+    color: var(--storybook-leaf);
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 0.64rem;
+    letter-spacing: 0.1em;
+}
+
+.storybook-meta span + span::before {
+    margin-right: 16px;
+    content: "/";
+}
+
+.storybook-intro h1 {
+    margin: 0;
+    color: var(--storybook-green);
+    font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+    font-size: clamp(3.2rem, 5.2vw, 5.4rem);
+    font-weight: 600;
+    line-height: 1.07;
+    letter-spacing: -0.06em;
+}
+
+.storybook-summary {
+    max-width: 470px;
+    margin-top: 32px;
+    color: #516157;
+    font-size: 0.87rem;
+    line-height: 1.9;
+}
+
+.storybook-summary p {
+    margin: 0 0 14px;
+}
+
+.storybook-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-top: 34px;
+}
+
+.storybook-start,
+.storybook-actions a {
+    box-sizing: border-box;
+    min-height: 44px;
+    padding: 12px 22px;
+    border: 1px solid var(--storybook-green);
+    border-radius: 0;
+    font: inherit;
+    font-size: 0.78rem;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.storybook-start {
+    background: var(--storybook-green);
+    color: #fffdf7;
+}
+
+.storybook-actions a {
+    background: transparent;
+    color: var(--storybook-green);
+}
+
+.storybook-intro > small {
+    display: block;
+    margin-top: 18px;
+    color: var(--storybook-leaf);
+    font-size: 0.68rem;
+}
+
+.storybook-cover {
+    position: relative;
+    margin: 0;
+    padding: 14px;
+    background: var(--storybook-paper);
+    box-shadow: 0 22px 54px rgba(61, 73, 45, 0.13);
+    transform: rotate(0.7deg);
+}
+
+.storybook-cover::before {
+    position: absolute;
+    top: -16px;
+    left: 10%;
+    width: 92px;
+    height: 30px;
+    background: rgba(226, 215, 170, 0.72);
+    content: "";
+    transform: rotate(-3deg);
+}
+
+.storybook-cover img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.storybook-chapters {
+    padding: 74px 0 100px;
+    border-top: 1px solid #cad3c2;
+}
+
+.storybook-chapters > header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.storybook-chapters > header p {
+    margin: 0;
+    color: var(--storybook-leaf);
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+}
+
+.storybook-chapters h2 {
+    margin: 0;
+    color: var(--storybook-green);
+    font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.storybook-chapters ol {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid #cad3c2;
+    list-style: none;
+}
+
+.storybook-chapters li {
+    border-bottom: 1px solid #cad3c2;
+}
+
+.storybook-chapters li:not(:nth-child(3n + 1)) {
+    border-left: 1px solid #cad3c2;
+}
+
+.storybook-chapters button {
+    display: grid;
+    width: 100%;
+    min-height: 94px;
+    grid-template-columns: 38px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 20px;
+    border: 0;
+    background: transparent;
+    color: #203326;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 160ms ease;
+}
+
+.storybook-chapters button:hover {
+    background: var(--storybook-wash);
+}
+
+.storybook-chapters button span,
+.storybook-chapters button i {
+    color: var(--storybook-leaf);
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 0.62rem;
+    font-style: normal;
+}
+
+.storybook-chapters button strong {
+    font-size: 0.78rem;
+    font-weight: 500;
+}
+
+.storybook-reader-open {
+    overflow: hidden;
+}
+
+.storybook-reader[hidden] {
+    display: none;
+}
+
+.storybook-reader {
+    position: fixed;
+    z-index: 10000;
+    inset: 0;
+    overflow-y: auto;
+    background: #eee9d9;
+    color: #203326;
+}
+
+.storybook-reader-bar {
+    position: sticky;
+    z-index: 2;
+    top: 0;
+    display: grid;
+    grid-template-columns: 80px 1fr 80px;
+    align-items: center;
+    min-height: 68px;
+    padding: 0 24px;
+    border-bottom: 1px solid #c8c4b7;
+    background: rgba(255, 253, 247, 0.94);
+    backdrop-filter: blur(14px);
+}
+
+.storybook-reader-bar button,
+.storybook-reader-nav button {
+    border: 0;
+    background: transparent;
+    color: #315a3a;
+    font: inherit;
+    cursor: pointer;
+}
+
+.storybook-reader-bar > button:first-child {
+    text-align: left;
+}
+
+.storybook-reader-bar > button:last-child {
+    text-align: right;
+}
+
+.storybook-reader-bar > div {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    text-align: center;
+}
+
+.storybook-reader-bar span {
+    color: #71905a;
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 0.66rem;
+}
+
+.storybook-reader-bar strong {
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.storybook-pages {
+    display: flex;
+    width: calc(100% - 48px);
+    max-width: 1448px;
+    flex-direction: column;
+    gap: 24px;
+    margin: 34px auto;
+}
+
+.storybook-pages img {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #fff;
+    box-shadow: 0 12px 34px rgba(60, 53, 33, 0.1);
+}
+
+.storybook-reader-nav {
+    display: grid;
+    width: calc(100% - 48px);
+    max-width: 1448px;
+    grid-template-columns: 1fr 1fr;
+    margin: 0 auto 42px;
+    border-top: 1px solid #c8c4b7;
+    border-bottom: 1px solid #c8c4b7;
+}
+
+.storybook-reader-nav button {
+    display: flex;
+    min-height: 68px;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 14px;
+    padding: 0 20px;
+}
+
+.storybook-reader-nav button:last-child {
+    justify-content: flex-end;
+    border-left: 1px solid #c8c4b7;
+}
+
+.storybook-reader-nav button:disabled {
+    opacity: 0.28;
+    cursor: default;
+}
+
+.storybook-reader-nav small {
+    font-size: 0.72rem;
+}
+
+@media (max-width: 720px) {
+    .home-works {
+        padding-top: 56px;
+    }
+
+    .home-work-feature {
+        grid-template-columns: 1fr;
+        min-height: 0;
+    }
+
+    .home-work-feature figure {
+        aspect-ratio: 4 / 3;
+    }
+
+    .home-work-feature > div {
+        min-height: 270px;
+        padding: 24px 22px 26px;
+        border-top: 1px solid var(--brand-line);
+        border-left: 0;
+    }
+
+    .home-work-feature h2 {
+        margin-top: 44px;
+        font-size: 1.7rem;
+    }
+
+    .works-page {
+        padding: 0 20px 72px;
+    }
+
+    .works-head {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        padding: 58px 0 34px;
+    }
+
+    .works-head h1 {
+        font-size: 3.4rem;
+    }
+
+    .works-directory > li > a {
+        grid-template-columns: 1fr;
+        padding: 28px 0;
+    }
+
+    .works-directory figure {
+        aspect-ratio: 4 / 3;
+    }
+
+    .works-card-copy {
+        min-height: 280px;
+        padding: 26px 0 4px;
+    }
+
+    .works-card-copy h2 {
+        margin-top: 52px;
+        font-size: 1.8rem;
+    }
+
+    .storybook-shell {
+        width: calc(100% - 40px);
+    }
+
+    .storybook-hero {
+        grid-template-columns: 1fr;
+        gap: 54px;
+        min-height: 0;
+        padding: 58px 0 70px;
+    }
+
+    .storybook-intro h1 {
+        font-size: 3.45rem;
+    }
+
+    .storybook-cover {
+        padding: 8px;
+        transform: none;
+    }
+
+    .storybook-chapters {
+        padding: 58px 0 72px;
+    }
+
+    .storybook-chapters > header {
+        display: block;
+    }
+
+    .storybook-chapters h2 {
+        margin-top: 8px;
+        font-size: 1.65rem;
+    }
+
+    .storybook-chapters ol {
+        grid-template-columns: 1fr;
+    }
+
+    .storybook-chapters li:not(:nth-child(3n + 1)) {
+        border-left: 0;
+    }
+
+    .storybook-chapters button {
+        min-height: 76px;
+        padding: 14px 10px;
+    }
+
+    .storybook-reader-bar {
+        grid-template-columns: 50px 1fr 50px;
+        min-height: 58px;
+        padding: 0 12px;
+    }
+
+    .storybook-reader-bar > div {
+        display: block;
+    }
+
+    .storybook-reader-bar span {
+        display: block;
+        margin-bottom: 2px;
+    }
+
+    .storybook-reader-bar button {
+        font-size: 0.7rem;
+    }
+
+    .storybook-pages,
+    .storybook-reader-nav {
+        width: calc(100% - 20px);
+    }
+
+    .storybook-pages {
+        gap: 12px;
+        margin-top: 10px;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
         scroll-behavior: auto !important;
