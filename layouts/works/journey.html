@@ -1,0 +1,65 @@
+{{ define "main" }}
+{{ $journey := .Site.Data.works.journey }}
+<main class="main journey-work" id="main" data-journey>
+    <canvas class="journey-canvas" data-journey-canvas aria-hidden="true"></canvas>
+
+    <div class="journey-hud" data-journey-hud aria-hidden="true">
+        <span data-hud-coord></span>
+        <span data-hud-alt></span>
+        <span data-hud-chapter></span>
+    </div>
+
+    <div class="journey-flow">
+        <section class="journey-hero" data-journey-hero>
+            <div class="journey-hero-copy">
+                <p class="journey-eyebrow"><span>{{ .Params.workNumber }}</span><span>{{ .Params.workType }}</span><span>{{ $journey.span }}</span></p>
+                <h1>{{ .Title }}</h1>
+                <div class="journey-lede">{{ .Content }}</div>
+                <p class="journey-hint"><i aria-hidden="true"></i>向下滚动，从第一盏灯开始</p>
+            </div>
+        </section>
+
+        {{ range $index, $chapter := $journey.chapters }}
+            <section class="journey-chapter" data-journey-chapter="{{ $index }}">
+                <article class="journey-card">
+                    <header>
+                        <span class="journey-card-period">{{ $chapter.period }}</span>
+                        <span class="journey-card-level">{{ $chapter.level }}</span>
+                    </header>
+                    <h2>{{ $chapter.title }}</h2>
+                    <p class="journey-card-place">{{ $chapter.place }}{{ with $chapter.region }}<small>{{ . }}</small>{{ end }}</p>
+                    <p class="journey-card-story">{{ $chapter.story }}</p>
+                    {{ with $chapter.trips }}
+                        <footer>
+                            <span>支线 · {{ len . }} 段</span>
+                            <ul>
+                                {{ range $tripIndex, $trip := . }}
+                                    <li><button type="button" data-journey-trip="{{ $tripIndex }}">{{ $trip.year }} · {{ $trip.place }}</button></li>
+                                {{ end }}
+                            </ul>
+                        </footer>
+                    {{ end }}
+                </article>
+            </section>
+        {{ end }}
+
+        <section class="journey-finale" data-journey-finale>
+            <div class="journey-finale-inner">
+                <p class="journey-eyebrow"><span>FULL TRAJECTORY</span><span>{{ $journey.span }}</span></p>
+                <h2>这些年，走过的都亮着</h2>
+                <dl class="journey-stats">
+                    <div><dt>落脚过的地名</dt><dd><b data-stat-places>0</b>个</dd></div>
+                    <div><dt>画出的轨迹</dt><dd><b data-stat-legs>0</b>段</dd></div>
+                    <div><dt>走过的路</dt><dd>约<b data-stat-km>0</b>公里</dd></div>
+                    <div><dt>时间跨度</dt><dd><b data-stat-years>0</b>年</dd></div>
+                </dl>
+                <p class="journey-epilogue">地图还在画。下一盏灯，不知道会亮在哪里。</p>
+                <a class="journey-back" href="{{ "/works/" | relURL }}">返回作品列表</a>
+            </div>
+        </section>
+    </div>
+
+    <script type="application/json" id="journey-data">{{ $journey | jsonify | safeJS }}</script>
+    <script src="{{ "/js/journey.js" | relURL }}" defer></script>
+</main>
+{{ end }}
