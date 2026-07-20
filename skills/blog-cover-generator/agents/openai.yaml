@@ -1,0 +1,5 @@
+interface:
+  display_name: "BUG1024 博客封面"
+  short_description: "为 BUG1024 生成克制、统一且有隐喻的文章封面"
+  brand_color: "#365B6D"
+  default_prompt: "使用 $blog-cover-generator 根据文章内容生成一张 BUG1024 风格封面。"
