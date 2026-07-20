@@ -16,7 +16,7 @@
         {{- if $attrs.indent }} data-indent="true"{{ end }}
         {{- if $attrs.tocNum }} data-toc-num="true"{{ end }}>
 
-            <header class="article-hero">
+            <header class="article-hero{{ with .Params.cover }} article-hero--with-cover{{ end }}">
                 <div class="article-hero-copy">
                     <div class="article-kicker">
                         {{ with .Params.tags }}<a href="{{ printf "/tags/%s/" (urlize (index . 0)) | relLangURL }}">{{ index . 0 }}</a>{{ else }}<span>文章</span>{{ end }}
@@ -34,17 +34,30 @@
                     {{ end }}
                 </div>
 
-                <aside class="article-coordinate" aria-label="文章坐标">
-                    <span class="article-coordinate-type">POST</span>
-                    <strong>{{ printf "%03d" $postNumber }}</strong>
-                    <div class="article-coordinate-meta">
-                        <time datetime="{{ .PublishDate.Format "2006-01-02" }}">
-                            <span>{{ .PublishDate.Format "2006" }}</span>
-                            <span>{{ .PublishDate.Format "01 / 02" }}</span>
-                        </time>
-                        <span>{{ .ReadingTime }} 分钟阅读</span>
-                    </div>
-                </aside>
+                {{ with .Params.cover }}
+                    {{ $coverImage := .image }}
+                    {{ $coverAlt := .alt | default "" }}
+                    {{ $coverFit := .fit | default "cover" }}
+                    {{ $coverPosition := .position | default "center" }}
+                    <figure class="article-cover">
+                        <div class="article-cover-media" style="--article-cover-fit: {{ $coverFit }}; --article-cover-position: {{ $coverPosition }};">
+                            <img src="{{ $coverImage | relURL }}" alt="{{ $coverAlt }}" width="2400" height="1800" fetchpriority="high" decoding="async">
+                        </div>
+                        {{ with .caption }}<figcaption>{{ . }}</figcaption>{{ end }}
+                    </figure>
+                {{ else }}
+                    <aside class="article-coordinate" aria-label="文章坐标">
+                        <span class="article-coordinate-type">POST</span>
+                        <strong>{{ printf "%03d" $postNumber }}</strong>
+                        <div class="article-coordinate-meta">
+                            <time datetime="{{ .PublishDate.Format "2006-01-02" }}">
+                                <span>{{ .PublishDate.Format "2006" }}</span>
+                                <span>{{ .PublishDate.Format "01 / 02" }}</span>
+                            </time>
+                            <span>{{ .ReadingTime }} 分钟阅读</span>
+                        </div>
+                    </aside>
+                {{ end }}
             </header>
 
             {{ $enableTOC := .Params.toc | default .Site.Params.enableTOC -}}
