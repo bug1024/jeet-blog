@@ -1,43 +1,43 @@
-# Runtime adapters
+# 运行时适配
 
-The brand system, visual brief, prompt, rejection test, and output preparation are platform-independent. Only the image-generation call changes.
+品牌系统、视觉简报、英文 Prompt、否决检查和输出规格与平台无关，只有图片生成调用方式需要变化。
 
-## Runtime selection
+## 运行时选择
 
-Use the first available option that the user has authorized:
+按照顺序使用第一个已经获得用户授权的选项：
 
-1. A platform-native image-generation tool.
-2. An installed image-generation skill, plugin, MCP tool, or connector.
-3. An API-backed image generator already configured in the environment.
-4. Prompt-only delivery when no generation runtime is available.
+1. 平台原生图片生成工具；
+2. 已安装的图片生成 Skill、插件、MCP 工具或连接器；
+3. 环境中已经配置的 API 图片生成器；
+4. 不存在可用生成运行时时，只交付英文 Prompt。
 
-Never silently install a paid service, expose credentials, or switch to a lower-quality model. Explain the missing runtime and ask before expanding scope.
+不得静默安装付费服务、暴露凭据或切换到质量更低的模型。缺少运行时时先说明情况，扩大范围前征得用户同意。
 
-## Codex adapter
+## Codex 适配
 
-- Use the built-in `image_gen` tool by default.
-- Follow the installed `$imagegen` skill for input-image handling, generation versus editing, project-bound save paths, inspection, and iteration.
-- Generate first, then copy the selected output into the repository and run `scripts/prepare_cover.py`.
-- Do not assume a filesystem destination parameter exists on the built-in tool.
+- 默认使用内置 `image_gen` 工具；
+- 按已安装的 `$imagegen` Skill 处理输入图片、生成与编辑的选择、项目保存路径、检查和迭代；
+- 先生成，再把选中结果复制进仓库，并运行 `scripts/prepare_cover.py`；
+- 不得假设内置工具支持直接指定文件系统输出路径。
 
-## OpenAI API adapter
+## OpenAI API 适配
 
-- Use only when the environment already has an authorized API key or the user explicitly requests an API implementation.
-- Keep model selection and request parameters outside the core brand files so they can evolve independently.
-- Save the raw generated image to a temporary or versioned project path, inspect it, and then run `scripts/prepare_cover.py`.
-- Do not hard-code credentials into the repository.
+- 只有环境中已经存在授权 API Key，或用户明确要求 API 实现时才使用；
+- 模型选择和请求参数不得写入核心品牌文件，以便独立演进；
+- 将原始生成图保存到临时路径或带版本的项目路径，检查后再运行 `scripts/prepare_cover.py`；
+- 不得把凭据硬编码进仓库。
 
-## Other agent or image-service adapter
+## 其他 Agent 或图片服务适配
 
-- Convert the shared prompt skeleton into the service's supported prompt format without weakening the constraints.
-- Preserve the exact 4:3 composition request, no-text rule, brand palette behavior, and rejection test.
-- If the service cannot accept negative constraints, incorporate the most important prohibitions into the primary scene description and validate more strictly afterward.
-- If the service cannot generate images directly, return the visual brief and final production prompt as the deliverable; do not pretend an image was created.
+- 将公共英文 Prompt 模板转换为服务支持的格式，不得削弱约束；
+- 保留准确的 4:3 构图要求、无文字规则、品牌色行为和否决检查；
+- 服务不支持负向约束时，把最重要的禁止项写入主要场景描述，并在生成后执行更严格检查；
+- 服务无法直接生成图片时，交付视觉简报和最终英文生产 Prompt，不得假装已经生成图片。
 
-## Platform installation
+## 跨平台安装
 
-The canonical files live at `skills/blog-cover-generator/` in the blog repository.
+唯一标准文件位于博客仓库的 `skills/blog-cover-generator/`。
 
-- Codex may link this folder into `~/.codex/skills/blog-cover-generator`.
-- Other agents may link or package the same folder in their own discovery location.
-- Do not copy and edit separate platform versions. Put shared changes here; keep truly platform-specific metadata or wrappers isolated from the core instructions.
+- Codex 可以把此目录链接到 `~/.codex/skills/blog-cover-generator`；
+- 其他 Agent 可以把同一目录链接或打包到各自的发现位置；
+- 不得复制后分别修改不同平台版本。公共修改统一写回此目录，真正与平台有关的元数据或包装层与核心规则隔离。

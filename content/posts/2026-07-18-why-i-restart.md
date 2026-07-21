@@ -7,10 +7,10 @@ author: "Bug1024"
 slug: "why-i-restart"
 draft: false
 cover:
-    image: "/images/article/why-i-restart-cover.webp"
-    alt: "一名戴眼镜的男子在深夜灯下，将旧笔记和散页搭建成纸质建筑模型，桌上放着一件钢蓝色工具"
-    position: "50% 50%"
-    fit: "cover"
+  image: "/images/article/why-i-restart-cover.webp"
+  alt: "深夜灯下，旧纸页沿桌面排成一条直线，一枚钢蓝色铰接件让纸质结构向上分叉，一只手正在接上新的纸模块"
+  position: "50% 50%"
+  fit: "cover"
 images:
     - "/images/article/why-i-restart-cover.webp"
 tags:

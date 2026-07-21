@@ -1,60 +1,62 @@
-# BUG1024 cover brand system
+# BUG1024 封面品牌系统
 
-## Positioning
+## 定位
 
-BUG1024 is a personal brand, long-term body of work, and record of thought. It contains work, systems, technology, creation, family, places, and traces left by time. The long-term visual idea is:
+BUG1024 是个人品牌、长期作品集合和思考记录，包含工作、系统、技术、创造、家庭、地点，以及时间留下的痕迹。长期视觉概念是：
 
 > 技术人的人文主义
 
-Interpret this as an engineer observing creation, work, and life in the AI era. Do not turn it into a slogan or print it on the cover.
+将它理解为一名工程师在 AI 时代观察创造、工作和生活。不要把它变成口号，也不要印在封面上。
 
-## Visual principles
+AI 生成封面属于“第 1024 格”视觉系列。详细的作者签名规则见 `visual-system.md`：一种真实秩序、一个与文章有关的 Bug，以及一次克制的钢蓝回应。
 
-1. The image creates atmosphere; the title states the argument.
-2. Start from a real detail, object, place, action, or tension in the article.
-3. Prefer restraint, negative space, structure, and one memorable relationship.
-4. Keep human presence possible but understated. A hand, posture, chair, used object, or maintenance action often says more than a posed face.
-5. Permit one deliberate anomaly. Do not scatter multiple clever devices through the frame.
-6. Aim closer to an editorial publication or personal portfolio than a social-media title card.
+## 视觉原则
 
-## Palette
+1. 图像负责营造气质，标题负责表达观点；
+2. 从文章中的真实细节、物件、地点、动作或矛盾出发；
+3. 优先考虑克制、留白、结构和一组值得记住的关系；
+4. 可以保留人的存在，但不要过度突出。一只手、一个姿态、一把椅子、使用过的物件或维护动作，通常比摆拍人像表达得更多；
+5. AI 生成作品必须只有一个明确且与文章有关的 Bug，不得在画面中散布多个聪明装置；
+6. 视觉目标更接近编辑出版物或个人作品集，而不是社交媒体标题卡片。
 
-| Role | Color | Usage |
+## 色彩
+
+| 角色 | 色值 | 用途 |
 | --- | --- | --- |
-| Ink | `#111A21` | primary dark mass, line, silhouette, or deep shadow |
-| Steel | `#365B6D` | one structural accent or meaningful anomaly, not a wash |
-| Slate | `#71838C` | secondary neutral |
-| Line | `#D3DCE0` | quiet divisions and pale structure |
-| Mist | `#EEF2F3` | cool atmospheric neutral |
-| Paper | `#F8FAF9` | preferred light ground |
+| 墨色 Ink | `#111A21` | 主要深色块、线条、剪影或深阴影 |
+| 钢蓝 Steel | `#365B6D` | 一处结构强调或有意义的异常，不得铺满画面 |
+| 灰蓝 Slate | `#71838C` | 次要中性色 |
+| 线灰 Line | `#D3DCE0` | 克制的分隔和浅色结构 |
+| 雾灰 Mist | `#EEF2F3` | 偏冷的环境中性色 |
+| 纸白 Paper | `#F8FAF9` | 首选浅色底 |
 
-The image may use natural material colors. Do not recolor every scene into the palette. Steel blue is optional and should usually occupy less than 15% of the frame.
+画面可以保留材料的自然颜色，不要把所有场景强行重新着色为品牌色。AI 生成的“第 1024 格”作品中，钢蓝必须成为、标记、修补或记录唯一的 Bug，通常少于画面面积的 10%，最多不得超过 15%。处理作者摄影时优先保留事实真实性，不强加钢蓝。
 
-## Logo
+## 标志
 
-Do not place the BUG1024 wordmark or symbol on article covers. The site header supplies brand identity. If a separate social asset later requires attribution, add the official SVG outside the generated image through deterministic layout, preserving its safe area and colors.
+文章封面内不放 BUG1024 字标或独立符号，网站页眉已经承担品牌识别。独立社交图片需要署名时，通过确定性排版在生成图之外添加官方 SVG，并保持安全留白和标准颜色。
 
-## Composition
+## 构图
 
-- Canonical ratio: `4:3` landscape.
-- Canonical delivery: `2400 × 1800px`.
-- The focal relationship must remain legible around `328 × 246px`.
-- Use generous breathing room without leaving an unexplained empty half-frame.
-- Avoid layouts that assume title text will be placed over the image.
-- Keep important content away from the outer 6% safety edge.
-- Prefer natural depth, editorial flatness, or quiet geometry over cinematic wide-angle spectacle.
+- 标准比例：`4:3` 横图；
+- 标准交付尺寸：`2400 × 1800px`；
+- 核心关系在约 `328 × 246px` 下仍须清晰；
+- 保留充分但有意义的空间，不得让半个画面无故空白；
+- 不使用依赖后续叠加标题文字的构图；
+- 重要内容避开外缘 6% 的安全区域；
+- 优先使用自然景深、编辑式平面感或安静的几何关系，避免电影式广角奇观。
 
-## Absolute prohibitions
+## 绝对禁止
 
-- article-title typography or big-character poster covers;
-- logo-like lettering, fake code, random glyphs, signatures, and watermarks;
-- cyberpunk, neon cyan, purple-blue gradients, holographic interfaces;
-- humanoid robots, robot hands, glowing brains, floating neural networks;
-- generic chips, circuit boards, server racks, binary rain, and cloud icons as shorthand for technology;
-- glossy corporate stock photography, staged handshakes, heroic poses, exaggerated rim light;
-- inspirational-poster sentiment, forced profundity, or decorative melancholy;
-- visual complexity that disappears at thumbnail size.
+- 文章标题排版或大字海报式封面；
+- 类 Logo 字符、伪代码、随机符号、签名和水印；
+- 赛博朋克、霓虹青色、紫蓝渐变和全息界面；
+- 人形机器人、机器人手、发光大脑和悬浮神经网络；
+- 用通用芯片、电路板、服务器机架、二进制雨或云图标代指技术；
+- 光滑的企业图库摄影、摆拍握手、英雄姿态和夸张轮廓光；
+- 励志海报式情绪、强行深刻和装饰性忧郁；
+- 在缩略图尺寸下无法辨认的视觉复杂度。
 
-## Relationship to author photography
+## 与作者摄影的关系
 
-An author's photograph with a real connection to the article outranks generated imagery. Preserve its place, time, crop intention, and documentary content. Do not use strong filters, gradients, shadows, text overlays, or invented objects. When a vertical or edge-dependent photograph cannot survive a 4:3 crop, use `contain` or keep it in the article body.
+作者本人拍摄且与文章真实相关的照片优先于 AI 生成图。保留拍摄地点、时间、构图意图和纪实内容，不使用强滤镜、渐变、投影、文字覆盖或虚构物件。竖图或依赖边缘构图的照片无法承受 4:3 裁切时，使用 `contain`，或将其保留在正文中。

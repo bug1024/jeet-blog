@@ -1,5 +1,5 @@
 interface:
-  display_name: "BUG1024 博客封面"
-  short_description: "为 BUG1024 生成克制、统一且有隐喻的文章封面"
+  display_name: "BUG1024 第 1024 格封面"
+  short_description: "生成带有单一 Bug 签名的 BUG1024 文章封面与视觉作品"
   brand_color: "#365B6D"
-  default_prompt: "使用 $blog-cover-generator 根据文章内容生成一张 BUG1024 风格封面。"
+  default_prompt: "使用 $blog-cover-generator 根据文章内容，以‘自然秩序、一个 Bug、钢蓝回应’的视觉语法生成封面。"

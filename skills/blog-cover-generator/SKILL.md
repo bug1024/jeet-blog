@@ -1,74 +1,84 @@
 ---
 name: blog-cover-generator
-description: Generate, refine, and prepare article cover images for the BUG1024 personal site and digital garden. Use when an AI agent is asked to create a blog cover, article hero image, social sharing image, visual concept, or cover variants for BUG1024 content about work, systems, AI, engineering, life, family, time, photography, or personal experience. Preserve the site's restrained ink, mist-white, and steel-blue identity; prefer editorial metaphor, quiet technical photography, or documentary still-life over title-card graphics, stock imagery, cyberpunk, or generic AI motifs.
+description: 为 BUG1024 个人网站和“第 1024 格”系列生成、调整并准备具有作者识别度的文章封面与视觉作品。适用于博客封面（blog cover）、文章头图（hero image）、社交分享图（social sharing image）、作品集版本（portfolio edition）、视觉概念和封面变体等任务，覆盖工作、系统、AI、工程、生活、家庭、时间、摄影和个人经历等内容。保持墨色、雾白和钢蓝的克制体系；每张 AI 生成图必须表达与文章相关的一种自然秩序、一个明确的 Bug，以及一次具有实际作用的钢蓝回应，避免落入通用编辑配图风格。
 ---
 
-# BUG1024 Blog Cover Generator
+# BUG1024 文章封面生成器
 
-Create a visual interpretation of an article, not a second title block. Let the image establish tone and metaphor while the article title carries the argument.
+生成对文章的视觉解释，而不是第二块标题区。让图像负责气质和隐喻，让标题负责表达观点。
 
-## Required references
+## 必读资料
 
-Read both files before choosing a visual direction:
+选择视觉方向前，完整阅读：
 
-- [brand-system.md](references/brand-system.md) for fixed brand and production rules.
-- [visual-directions.md](references/visual-directions.md) for direction selection and prompt patterns.
-- [runtime-adapters.md](references/runtime-adapters.md) for selecting the available image-generation runtime without changing the visual system.
+- [brand-system.md](references/brand-system.md)：固定品牌规则与生产规范；
+- [visual-system.md](references/visual-system.md)：“第 1024 格”的作者签名、Bug 分类和验收标准；
+- [visual-directions.md](references/visual-directions.md)：视觉方向选择与英文 Prompt 范例；
+- [runtime-adapters.md](references/runtime-adapters.md)：在不改变视觉体系的前提下选择图片生成运行时。
 
-For work inside the `jeet-blog` repository, also read `AGENTS.md`, `docs/content/article-authoring.md`, and `docs/brand/bug1024-identity.md` completely. Repository rules override this skill if they later change.
+在 `jeet-blog` 仓库内工作时，还必须完整阅读 `AGENTS.md`、`docs/content/article-authoring.md` 和 `docs/brand/bug1024-identity.md`。仓库规则发生变化时，以仓库规则为准。
 
-## Workflow
+## 工作流程
 
-1. Read the full article or the user's complete outline. Do not infer a cover from the title alone.
-2. Extract a visual brief containing:
-   - the concrete subject;
-   - the central tension or relationship;
-   - one visual metaphor or real scene;
-   - the intended emotional temperature;
-   - objects and clichés to exclude.
-3. Decide whether a generated cover is justified:
-   - Prefer the author's own relevant photograph when one exists.
-   - Use the site's default steel-blue coordinate panel when no honest visual concept exists.
-   - Generate only when the image materially interprets the article rather than merely filling space.
-4. Select exactly one direction from `references/visual-directions.md`. Default to restrained editorial illustration. Generate variants only when the user requests comparison.
-5. Shape a production prompt using the brief and brand rules. Never place the article title, BUG1024 wordmark, pseudo-code, UI labels, or decorative typography inside the image.
-6. Select the image-generation runtime described in `references/runtime-adapters.md`. Keep the visual brief and acceptance rules identical across platforms.
-7. Inspect the result at full size and as a small thumbnail. Reject it if it contains illegible text, watermarks, generic robot imagery, neon technology effects, stock-photo mannerisms, excessive steel blue, or more than one dominant visual anomaly.
-8. Iterate with one targeted change at a time. Preserve the approved subject, composition, palette, and mood between iterations.
-9. Prepare the selected raster with `scripts/prepare_cover.py` at `2400 × 1800`, sRGB-compatible RGB, and WebP output. Use `cover` cropping unless the composition depends on its edges.
-10. For `jeet-blog`, save the final asset as `static/images/article/<slug>-cover.webp` unless the user gives another path. Do not overwrite an existing cover without explicit permission.
-11. Write objective alt text describing visible content. Write a caption only when it records a real place, date, source, or concrete observation; do not invent documentary metadata for generated art.
-12. Before adding front matter, inspect the active article template. If it does not render the documented `cover` contract, say so and either implement support when authorized or leave the asset unreferenced. Never claim the cover is live when the template ignores it.
-13. Report the selected direction, final prompt, saved path, dimensions, and whether the cover has been connected to the article.
+1. 阅读文章全文或用户提供的完整提纲。不得只根据标题推测封面。
+2. 提取视觉简报，至少包括：
+   - 具体主题；
+   - 核心矛盾或关系；
+   - 一个隐喻或真实场景中可见的自然秩序；
+   - 恰好一种 Bug 类型及其具体表现；
+   - 钢蓝承担 Bug、修补（patch）还是痕迹（trace）；
+   - 可选的人为痕迹，例如使用、选择、照料或维护；
+   - 预期的情绪温度；
+   - 需要排除的物件与陈词滥调。
+3. 判断是否确实需要生成封面：
+   - 存在作者本人拍摄且与文章直接相关的照片时，优先使用照片；
+   - 找不到诚实、具体的视觉概念时，使用网站默认钢蓝文章坐标板；
+   - 只有图像能够实质解释文章，而非单纯填补空白时，才生成新图。
+4. 生成封面时应用 `references/visual-system.md`。不断收紧简报，直到秩序、Bug 和钢蓝作用都具体且与文章不可互换。
+5. 从 `references/visual-directions.md` 中只选择一个方向。默认使用“结构静物”；只有文章明显需要其他媒介时才切换。除非用户要求对比，否则只生成一个方案。
+6. 根据简报和品牌规则编写英文生产 Prompt。不得在图内放置文章标题、`1024`、BUG1024 字标、封面编号、伪代码、UI 标签或装饰文字。
+7. 根据 `references/runtime-adapters.md` 选择图片生成运行时。跨平台时保持视觉简报和验收规则一致。
+8. 同时检查全尺寸图和小缩略图，并应用 `visual-directions.md` 与 `visual-system.md` 中的验收标准。拒绝通用氛围图、装饰性钢蓝、过度隐藏或过度突出的 Bug，以及多个相互竞争的异常。
+9. 每次迭代只调整一个明确问题。保留已经确认的主题、秩序、Bug 类型、构图、配色和情绪。
+10. 使用 `scripts/prepare_cover.py` 将选中图片处理为 `2400 × 1800`、兼容 sRGB 的 RGB WebP。除非构图依赖边缘完整性，否则使用 `cover` 裁切。
+11. 在 `jeet-blog` 中默认保存为 `static/images/article/<slug>-cover.webp`。未获得明确许可时，不得覆盖已有封面。
+12. 编写客观描述画面内容的 `alt`。只有真实地点、日期、来源或具体观察需要记录时才添加图注；不得为生成图虚构纪实信息。
+13. 写入 front matter 前检查当前文章模板。模板不支持约定的 `cover` 字段时，明确说明；得到授权后补齐支持，否则保持图片未接入。不得在模板实际忽略配置时宣称封面已经生效。
+14. 交付时报告视觉方向、自然秩序、Bug 类型、钢蓝作用、最终英文 Prompt、保存路径、尺寸以及是否已经接入文章。
 
-## Prompt skeleton
+## 英文 Prompt 模板
 
-Use only useful lines and keep the prompt compact:
+只保留当前任务需要的字段，避免把 Prompt 写成冗长的规则堆积：
 
 ```text
 Use case: <stylized-concept or photorealistic-natural>
 Asset type: BUG1024 article cover, 4:3 landscape
 Article premise: <one factual sentence>
-Primary request: <one scene or metaphor>
+Natural order: <one real arrangement, rhythm, sequence, boundary, or structure>
+Single Bug: <one Bug type and its physical manifestation>
+Steel-blue role: <the Bug, patch, or trace; causal, not decorative>
+Primary request: <one scene expressing this relationship>
 Style/medium: <selected direction>
 Composition/framing: one clear focal relationship, generous breathing room, readable at thumbnail size, no text area required
 Lighting/mood: restrained, observant, quiet confidence; not dramatic or sentimental
-Color palette: ink #111A21, mist white #F8FAF9, muted neutrals; steel blue #365B6D only as one small structural accent when justified
-Constraints: no words, letters, numbers, logo, title, watermark; one dominant visual anomaly at most
+Color palette: ink #111A21, mist white #F8FAF9, muted natural materials; steel blue #365B6D occupies less than 10% and participates in the Bug
+Constraints: no words, letters, numbers, logo, title, watermark; exactly one Bug; no generic grid overlay
 Avoid: cyberpunk, neon blue, holograms, humanoid robots, glowing brains, circuit-board clichés, server-rack literalism, glossy corporate stock photography, cinematic spectacle, motivational-poster mood
 ```
 
-## Delivery rules
+## 交付规则
 
-- Produce one finished cover by default, not a contact sheet.
-- Keep source truth intact when editing an author photograph; do not create objects or alter documentary meaning.
-- Do not add the BUG1024 logo to article covers. The website header already carries the identity.
-- Do not force steel blue into a naturally warm or documentary image. Brand unity comes primarily from restraint, composition, and tone.
-- Treat `4:3` as the canonical article-cover ratio. Create separate social crops only when requested, derived from the same visual concept.
-- Do not commit, publish, or change article templates unless the user explicitly asks.
-- Treat this repository folder as the canonical skill source. Platform-specific installations should link to or package this folder rather than maintain divergent copies.
+- 默认只交付一张完成的封面，不生成联系表。
+- 将 AI 生成封面视为“第 1024 格”视觉作品的一部分；跨题材保持“秩序—Bug—钢蓝”关系，但不机械重复同一种构图。
+- 编辑作者照片时保持事实真实性，不得生成不存在的物体或改变纪实含义。
+- 文章封面内不放 BUG1024 标志，网站页眉已经承担品牌识别。
+- AI 生成作品中的钢蓝必须具有结构意义，不得只是可有可无的装饰；不得为了统一而把钢蓝强加到作者纪实照片中。
+- 不得在每张图里放置 `1024`、网格、坐标或作品编号。“第 1024 格”不是寻找彩蛋的游戏。
+- 文章封面标准比例为 `4:3`。只有用户明确要求时才从同一视觉概念派生独立社交裁切版本。
+- 未经用户明确要求，不得提交、发布或修改文章模板。
+- 以仓库内当前目录作为 Skill 唯一事实源。其他平台应链接或打包此目录，不得维护内容不同的副本。
 
-## Cover preparation
+## 封面规格化
 
 Run:
 
@@ -76,4 +86,4 @@ Run:
 python3 scripts/prepare_cover.py INPUT OUTPUT --fit cover --focus-x 50 --focus-y 50
 ```
 
-Use `--fit contain` only when the whole composition must remain visible. Run `python3 scripts/prepare_cover.py --help` for all options.
+只有构图必须完整保留时才使用 `--fit contain`。运行 `python3 scripts/prepare_cover.py --help` 查看全部参数。
