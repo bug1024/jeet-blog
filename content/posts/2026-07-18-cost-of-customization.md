@@ -6,6 +6,14 @@ author: "Bug1024"
 slug: "cost-of-customization"
 draft: false
 hideInHomepage: true
+visual: "bug-visual-017"
+cover:
+  image: "/images/article/cost-of-customization-cover.webp"
+  alt: "木框内排列标准矩形模块，其中一个异形模块由钢蓝色金属适配器固定"
+  position: "50% 50%"
+  fit: "cover"
+images:
+    - "/images/article/cost-of-customization-cover.webp"
 tags:
     - 工作与系统
     - 技术实践

@@ -1,0 +1,38 @@
+id: "bug-visual-018"
+number: 18
+series: "第 1024 格"
+title: "缺失的接入段"
+article: "platforms-need-adoption"
+image: "/images/article/platforms-need-adoption-cover.webp"
+created: "2026-07-21"
+direction: "结构静物"
+source: "ai-generated"
+dimensions: "2400x1800"
+
+natural_order: "平台与实际工作模块之间由一组等距踏板形成连续、可以使用的接入路径。"
+bug_type: "missing"
+bug_expression: "路径中央缺少一块踏板，使已经完成的平台能力停在使用者之前。"
+steel_blue_role: "patch"
+steel_blue_expression: "钢蓝色桥板只补齐缺失的位置，把平台能力重新连接到真实工作环境。"
+human_trace: "两侧模块、工具和踏板边缘带有日常使用产生的磨损，说明路径是否被使用比是否建成更重要。"
+
+interpretation: >
+  平台功能已经存在，但接入成本、默认配置、文档和推广共同决定了能力能否真正抵达使用者。
+  缺失的不是另一套平台，而是让能力进入工作流程的最后一段连接。
+
+alt: "两组工作模块之间排列着连接踏板，中间缺口由一块钢蓝色桥板补齐"
+
+prompt: |
+  Use case: stylized-concept
+  Asset type: BUG1024 article cover, 4:3 landscape
+  Article premise: A technical platform creates value only when users can cross the integration cost and make the capability part of real work.
+  Natural order: A sequence of evenly spaced stone-and-wood stepping plates forms a practical connection between a finished platform slab and a group of small work modules.
+  Single Bug: missing — exactly one central stepping plate is absent, leaving an obvious but modest gap that stops the otherwise complete connection.
+  Steel-blue role: patch — one restrained steel-blue #365B6D bridge plate spans only that missing position and restores a usable route.
+  Primary request: A constructed editorial still-life on an ink-dark work surface: a carefully finished neutral platform slab on one side, several modest used work modules on the other, and an orderly line of tactile stepping plates between them. One central plate is missing and replaced by a functional steel-blue bridge plate. Show slight wear where the path is actually used. The missing segment is the only anomaly.
+  Style/medium: tactile constructed editorial still-life between photography and handmade spatial model, using stone, wood, paper fiber and brushed metal.
+  Composition/framing: clear side-to-side crossing, purposeful breathing room but no empty half-frame, thumbnail-readable, all important elements within 6% margins.
+  Lighting/mood: quiet daylight, practical and observant, neither triumphant nor bleak.
+  Color palette: ink #111A21, mist white #F8FAF9, muted natural materials; steel blue under 10%, only the replacement bridge.
+  Constraints: no text, letters, numbers, logo, title, watermark; exactly one missing segment; no arrows, icons, UI, decorative blue or generic grid.
+  Avoid: literal software platform, cloud icons, download symbols, corporate presentation aesthetic, cyberpunk, neon, holograms, robots, server racks, glossy product shot.

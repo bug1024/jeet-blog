@@ -1,0 +1,34 @@
+id: "bug-visual-007"
+number: 7
+series: "第 1024 格"
+title: "共同承重"
+article: "after-becoming-a-lead"
+image: "/images/article/after-becoming-a-lead-cover.webp"
+created: "2026-07-21"
+direction: "结构模型"
+source: "ai-generated"
+dimensions: "2400x1800"
+
+natural_order: "一根横梁由多根等距支柱共同支撑，任务重量应在结构中均匀分布。"
+bug_type: "overload"
+bug_expression: "任务方块集中在中央支柱上方，使唯一的中央支柱弯曲并成为承重瓶颈。"
+steel_blue_role: "patch"
+steel_blue_expression: "钢蓝色斜撑把中央支柱连接到相邻支柱，将集中压力重新分散到团队结构。"
+human_trace: "木质模型的边缘、接点和方块保留了搭建与调整留下的细微痕迹。"
+
+interpretation: >
+  负责人如果成为所有事情的必经节点，个人能力越强，团队的瓶颈反而越稳定。
+  真正的变化是把目标、信息与判断分布出去，让结构能够共同承重。
+
+alt: "木质承重模型上，多块任务方块集中压在弯曲的中央支柱上，一组钢蓝色斜撑将压力分散到相邻支柱"
+
+prompt: |
+  Create a 4:3 horizontal editorial model photograph for the BUG1024 “The 1024th Cell” visual series. Theme: after becoming a team lead, the real task is not to carry everything personally but to build a structure in which responsibility and information are shared.
+
+  Scene: a small handcrafted wooden load-bearing model on a dark ink-colored worktable. A long neutral horizontal beam is supported by four evenly spaced wooden uprights, establishing a clear natural order of distributed support. Several small neutral task blocks sit on the beam. The model should feel practical and architectural, with subtle fingerprints and wear.
+
+  Introduce exactly one deliberate deviation: all task blocks have accumulated into one compact cluster directly above the central upright, making that single upright visibly bow under the concentrated load while the rest of the structure remains orderly. Add one restrained steel-blue #365B6D cross-brace that physically connects the bowed central upright to its neighboring supports and redistributes the load across the structure. The concentrated cluster and its stressed central support are one visual Bug; the blue brace is the functional Patch. No other blue elements and no broken pieces.
+
+  Visual mood: calm, responsible, technically precise, human, and understated; editorial photography fused with subtle crafted illustration, like an architectural model in a Japanese design magazine. Warm off-white wood against dark ink, soft directional light, material texture, purposeful negative space. Do not make it heroic or corporate.
+
+  Hard constraints: no people, no hands, no org charts, no arrows, no labels, no screens, no servers, no robots, no cyberpunk, no title text, no letters, no numbers, no logos, no watermark, no decorative grid overlay. Exactly one visual exception and less than 10% steel blue. Keep all meaningful elements inside a 6% safe margin for responsive cropping.

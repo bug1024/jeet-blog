@@ -1,0 +1,34 @@
+id: "bug-visual-011"
+number: 11
+series: "第 1024 格"
+title: "被绕开的约束"
+article: "dont-rush-to-criticize-legacy-systems"
+image: "/images/article/dont-rush-to-criticize-legacy-systems-cover.webp"
+created: "2026-07-21"
+direction: "空间叙事"
+source: "ai-generated"
+dimensions: "2400x1800"
+
+natural_order: "旧工作台的桌腿原本应从四个桌角垂直落下，形成整齐而直接的支撑。"
+bug_type: "offset"
+bug_expression: "一条桌腿为避开无法移动的地面石墩而偏向侧面，看起来不符合通常结构。"
+steel_blue_role: "patch"
+steel_blue_expression: "钢蓝色斜撑把原来的承重点连接到偏置桌腿，解释并承担这次结构妥协。"
+human_trace: "旧木桌面的磨损、石墩和地板保留了长期使用与现场条件留下的痕迹。"
+
+interpretation: >
+  陌生系统中的不一致可能确实需要改变，也可能是在回应代码之外的历史约束。
+  先看见那块无法直接移走的石墩，才能判断偏置桌腿究竟是债务还是仍在发挥作用的设计。
+
+alt: "旧木工作台的一条桌腿为避开地面石墩而偏向右侧，并由钢蓝色斜撑连接到桌面结构"
+
+prompt: |
+  Create a 4:3 horizontal constructed editorial still-life for the BUG1024 “The 1024th Cell” visual series. Theme: an old system may look irrational until the historical constraint that shaped it becomes visible.
+
+  Scene: a modest old wooden workbench viewed straight on in a quiet workshop. Three of its four legs descend in a clean, expected alignment. Beneath the remaining expected leg position, an immovable worn stone footing rises from the old floor, making a normal vertical leg impossible. The bench surface remains level and visibly in use.
+
+  Introduce exactly one Offset: the fourth wooden leg stands several centimeters to the side of its expected position to avoid that fixed stone. A single restrained steel-blue #365B6D load-transfer bracket connects the original corner of the bench to the offset leg, physically explaining how the unusual structure still carries weight. The offset leg and its bracket form the only deviation; no other repairs, cracks, or blue elements.
+
+  Style and mood: credible constructed editorial still-life between real photography and a handmade structural model. Aged but cared-for wood, stone, old floor, brushed metal, subtle use marks, ordinary daylight. Calm, observant, and fair-minded, not nostalgic or picturesque. The first reading is “one leg looks wrong”; the second is “it is responding to a real constraint.”
+
+  Hard constraints: no people, no tools scattered as decoration, no code, no servers, no gears, no blueprint overlay, no robots, no cyberpunk, no text, no letters, no numbers, no logo, no watermark. Exactly one offset and less than 10% steel blue. Keep all meaningful elements inside a 6% safe margin for responsive cropping.

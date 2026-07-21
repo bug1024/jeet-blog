@@ -1,0 +1,34 @@
+id: "bug-visual-006"
+number: 6
+series: "第 1024 格"
+title: "最初的偏移"
+article: "how-long-projects-lose-control"
+image: "/images/article/how-long-projects-lose-control-cover.webp"
+created: "2026-07-21"
+direction: "结构静物"
+source: "ai-generated"
+dimensions: "2400x1800"
+
+natural_order: "相连的纸木模块应当沿同一条刻度基准线持续排列。"
+bug_type: "offset"
+bug_expression: "一个早期接点发生平移，后续模块仍然有序推进，却整体沿平行方向偏离。"
+steel_blue_role: "trace"
+steel_blue_expression: "钢蓝色定位钉只标记偏移最初发生的位置，为重新校准保留证据。"
+human_trace: "纸面纤维、木质接点和规划台保留了长期推进与调整的使用痕迹。"
+
+interpretation: >
+  长周期项目并不总在某一刻突然失控。局部任务仍在完成，真正的偏差却可能早已从某个假设、
+  依赖或关键接点开始，并在后续有序推进中不断累积。
+
+alt: "一列相连的纸木模块原本沿基准线排列，却从一枚钢蓝色定位钉处开始整体平移，并沿平行方向继续延伸"
+
+prompt: |
+  Create a 4:3 horizontal editorial still-life illustration for the BUG1024 “The 1024th Cell” visual series. Theme: a long-cycle project can appear locally active while its overall path has quietly drifted because one early assumption was never realigned.
+
+  Scene: a long sequence of small neutral paper-and-wood project modules connected edge to edge across a dark ink-colored planning table. A subtle scored baseline beneath them establishes a clear natural order: the modules should continue in one straight aligned line. The modules contain no writing or symbols, only material joints and modest handling wear.
+
+  Introduce exactly one deliberate deviation: at one early joint, a single module shifts a few centimeters sideways from the scored baseline. Every later module remains connected in an orderly chain, but the whole downstream sequence now continues along one clean parallel displaced line. Mark only the original point of offset with one restrained steel-blue #365B6D registration pin or joint, functioning as evidence of where the drift began. The early offset is the only anomaly; do not create forks, branches, breaks, or additional misaligned pieces. No other blue elements.
+
+  Visual mood: precise, sober, quietly tense, and human; editorial photography fused with subtle crafted illustration, like an architectural planning model photographed for a Japanese design magazine. Show paper fibers, wooden edges, slight wear, soft directional light, and purposeful negative space. The viewer should grasp “local progress, global deviation” without a literal diagram.
+
+  Hard constraints: no maps, no road, no dominoes, no graphs, no arrows, no screens, no people, no servers, no robots, no cyberpunk, no title text, no letters, no numbers, no logos, no watermark, no decorative grid overlay. Exactly one visual exception and less than 10% steel blue. Keep all meaningful elements inside a 6% safe margin for responsive cropping.

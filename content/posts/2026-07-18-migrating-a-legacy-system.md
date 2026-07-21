@@ -6,6 +6,14 @@ author: "Bug1024"
 slug: "migrating-a-legacy-system"
 draft: false
 hideInHomepage: true
+visual: "bug-visual-020"
+cover:
+  image: "/images/article/migrating-a-legacy-system-cover.webp"
+  alt: "旧木结构中的单一路径在钢蓝色切换接点处分成两条并行通道"
+  position: "50% 50%"
+  fit: "cover"
+images:
+    - "/images/article/migrating-a-legacy-system-cover.webp"
 tags:
     - 技术实践
     - 工作与系统

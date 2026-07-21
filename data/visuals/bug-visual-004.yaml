@@ -1,0 +1,34 @@
+id: "bug-visual-004"
+number: 4
+series: "第 1024 格"
+title: "离开档案"
+article: "bookmarking-is-not-learning"
+image: "/images/article/bookmarking-is-not-learning-cover.webp"
+created: "2026-07-21"
+direction: "结构静物"
+source: "ai-generated"
+dimensions: "2400x1800"
+
+natural_order: "旧卡片被整齐保存在木质档案柜里，信息停留在各自的槽位中。"
+bug_type: "out-of-order"
+bug_expression: "唯一一张卡片离开档案，被折成垫片并进入旧木刨的实际接缝。"
+steel_blue_role: "patch"
+steel_blue_expression: "钢蓝色夹具把卡片垫片固定在松动处，使被保存的信息真正参与修复。"
+human_trace: "卡片边缘、木柜和旧木刨都保留了反复使用与修补的痕迹。"
+
+interpretation: >
+  收藏只把信息放进一个更容易找到的位置。卡片离开档案并成为修复的一部分，
+  对应知识在具体问题、实际选择和反复使用中才真正属于自己。
+
+alt: "木质卡片柜中整齐保存着旧卡片，其中一张被取出折成垫片，并由钢蓝色夹具固定在旧木刨的接缝处"
+
+prompt: |
+  Create a 4:3 horizontal editorial still-life illustration for the BUG1024 “The 1024th Cell” visual series. Theme: bookmarking is not learning; stored information becomes knowledge only when it is taken out and used to solve a specific problem.
+
+  Scene: on a dark ink-colored worktable, a quiet wooden card-catalog drawer holds many anonymous worn off-white reference cards in precise natural order. The cards contain no readable writing, only faint blank rules. Beside it is one small old wooden hand plane with a single loose joint that needs a practical repair.
+
+  Introduce exactly one deliberate deviation: one single card has been removed from the archive, folded once as a functional shim, and inserted into the hand plane’s loose joint. One restrained steel-blue #365B6D metal clamp holds that card-shim and the joint firmly together. The card must visibly participate in the repair, not merely rest nearby or carry a decorative paper clip. This extracted and used card is the only anomaly; all other cards remain in the drawer. No other blue elements.
+
+  Composition: the archive occupies the left half, the repaired tool the right half, with the extracted card visibly bridging the two ideas. Calm, intelligent, human, materially real; editorial photography fused with subtle crafted illustration, like a quiet Japanese design magazine. Visible paper fibers, worn wood, modest repair marks, purposeful negative space. Avoid a generic study scene.
+
+  Hard constraints: no books, no laptop, no phone, no screens, no people, no brains, no light bulbs, no servers, no robots, no cyberpunk, no title text, no letters, no numbers, no logos, no watermark, no decorative grid overlay. Exactly one visual exception and less than 10% steel blue. Keep all meaningful elements inside a 6% safe margin for responsive cropping.

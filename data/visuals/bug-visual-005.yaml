@@ -1,0 +1,34 @@
+id: "bug-visual-005"
+number: 5
+series: "第 1024 格"
+title: "有限的一段"
+article: "when-work-feels-stagnant"
+image: "/images/article/when-work-feels-stagnant-cover.webp"
+created: "2026-07-21"
+direction: "结构静物"
+source: "ai-generated"
+dimensions: "2400x1800"
+
+natural_order: "一列等距木块在工作台上构成连续、稳定而重复的工作节奏。"
+bug_type: "missing"
+bug_expression: "序列中间缺少一块，原本持续的节奏出现唯一的停顿。"
+steel_blue_role: "patch"
+steel_blue_expression: "一座短小的钢蓝色金属桥只跨过眼前缺口，让两侧重新发生连接。"
+human_trace: "木块边缘和工作台表面留有反复摆放、使用形成的磨损。"
+
+interpretation: >
+  低迷期不一定需要一个更宏大的远方。先完成一个边界明确的小阶段，
+  让行动重新获得反馈，往往比继续增加目标更有效。
+
+alt: "深色工作台上一列等距木块在中间缺少一块，一座短小的钢蓝色金属桥连接了缺口两侧"
+
+prompt: |
+  Create a 4:3 horizontal editorial still-life illustration for the BUG1024 “The 1024th Cell” visual series. Theme: when work enters a stagnant period, progress returns not through a grand distant goal but through one small, bounded stage that restores action and feedback.
+
+  Scene: a dark ink-colored craftsman’s workbench with a restrained warm off-white atmosphere. Across the surface, a sequence of identical small wooden measuring tiles forms a calm, practical working rhythm. They are ordinary task markers, not stairs and not a road. The natural order is a continuous row of equally spaced neutral tiles, with subtle human wear on their edges.
+
+  Introduce exactly one deliberate deviation: one expected tile is missing from the middle of the sequence, creating a single quiet gap. A short, functional steel-blue #365B6D metal bridge spans only that gap and reconnects the two neighboring tiles. It should clearly solve this one limited interval, not point toward a distant destination. This missing interval is the only anomaly; no other blue elements.
+
+  Visual mood: sober, patient, intelligent, human, and grounded; editorial photography fused with subtle crafted illustration, like a carefully composed Japanese design magazine. Material texture, soft side light, purposeful negative space, no inspirational spectacle. The visual idea is “finish one finite section, then regain movement.”
+
+  Hard constraints: no horizon, no staircase, no road, no mountain, no finish line, no glowing future, no screens, no people, no clocks, no servers, no robots, no cyberpunk, no title text, no letters, no numbers, no logos, no watermark, no decorative grid overlay. Exactly one visual exception and less than 10% steel blue. Keep all meaningful elements inside a 6% safe margin for responsive cropping.

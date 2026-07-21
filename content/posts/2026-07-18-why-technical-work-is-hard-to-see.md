@@ -6,6 +6,14 @@ author: "Bug1024"
 slug: "why-technical-work-is-hard-to-see"
 draft: false
 hideInHomepage: true
+visual: "bug-visual-010"
+cover:
+  image: "/images/article/why-technical-work-is-hard-to-see-cover.webp"
+  alt: "五只水位相同的玻璃杯整齐放在石质搁板上，中央杯子下方的一道裂缝由钢蓝色金属托件固定"
+  position: "50% 50%"
+  fit: "cover"
+images:
+    - "/images/article/why-technical-work-is-hard-to-see-cover.webp"
 tags:
     - 工作与系统
 ---

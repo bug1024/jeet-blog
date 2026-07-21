@@ -6,6 +6,14 @@ author: "Bug1024"
 slug: "after-becoming-a-lead"
 draft: false
 hideInHomepage: true
+visual: "bug-visual-007"
+cover:
+  image: "/images/article/after-becoming-a-lead-cover.webp"
+  alt: "木质承重模型上，多块任务方块集中压在弯曲的中央支柱上，一组钢蓝色斜撑将压力分散到相邻支柱"
+  position: "50% 50%"
+  fit: "cover"
+images:
+    - "/images/article/after-becoming-a-lead-cover.webp"
 tags:
     - 工作与系统
     - 经历与阶段

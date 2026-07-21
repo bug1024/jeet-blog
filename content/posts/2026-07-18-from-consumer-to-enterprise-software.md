@@ -6,6 +6,14 @@ author: "Bug1024"
 slug: "from-consumer-to-enterprise-software"
 draft: false
 hideInHomepage: true
+visual: "bug-visual-016"
+cover:
+  image: "/images/article/from-consumer-to-enterprise-software-cover.webp"
+  alt: "一排木质模块穿过简单隔栏后进入多层嵌套框架，钢蓝色连杆调节最深处的开口"
+  position: "50% 50%"
+  fit: "cover"
+images:
+    - "/images/article/from-consumer-to-enterprise-software-cover.webp"
 tags:
     - 工作与系统
     - 技术实践

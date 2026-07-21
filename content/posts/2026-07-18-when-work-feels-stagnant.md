@@ -6,6 +6,14 @@ author: "Bug1024"
 slug: "when-work-feels-stagnant"
 draft: false
 hideInHomepage: true
+visual: "bug-visual-005"
+cover:
+  image: "/images/article/when-work-feels-stagnant-cover.webp"
+  alt: "深色工作台上一列等距木块在中间缺少一块，一座短小的钢蓝色金属桥连接了缺口两侧"
+  position: "50% 50%"
+  fit: "cover"
+images:
+    - "/images/article/when-work-feels-stagnant-cover.webp"
 tags:
     - 经历与阶段
     - 生活与时间

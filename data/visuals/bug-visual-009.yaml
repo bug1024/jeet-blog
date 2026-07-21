@@ -1,0 +1,34 @@
+id: "bug-visual-009"
+number: 9
+series: "第 1024 格"
+title: "一枚适配件"
+article: "compromises-in-technical-design"
+image: "/images/article/compromises-in-technical-design-cover.webp"
+created: "2026-07-21"
+direction: "结构静物"
+source: "ai-generated"
+dimensions: "2400x1800"
+
+natural_order: "四个相同圆形孔位构成统一接口，前三个容纳形状一致的标准圆柱。"
+bug_type: "patch"
+bug_expression: "最后一个孔位需要容纳无法直接适配标准接口的不规则木件。"
+steel_blue_role: "patch"
+steel_blue_expression: "钢蓝色适配环只修改一个孔位，在不改变整体系统的前提下固定特殊木件。"
+human_trace: "石膏表面的粉尘、木件切面和金属环保留了制作与调试痕迹。"
+
+interpretation: >
+  技术方案不必为了形式统一，把所有变化都纳入一套昂贵的通用机制。
+  一枚边界清楚、作用明确的适配件，对应配置、模板与少量代码之间可解释的妥协。
+
+alt: "雾白色板面上四个圆形孔位依次排列，前三个嵌入相同的石墨圆柱，最后一个通过钢蓝色适配环固定着不规则木件"
+
+prompt: |
+  Create a 4:3 horizontal constructed editorial still-life for the BUG1024 “The 1024th Cell” visual series. Theme: a good technical compromise does not force every business rule into one elegant abstraction; it makes one bounded exception explicit and maintainable.
+
+  Scene: on a dark ink-colored work surface, a warm off-white plaster calibration panel contains four evenly spaced identical circular sockets in one calm horizontal row. Three sockets hold matching neutral graphite cylinders with a precise, natural fit. The fourth must hold one irregular hand-cut wooden component whose shape is useful but cannot fit the standard socket on its own.
+
+  Introduce exactly one deliberate Patch: a single restrained steel-blue #365B6D adapter collar sits inside that fourth socket and physically holds the irregular wooden component securely without changing the other three sockets. The adapted socket is the only deviation from the repeated system. The blue collar must look functional and removable, not decorative; no other blue elements.
+
+  Style and mood: tactile architectural still-life between real photography and a carefully handmade editorial model; plaster dust, graphite, imperfect wood grain, brushed metal, subtle handling marks. Quiet, intelligent, pragmatic, and restrained, like a Japanese design magazine. Purposeful breathing room and one immediately readable fit-versus-exception relationship.
+
+  Hard constraints: no UI, no configuration screens, no code, no gears, no people, no servers, no robots, no cyberpunk, no text, no letters, no numbers, no logo, no watermark, no decorative grid overlay. Exactly one patched exception and less than 10% steel blue. Keep all meaningful elements inside a 6% safe margin for responsive cropping.

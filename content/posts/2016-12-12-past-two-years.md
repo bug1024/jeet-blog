@@ -7,6 +7,14 @@ author: "Bug1024"
 tags:
     - 经历与阶段
 slug: "past-two-years"
+visual: "bug-visual-008"
+cover:
+  image: "/images/article/past-two-years-cover.webp"
+  alt: "旧房间内的衣物、笔记本和木盒沿墙摆放，一只由钢蓝色绑带束紧的旧行李箱已经越过门槛"
+  position: "50% 50%"
+  fit: "cover"
+images:
+    - "/images/article/past-two-years-cover.webp"
 ---
 
 毕业不知不觉已经两年半了。原本国庆节就想写这篇总结，真正动笔时已经到了十二月。此时我离开了第一家公司，也离开福州，一路向北去了北京。

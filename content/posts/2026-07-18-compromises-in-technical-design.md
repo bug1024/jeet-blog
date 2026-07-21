@@ -6,6 +6,14 @@ author: "Bug1024"
 slug: "compromises-in-technical-design"
 draft: false
 hideInHomepage: true
+visual: "bug-visual-009"
+cover:
+  image: "/images/article/compromises-in-technical-design-cover.webp"
+  alt: "雾白色板面上四个圆形孔位依次排列，前三个嵌入相同的石墨圆柱，最后一个通过钢蓝色适配环固定着不规则木件"
+  position: "50% 50%"
+  fit: "cover"
+images:
+    - "/images/article/compromises-in-technical-design-cover.webp"
 tags:
     - 技术实践
     - 工作与系统

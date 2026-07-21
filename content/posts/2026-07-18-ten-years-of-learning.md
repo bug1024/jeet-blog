@@ -6,6 +6,14 @@ author: "Bug1024"
 slug: "ten-years-of-learning"
 draft: false
 hideInHomepage: true
+visual: "bug-visual-014"
+cover:
+  image: "/images/article/ten-years-of-learning-cover.webp"
+  alt: "一排旧木抽屉中空出一个位置，被取出的抽屉由钢蓝色支架架在柜体上方，并托着一组石木结构模型"
+  position: "50% 50%"
+  fit: "cover"
+images:
+    - "/images/article/ten-years-of-learning-cover.webp"
 tags:
     - 经历与阶段
 ---

@@ -6,6 +6,14 @@ author: "Bug1024"
 slug: "after-several-work-reviews"
 draft: false
 hideInHomepage: true
+visual: "bug-visual-003"
+cover:
+  image: "/images/article/after-several-work-reviews-cover.webp"
+  alt: "深色工作台上叠放着四份述职材料，一条钢蓝色纸带越过最上层文件夹的边缘，连接到纸面之外的实体方块"
+  position: "50% 50%"
+  fit: "cover"
+images:
+    - "/images/article/after-several-work-reviews-cover.webp"
 tags:
     - 工作与系统
     - 经历与阶段

@@ -6,6 +6,14 @@ author: "Bug1024"
 slug: "how-long-projects-lose-control"
 draft: false
 hideInHomepage: true
+visual: "bug-visual-006"
+cover:
+  image: "/images/article/how-long-projects-lose-control-cover.webp"
+  alt: "一列相连的纸木模块原本沿基准线排列，却从一枚钢蓝色定位钉处开始整体平移，并沿平行方向继续延伸"
+  position: "50% 50%"
+  fit: "cover"
+images:
+    - "/images/article/how-long-projects-lose-control-cover.webp"
 tags:
     - 工作与系统
 ---

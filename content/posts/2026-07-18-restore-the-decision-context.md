@@ -6,6 +6,14 @@ author: "Bug1024"
 slug: "restore-the-decision-context"
 draft: false
 hideInHomepage: true
+visual: "bug-visual-012"
+cover:
+  image: "/images/article/restore-the-decision-context-cover.webp"
+  alt: "五块透明玻璃板依次由石质垫块支撑，中间一块缺少右侧支撑并开始倾斜，空位上留有钢蓝色方形轮廓"
+  position: "50% 50%"
+  fit: "cover"
+images:
+    - "/images/article/restore-the-decision-context-cover.webp"
 tags:
     - 工作与系统
 ---

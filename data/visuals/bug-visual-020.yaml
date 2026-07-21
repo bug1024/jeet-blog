@@ -1,0 +1,38 @@
+id: "bug-visual-020"
+number: 20
+series: "第 1024 格"
+title: "并行的中间状态"
+article: "migrating-a-legacy-system"
+image: "/images/article/migrating-a-legacy-system-cover.webp"
+created: "2026-07-21"
+direction: "结构静物"
+source: "ai-generated"
+dimensions: "2400x1800"
+
+natural_order: "一条经过长期使用的木质通道持续输送相同的石质模块。"
+bug_type: "fork"
+bug_expression: "通道在迁移接点处分成旧路径与新路径，形成一次暂时存在的双重写入。"
+steel_blue_role: "patch"
+steel_blue_expression: "钢蓝色切换与同步接点控制分叉，让两条路径上的对应模块保持一致。"
+human_trace: "旧木路径的磨损、新路径的较新材料和手工接点体现了迁移期间同时维护两套状态的代价。"
+
+interpretation: >
+  旧系统迁移没有依赖所有客户端同时升级，而是把兼容集中到服务端，让新旧链路在一段时间内并行运行。
+  钢蓝接点代表这段中间状态中的控制、比较和回退能力，而不是一条没有代价的捷径。
+
+alt: "旧木结构中的单一路径在钢蓝色切换接点处分成两条并行通道"
+
+prompt: |
+  Use case: stylized-concept
+  Asset type: BUG1024 article cover, 4:3 landscape
+  Article premise: A legacy monitoring system was migrated through temporary server-side dual writing, comparison, batching, and sharding because many clients could not upgrade together.
+  Natural order: A single worn channel carries a sequence of identical small stone data pieces through an established wooden structure.
+  Single Bug: fork — at one transition point the channel splits once into an old worn path and a new cleaner parallel path, creating a temporary double route.
+  Steel-blue role: patch — one restrained steel-blue #365B6D switch-and-sync joint controls the single fork and keeps corresponding pieces aligned across both paths before they reconnect.
+  Primary request: A constructed editorial still-life of two parallel tactile channels built from old wood, stone, paper composite and brushed metal. The scene begins as one established path, forks once through a steel-blue synchronization joint into old and new paths, then continues in parallel toward the edge of the model. Matching neutral pieces remain visibly aligned across both routes. The fork is the only deviation; no broken track or missing piece.
+  Style/medium: tactile constructed editorial still-life, believable migration model with signs of use, between real photography and handmade engineering model.
+  Composition/framing: clear left-to-right transition with one focal switch joint, balanced 4:3 landscape, thumbnail-readable, safe margins.
+  Lighting/mood: quiet practical workshop light, patient and controlled, not heroic.
+  Color palette: ink #111A21, mist white #F8FAF9, weathered wood and stone; steel blue under 10%, only the switch-and-sync joint.
+  Constraints: no text, letters, numbers, labels, arrows, logo, title, watermark; exactly one fork; no trains, vehicles, server racks, decorative blue or grid overlay.
+  Avoid: railway cliché, before-and-after split screen, data streams, cloud icons, cyberpunk, neon, holograms, robots, glossy corporate 3D, cinematic spectacle.

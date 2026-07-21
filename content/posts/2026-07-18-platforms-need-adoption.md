@@ -6,6 +6,14 @@ author: "Bug1024"
 slug: "platforms-need-adoption"
 draft: false
 hideInHomepage: true
+visual: "bug-visual-018"
+cover:
+  image: "/images/article/platforms-need-adoption-cover.webp"
+  alt: "两组工作模块之间排列着连接踏板，中间缺口由一块钢蓝色桥板补齐"
+  position: "50% 50%"
+  fit: "cover"
+images:
+    - "/images/article/platforms-need-adoption-cover.webp"
 tags:
     - 工作与系统
     - 技术实践

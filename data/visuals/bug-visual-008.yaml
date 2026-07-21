@@ -1,0 +1,34 @@
+id: "bug-visual-008"
+number: 8
+series: "第 1024 格"
+title: "越过门槛"
+article: "past-two-years"
+image: "/images/article/past-two-years-cover.webp"
+created: "2026-07-21"
+direction: "空间叙事"
+source: "ai-generated"
+dimensions: "2400x1800"
+
+natural_order: "衣物、笔记本和木盒沿旧房间的内墙整齐摆放，仍属于原有生活。"
+bug_type: "offset"
+bug_expression: "唯一一只旧行李箱离开室内的排列，停在跨过门槛的位置。"
+steel_blue_role: "trace"
+steel_blue_expression: "钢蓝色绑带实际束紧行李，也把这次离开标记为画面的唯一偏移。"
+human_trace: "磨损的提手、旧木地板和简单随身物品留下了真实生活与迁移的痕迹。"
+
+interpretation: >
+  从专业、工作到城市，早期职业生活由几次并不宏大的选择逐渐构成。
+  行李越过门槛，代表离开熟悉环境，并开始承担选择带来的新生活。
+
+alt: "旧房间内的衣物、笔记本和木盒沿墙摆放，一只由钢蓝色绑带束紧的旧行李箱已经越过门槛"
+
+prompt: |
+  Create a 4:3 horizontal spatial editorial photograph for the BUG1024 “The 1024th Cell” visual series. Theme: looking back on the first two years after graduation, several personal choices gradually carried the author from familiar Fuzhou life toward a new working life in Beijing.
+
+  Scene: an ordinary, modest room with a worn wooden floor and one real doorway threshold. Along the inside wall, a few neutral personal objects are placed in a calm aligned order: a folded shirt, a plain notebook with no writing, and a small wooden box. They suggest a recently lived-in life without nostalgia props or travel branding. The natural order is that everything remains aligned inside the room.
+
+  Introduce exactly one deliberate deviation: one compact, well-used cardboard travel case has left that alignment and sits halfway across the threshold toward a cooler, quieter space beyond. Its single restrained steel-blue #365B6D binding strap is functional, holding the case closed and marking the act of crossing. The moved case is the only anomaly and the strap is the only blue element. Show subtle human traces in the worn handle and floor, but no person.
+
+  Visual mood: restrained, observant, clear-eyed, and human; editorial photography fused with subtle crafted illustration, like a quietly composed Japanese magazine image. Warm off-white interior, dark ink shadows, cooler neutral space beyond, soft natural side light, purposeful negative space. The choice should feel consequential but not triumphant or sentimental.
+
+  Hard constraints: no map, no train, no tracks, no airplane, no city skyline, no road, no destination sign, no inspirational travel poster, no screens, no people, no robots, no cyberpunk, no title text, no letters, no numbers, no logos, no watermark, no decorative grid overlay. Exactly one visual exception and less than 10% steel blue. Keep all meaningful elements inside a 6% safe margin for responsive cropping.

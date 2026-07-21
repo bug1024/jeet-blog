@@ -1,0 +1,38 @@
+id: "bug-visual-016"
+number: 16
+series: "第 1024 格"
+title: "另一种复杂度"
+article: "from-consumer-to-enterprise-software"
+image: "/images/article/from-consumer-to-enterprise-software-cover.webp"
+created: "2026-07-21"
+direction: "结构静物"
+source: "ai-generated"
+dimensions: "2400x1800"
+
+natural_order: "相同的木质模块先沿一条边界单一、尺度一致的通道依次前进。"
+bug_type: "overflow"
+bug_expression: "其中一个模块进入多层嵌套边界后超出原有开口，简单通道的尺度不再足够。"
+steel_blue_role: "patch"
+steel_blue_expression: "钢蓝色连杆调整最深处的一道边界，让模块在保留其他约束的情况下继续通过。"
+human_trace: "木材磨损、玻璃接点和手工装配痕迹体现了对现实边界的持续校正。"
+
+interpretation: >
+  面向消费者的系统常把复杂度集中在容量与性能上，而企业软件还要容纳角色、权限、流程和组织差异。
+  画面中的模块没有变多，却在进入多层边界后暴露出另一种难以用流量衡量的复杂度。
+
+alt: "一排木质模块穿过简单隔栏后进入多层嵌套框架，钢蓝色连杆调节最深处的开口"
+
+prompt: |
+  Use case: stylized-concept
+  Asset type: BUG1024 article cover, 4:3 landscape
+  Article premise: Moving from consumer software to enterprise software revealed complexity created by roles, processes, permissions, time, and organizational differences rather than only traffic volume.
+  Natural order: A row of identical neutral wooden tokens travels through one broad, simple channel with evenly spaced supports.
+  Single Bug: overflow — one token reaches a compact set of nested boundary frames and cannot pass because its real shape extends beyond the simple channel's assumed dimensions.
+  Steel-blue role: patch — one restrained steel-blue #365B6D adjustable joint opens exactly one nested frame to accommodate the token without removing the surrounding boundaries.
+  Primary request: A constructed editorial still-life showing a simple wide channel entering a compact layered boundary structure made of paper, wood, translucent glass, and small metal pivots. One irregular but believable token exceeds a single aperture; a steel-blue adjustable joint responds to that mismatch. The overflow at that aperture is the only deviation.
+  Style/medium: tactile constructed editorial still-life, editorial and architectural, not an infographic or smooth 3D render.
+  Composition/framing: one clear left-to-right relationship, generous but purposeful space, strong thumbnail readability, meaningful elements within 6% safe margins.
+  Lighting/mood: cool natural window light, restrained and analytical without looking clinical.
+  Color palette: ink #111A21, mist white #F8FAF9, slate gray, natural wood; steel blue under 10%, only on the functioning joint.
+  Constraints: no text, letters, numbers, labels, logo, title, watermark; exactly one overflow; no second misaligned token; no generic grid overlay.
+  Avoid: flowchart arrows, org-chart icons, crowds, server racks, circuit boards, cyberpunk, neon, holograms, robots, glossy corporate stock style, decorative blue.

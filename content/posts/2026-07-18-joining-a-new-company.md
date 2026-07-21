@@ -6,6 +6,14 @@ author: "Bug1024"
 slug: "joining-a-new-company"
 draft: false
 hideInHomepage: true
+visual: "bug-visual-015"
+cover:
+  image: "/images/article/joining-a-new-company-cover.webp"
+  alt: "深色工作台上依次排列三座木质入口框架，最后一座通过钢蓝色铰接件连接到多层房间模型"
+  position: "50% 50%"
+  fit: "cover"
+images:
+    - "/images/article/joining-a-new-company-cover.webp"
 tags:
     - 经历与阶段
     - 工作与系统

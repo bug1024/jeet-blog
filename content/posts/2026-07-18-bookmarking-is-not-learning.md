@@ -6,6 +6,14 @@ author: "Bug1024"
 slug: "bookmarking-is-not-learning"
 draft: false
 hideInHomepage: true
+visual: "bug-visual-004"
+cover:
+  image: "/images/article/bookmarking-is-not-learning-cover.webp"
+  alt: "木质卡片柜中整齐保存着旧卡片，其中一张被取出折成垫片，并由钢蓝色夹具固定在旧木刨的接缝处"
+  position: "50% 50%"
+  fit: "cover"
+images:
+    - "/images/article/bookmarking-is-not-learning-cover.webp"
 tags:
     - 经历与阶段
 ---

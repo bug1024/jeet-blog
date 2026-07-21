@@ -1,0 +1,34 @@
+id: "bug-visual-003"
+number: 3
+series: "第 1024 格"
+title: "纸面之外"
+article: "after-several-work-reviews"
+image: "/images/article/after-several-work-reviews-cover.webp"
+created: "2026-07-21"
+direction: "结构静物"
+source: "ai-generated"
+dimensions: "2400x1800"
+
+natural_order: "四份年度述职材料依次叠放，工作碎片都被收纳在最上层文件夹内。"
+bug_type: "overflow"
+bug_expression: "一条纸带越过文件夹边界，把纸面内容连接到外部的实体结果。"
+steel_blue_role: "bug"
+steel_blue_expression: "越界的纸带本身呈钢蓝色，构成从材料到结果的唯一通路。"
+human_trace: "文件夹、纸片和工作台带有长期翻阅、整理留下的磨损。"
+
+interpretation: >
+  述职材料可以罗列项目、数字和技术细节，却不能自动说明工作的价值。
+  那条越过纸面边界的路径，代表从做过什么转向最终改变了什么。
+
+alt: "深色工作台上叠放着四份述职材料，一条钢蓝色纸带越过最上层文件夹的边缘，连接到纸面之外的实体方块"
+
+prompt: |
+  Create a 4:3 horizontal editorial still-life illustration for the BUG1024 “The 1024th Cell” visual series. Theme: after several work reviews, the author realizes that value exists beyond the review document.
+
+  Scene: an honest, tactile dark-ink worktable with a restrained warm off-white cast. A neat stack of four annual review folders lies in natural chronological order. The top folder is open and contains many small, anonymous paper fragments and neutral geometric work tokens, suggesting projects, metrics, and technical details without any readable writing. The established order is that every fragment remains contained inside the folder.
+
+  Introduce exactly one deliberate deviation: one single narrow strip leaves the open folder’s boundary and continues to a small, solid outcome block placed just beyond the paper. This boundary-crossing strip is the only anomaly in the composition. Make that strip a restrained steel blue #365B6D, because it is actively connecting written material to a real result; no other blue elements.
+
+  Visual mood: calm, intelligent, human, precise, slightly cinematic but not glossy; editorial photography fused with subtle crafted illustration, comparable to a quiet Japanese design magazine. Visible paper fibers, slight wear, careful composition, generous but purposeful negative space. The scene should feel designed by a technically minded person with humanist attention.
+
+  Hard constraints: no people, no hands, no screens, no servers, no robots, no cyberpunk, no futuristic interface, no title text, no letters, no numbers, no logos, no watermark, no decorative grid overlay. Exactly one visual exception and less than 10% steel blue. Keep all meaningful elements inside a 6% safe margin so the image can be cropped responsively.

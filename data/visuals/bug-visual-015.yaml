@@ -1,0 +1,38 @@
+id: "bug-visual-015"
+number: 15
+series: "第 1024 格"
+title: "逐层进入"
+article: "joining-a-new-company"
+image: "/images/article/joining-a-new-company-cover.webp"
+created: "2026-07-21"
+direction: "结构静物"
+source: "ai-generated"
+dimensions: "2400x1800"
+
+natural_order: "三座木质入口框架由前到后依次排列，每个入口原本只通向一层简单空间。"
+bug_type: "fork"
+bug_expression: "最后一座入口没有停在单一空间，而是向后分出一组彼此连接的多层房间。"
+steel_blue_role: "patch"
+steel_blue_expression: "钢蓝色铰接件把最后的入口与分层空间连接起来，使更深的结构能够展开。"
+human_trace: "工作台上的铅笔、橡皮、磨损边缘和手工接缝保留了逐步理解与修正的痕迹。"
+
+interpretation: >
+  入职时看到的入口最初只是工具和操作步骤，经验增加以后，入口后面逐渐显露出系统、业务历史和组织关系。
+  最后一处展开不是更多表面信息，而是对同一工作环境更深层的进入。
+
+alt: "深色工作台上依次排列三座木质入口框架，最后一座通过钢蓝色铰接件连接到多层房间模型"
+
+prompt: |
+  Use case: stylized-concept
+  Asset type: BUG1024 article cover, 4:3 landscape
+  Article premise: Across three new jobs, understanding a workplace changed from configuring tools to reading the system, business history, and organization before judging it.
+  Natural order: Three tactile architectural entrance frames stand in a calm straight sequence from foreground to background, each threshold normally leading into one shallow compartment.
+  Single Bug: fork — behind the final threshold, the expected single compartment branches once into three physically connected rooms at different depths.
+  Steel-blue role: patch — one restrained steel-blue #365B6D hinge-and-joinery piece at the final threshold holds the branching rooms together and makes the deeper structure readable.
+  Primary request: A constructed editorial still-life of a compact hand-built workplace model on a worn ink-dark desk: three aligned entrance frames, with the last opening into a modest layered arrangement of connected rooms rather than stopping at a single surface. The branching behind the last threshold is the only deviation. Add subtle human traces such as worn edges and pencil handling marks, but no person.
+  Style/medium: tactile constructed editorial still-life using paper, wood, smoked glass and old metal, between real photography and a carefully handmade design model.
+  Composition/framing: one clear front-to-back relationship, purposeful breathing room, readable at thumbnail size, all meaningful elements inside a 6% safe margin.
+  Lighting/mood: soft neutral side light, restrained, observant, quiet confidence; not nostalgic or dramatic.
+  Color palette: ink #111A21, mist white #F8FAF9, muted natural materials; steel blue occupies less than 10% and is only the structural joinery.
+  Constraints: no words, letters, numbers, signs, logo, title, watermark; exactly one fork; no other blue objects, no generic grid overlay.
+  Avoid: office stock photography, people shaking hands, laptops, corporate lobby, road-map arrows, cyberpunk, neon, holograms, robots, servers, miniature-diorama cuteness, cinematic spectacle.

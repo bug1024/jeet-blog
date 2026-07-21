@@ -1,0 +1,34 @@
+id: "bug-visual-013"
+number: 13
+series: "第 1024 格"
+title: "停在中间"
+article: "doing-more-is-not-producing-more"
+image: "/images/article/doing-more-is-not-producing-more-cover.webp"
+created: "2026-07-21"
+direction: "结构静物"
+source: "ai-generated"
+dimensions: "2400x1800"
+
+natural_order: "一只石膏件从粗坯、半成品、适配件到成品依次经过四个制作阶段。"
+bug_type: "duplicate"
+bug_expression: "第二阶段重复生产了六个几乎相同的半成品，行动数量集中在中间环节。"
+steel_blue_role: "patch"
+steel_blue_expression: "钢蓝色导向板从重复堆积中只放行一个半成品，使它继续进入后续阶段。"
+human_trace: "石膏粉尘、粗糙切面和托盘磨损保留了持续投入与反复加工的痕迹。"
+
+interpretation: >
+  忙碌、学习和计划都能带来确定感，却可能让大量行动停留在容易开始和结束的阶段。
+  真正的产出不取决于半成品数量，而在于是否选择了一个重要问题并让它继续发生变化。
+
+alt: "深色制作托盘展示石膏件从粗坯到成品的四个阶段，第二阶段堆着六个相同半成品，并由钢蓝色导向板隔开"
+
+prompt: |
+  Create a 4:3 horizontal constructed editorial still-life for the BUG1024 “The 1024th Cell” visual series. Theme: doing more activities does not necessarily create more output; repeated easy actions can accumulate while the important progression barely moves.
+
+  Scene: on a dark ink-colored craft table, a shallow linear making tray shows four physical stages of one small neutral plaster object: a rough blank, a partly shaped piece, a fitted piece, and a finished compact form. One object normally occupies each stage, creating a clear left-to-right natural progression. The stages have no labels or symbols.
+
+  Introduce exactly one Duplicate Bug: at the second, partly shaped stage, six nearly identical pieces have been produced and form one compact crowded cluster, while the rest of the progression remains sparse and orderly. A single restrained steel-blue #365B6D guide gate physically releases only one piece from that cluster into the next stage, restoring movement toward completion. The duplicated cluster is the only anomaly; no overflow beyond the tray and no other blue elements.
+
+  Style and mood: tactile constructed editorial still-life between photography and a handmade design model. Plaster dust, shallow grooves, worn tray edges, brushed metal, subtle evidence of repeated work. Calm, unsentimental, and precise; not a factory scene, not a productivity advertisement. The difference between activity volume and completed progression must read at thumbnail size.
+
+  Hard constraints: no check marks, no to-do list, no arrows, no conveyor belt, no people, no clock, no screens, no charts, no code, no robots, no cyberpunk, no text, no letters, no numbers, no logo, no watermark, no decorative grid overlay. Exactly one duplicate cluster and less than 10% steel blue. Keep all meaningful elements inside a 6% safe margin for responsive cropping.

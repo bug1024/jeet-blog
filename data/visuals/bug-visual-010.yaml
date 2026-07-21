@@ -1,0 +1,34 @@
+id: "bug-visual-010"
+number: 10
+series: "第 1024 格"
+title: "没有发生"
+article: "why-technical-work-is-hard-to-see"
+image: "/images/article/why-technical-work-is-hard-to-see-cover.webp"
+created: "2026-07-21"
+direction: "结构静物"
+source: "ai-generated"
+dimensions: "2400x1800"
+
+natural_order: "五只水位相同的玻璃杯等距排列在完整、水平的石质搁板上。"
+bug_type: "break"
+bug_expression: "中央杯子下方的搁板底部存在一道短裂缝，但表面秩序没有因此被破坏。"
+steel_blue_role: "patch"
+steel_blue_expression: "钢蓝色金属托件固定裂缝两侧，使搁板、水杯和水位继续保持稳定。"
+human_trace: "石材边缘、金属螺钉和玻璃表面呈现维护与日常使用留下的细节。"
+
+interpretation: >
+  稳定性、容量治理和风险控制的成果，经常表现为事故没有发生。
+  托件位于通常不会被注意的视线下方，却是上方秩序得以持续的实际原因。
+
+alt: "五只水位相同的玻璃杯整齐放在石质搁板上，中央杯子下方的一道裂缝由钢蓝色金属托件固定"
+
+prompt: |
+  Create a 4:3 horizontal constructed editorial still-life for the BUG1024 “The 1024th Cell” visual series. Theme: valuable technical work is often difficult to see because its result is that failure does not happen.
+
+  Scene: a thin warm-gray stone shelf spans the frame against an ink-dark wall. Five identical clear glass vessels stand evenly spaced on the shelf, each filled to the same quiet level with transparent water. Their alignment and still water establish a calm natural order: from above, everything appears ordinary and uneventful.
+
+  Introduce exactly one Break and one functional response: directly beneath the middle vessel, the underside of the stone shelf has one short hairline fracture. A single restrained steel-blue #365B6D metal bracket grips both sides of that fracture and physically prevents it from opening. The bracket is visible to the viewer but sits below the normal line of sight, making the hidden maintenance legible. No spilled water, no tilted vessel, no second crack, and no other blue elements.
+
+  Style and mood: precise, quiet, materially credible editorial still-life between photography and a handmade model. Clear glass, real water, honed stone, brushed metal, soft side light, restrained contrast. Observant rather than dramatic; the scene should communicate “nothing happened because something was maintained.” Readable at thumbnail size.
+
+  Hard constraints: no people, no UI, no charts, no code, no servers, no tools scattered around, no robots, no cyberpunk, no text, no letters, no numbers, no logo, no watermark, no decorative grid overlay. Exactly one fracture and less than 10% steel blue. Keep all meaningful elements inside a 6% safe margin for responsive cropping.

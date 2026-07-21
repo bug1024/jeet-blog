@@ -1,0 +1,38 @@
+id: "bug-visual-017"
+number: 17
+series: "第 1024 格"
+title: "适配的代价"
+article: "cost-of-customization"
+image: "/images/article/cost-of-customization-cover.webp"
+created: "2026-07-21"
+direction: "结构静物"
+source: "ai-generated"
+dimensions: "2400x1800"
+
+natural_order: "一排标准矩形模块严密地嵌入同一只木框，接口与受力方式保持一致。"
+bug_type: "patch"
+bug_expression: "一个异形模块无法直接进入标准槽位，需要额外结构才能成为产品的一部分。"
+steel_blue_role: "patch"
+steel_blue_expression: "钢蓝色多接点适配器固定异形模块，并把它的受力转移到原有框架。"
+human_trace: "桌面的图纸、铅笔、裁切余料和木框磨损呈现了定制完成以后仍会延续的维护工作。"
+
+interpretation: >
+  定制需求表面上只改变一个位置，真正进入标准产品时却需要额外的模型、连接和长期维护。
+  钢蓝适配器解决了当下的兼容，也让这项差异持续占据系统结构。
+
+alt: "木框内排列标准矩形模块，其中一个异形模块由钢蓝色金属适配器固定"
+
+prompt: |
+  Use case: stylized-concept
+  Asset type: BUG1024 article cover, 4:3 landscape
+  Article premise: One enterprise customization adds long-term complexity to models, testing, diagnosis, and maintenance, not only development time.
+  Natural order: A precise row of interchangeable rectangular modules fits flush into a restrained wooden product frame.
+  Single Bug: patch — one customer-specific irregular module cannot fit the standard opening and requires a single visibly more complex adapter.
+  Steel-blue role: patch — the adapter itself is muted steel-blue #365B6D and physically connects the irregular module to the standard frame while transferring its load into neighboring supports.
+  Primary request: A constructed editorial still-life of a well-used modular wooden frame with several simple neutral inserts aligned in one row. At one position only, an irregular neutral insert is held by a carefully fabricated steel-blue adapter with extra joints, making its additional long-term structural cost visible. The custom insert plus its adapter is one patch event; everything else remains standard and calm.
+  Style/medium: tactile constructed editorial still-life using wood, paper composite, brushed metal and graphite marks; believable handmade engineering model, not polished product design.
+  Composition/framing: one dominant row and one clearly legible adapter relationship, balanced 4:3 landscape, readable at thumbnail size, safe margins.
+  Lighting/mood: soft side light, matter-of-fact, restrained, no drama or sentimentality.
+  Color palette: ink #111A21, mist white #F8FAF9, muted wood and metal; steel blue less than 10% and only the adapter.
+  Constraints: no text, letters, numbers, labels, logo, title, watermark; exactly one patch; no other unusual modules or blue elements; no grid overlay.
+  Avoid: puzzle-piece cliché, gears, price tags, money symbols, server racks, cyberpunk, neon, robots, corporate stock imagery, glossy 3D render.

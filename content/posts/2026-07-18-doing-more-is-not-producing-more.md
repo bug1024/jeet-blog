@@ -6,6 +6,14 @@ author: "Bug1024"
 slug: "doing-more-is-not-producing-more"
 draft: false
 hideInHomepage: true
+visual: "bug-visual-013"
+cover:
+  image: "/images/article/doing-more-is-not-producing-more-cover.webp"
+  alt: "深色制作托盘展示石膏件从粗坯到成品的四个阶段，第二阶段堆着六个相同半成品，并由钢蓝色导向板隔开"
+  position: "50% 50%"
+  fit: "cover"
+images:
+    - "/images/article/doing-more-is-not-producing-more-cover.webp"
 tags:
     - 生活与时间
     - 工作与系统

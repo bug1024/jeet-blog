@@ -6,6 +6,14 @@ author: "Bug1024"
 slug: "dont-rush-to-criticize-legacy-systems"
 draft: false
 hideInHomepage: true
+visual: "bug-visual-011"
+cover:
+  image: "/images/article/dont-rush-to-criticize-legacy-systems-cover.webp"
+  alt: "旧木工作台的一条桌腿为避开地面石墩而偏向右侧，并由钢蓝色斜撑连接到桌面结构"
+  position: "50% 50%"
+  fit: "cover"
+images:
+    - "/images/article/dont-rush-to-criticize-legacy-systems-cover.webp"
 tags:
     - 工作与系统
     - 技术实践

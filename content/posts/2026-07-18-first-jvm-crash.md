@@ -6,6 +6,14 @@ author: "Bug1024"
 slug: "first-jvm-crash"
 draft: false
 hideInHomepage: true
+visual: "bug-visual-019"
+cover:
+  image: "/images/article/first-jvm-crash-cover.webp"
+  alt: "深色金属与透明玻璃层叠成方形结构，其中一层裂纹由细窄钢蓝色线条标出"
+  position: "50% 50%"
+  fit: "cover"
+images:
+    - "/images/article/first-jvm-crash-cover.webp"
 tags:
     - 技术实践
     - Java

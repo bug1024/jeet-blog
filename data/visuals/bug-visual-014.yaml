@@ -1,0 +1,34 @@
+id: "bug-visual-014"
+number: 14
+series: "第 1024 格"
+title: "从收纳到支撑"
+article: "ten-years-of-learning"
+image: "/images/article/ten-years-of-learning-cover.webp"
+created: "2026-07-21"
+direction: "结构静物"
+source: "ai-generated"
+dimensions: "2400x1800"
+
+natural_order: "一排相同的旧木抽屉沿柜体排列，用于持续收纳多年积累的学习资料。"
+bug_type: "out-of-order"
+bug_expression: "一只抽屉离开原来的槽位，被移到柜体上方并改作承载结构模型的搁板。"
+steel_blue_role: "patch"
+steel_blue_expression: "一组相连的钢蓝色支架把被移出的抽屉固定为真正承担重量的新结构。"
+human_trace: "抽屉、金属拉手和模型材料带有长期保存、取用和重新组织留下的磨损。"
+
+interpretation: >
+  十年笔记最初用于收纳工具与知识，后来真正留下的价值逐渐变成问题、判断和修正过程。
+  被移出的抽屉不再只是容器，而开始支撑一个更完整的工作模型。
+
+alt: "一排旧木抽屉中空出一个位置，被取出的抽屉由钢蓝色支架架在柜体上方，并托着一组石木结构模型"
+
+prompt: |
+  Create a 4:3 horizontal constructed editorial still-life for the BUG1024 “The 1024th Cell” visual series. Theme: ten years of learning changed from collecting tools and explanations into building judgment that supports real work.
+
+  Scene: a compact, well-used wooden archive cabinet on an ink-dark surface, with a single horizontal row of identical shallow drawers. Most drawers remain closed in a calm natural order, suggesting years of accumulated notes. The cabinet has no labels, handles with text, or decorative objects.
+
+  Introduce exactly one Out-of-order element: one drawer has been removed from its normal slot and repurposed immediately above the cabinet as a small structural shelf. A restrained steel-blue #365B6D pair of connected brackets physically fixes that same drawer-shelf to the cabinet. On the repurposed shelf sits one modest interconnected model made from neutral stone, wood, and metal pieces, suggesting applied system understanding rather than stored information. The empty slot and the relocated drawer are one single displacement event; no other open drawers or blue elements.
+
+  Style and mood: tactile constructed editorial still-life between real photography and a carefully handmade design model. Worn wood, patinated handles, quiet structural detail, subtle traces of long use, soft side light. Thoughtful and matter-of-fact, not nostalgic, scholarly, or triumphant. At thumbnail size the viewer should read “one drawer stopped storing and began supporting.”
+
+  Hard constraints: no books, no readable notes, no graduation symbols, no timeline labels, no screens, no code, no servers, no robots, no cyberpunk, no text, no letters, no numbers, no logo, no watermark, no decorative grid overlay. Exactly one out-of-order drawer and less than 10% steel blue. Keep all meaningful elements inside a 6% safe margin for responsive cropping.
