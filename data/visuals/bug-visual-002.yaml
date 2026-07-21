@@ -1,0 +1,38 @@
+id: "bug-visual-002"
+number: 2
+series: "第 1024 格"
+title: "第五张"
+article: "old-writings-2010"
+image: "/images/article/old-writings-2010-cover.webp"
+created: "2026-07-21"
+direction: "结构静物"
+source: "ai-generated"
+dimensions: "2400x1800"
+
+natural_order: "五张旧纸在雨窗旁的木桌上形成一条按时间排列的队列。"
+bug_type: "out-of-order"
+bug_expression: "第五张纸离开原有队列，停在稍远的位置。"
+steel_blue_role: "trace"
+steel_blue_expression: "一枚钢蓝色纸质接点记录偏离发生的位置，并把第五张纸重新连接到队列。"
+human_trace: "旧纸的纤维、磨损和重新连接的动作，保留了存放与整理留下的痕迹。"
+
+interpretation: >
+  五篇旧文原本属于一段已经过去的时间。最后一张纸的错序代表这些文字曾被搁置，
+  钢蓝接点则记录了它们在多年后被重新整理并放回个人成长记录的过程。
+
+alt: "雨窗旁的木桌上，五张空白旧纸依次排列，最后一张偏离队列，并由一枚钢蓝色纸质接点与前一张相连"
+
+prompt: |
+  Use case: stylized-concept
+  Asset type: BUG1024 article cover, 4:3 landscape
+  Article premise: Five short writings from 2010 were recovered years later from an old QQ Space archive; they contain rain, wind, waiting, home, departure, and memory.
+  Natural order: exactly five tactile paper leaves arranged in one quiet chronological line on a worn wooden surface beside a rain-softened old window.
+  Single Bug: out-of-order — the fifth and final paper leaf appears exactly once, slightly displaced from the line, as if it has been recovered and returned years later.
+  Steel-blue role: trace — one small muted steel-blue paper joint connects the displaced fifth leaf back to its proper place in the sequence; it is causal and occupies under 6% of the frame.
+  Primary request: construct a restrained still-life where the five paper leaves are clearly countable and the displaced final leaf is discoverable on second glance. The old window, damp courtyard, and fine rain provide quiet environmental context only.
+  Style/medium: constructed editorial still-life between real photography and a carefully handmade editorial model; believable aged paper fibers, worn dark wood, old glass, plaster, and one steel-blue paper joint; signs of handling and storage, not staged vintage decoration.
+  Composition/framing: oblique top-down 4:3 composition, the five-leaf sequence is the focal relationship, purposeful negative space, all important elements inside the outer 6%, readable at thumbnail size.
+  Lighting/mood: soft overcast daylight through old glass, cool quiet atmosphere, observant and unsentimental, no sepia nostalgia and no dramatic darkness.
+  Color palette: ink #111A21, paper #F8FAF9, mist #EEF2F3, muted natural wood and plaster; steel blue #365B6D only at the reconnecting joint.
+  Constraints: exactly five paper leaves; no writing, words, letters, numbers, logo, title, watermark, archive code, grid overlay, visible fish, circular ripple, torn paper, extra missing object, extra blue item, or second anomaly.
+  Avoid: generic lifestyle stock photography, sentimental props, artificial nostalgia, cyberpunk, neon, glossy 3D, miniature cuteness, decorative melancholy, title-card design.

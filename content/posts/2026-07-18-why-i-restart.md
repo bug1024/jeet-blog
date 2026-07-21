@@ -6,6 +6,7 @@ lastmod: 2026-07-18
 author: "Bug1024"
 slug: "why-i-restart"
 draft: false
+visual: "bug-visual-001"
 cover:
   image: "/images/article/why-i-restart-cover.webp"
   alt: "深夜灯下，旧纸页沿桌面排成一条直线，一枚钢蓝色铰接件让纸质结构向上分叉，一只手正在接上新的纸模块"

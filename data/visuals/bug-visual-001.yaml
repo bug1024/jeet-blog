@@ -1,0 +1,38 @@
+id: "bug-visual-001"
+number: 1
+series: "第 1024 格"
+title: "分叉"
+article: "why-i-restart"
+image: "/images/article/why-i-restart-cover.webp"
+created: "2026-07-21"
+direction: "结构静物"
+source: "ai-generated"
+dimensions: "2400x1800"
+
+natural_order: "旧纸页和纸质模块沿桌面形成一条连续、水平的工作路径。"
+bug_type: "fork"
+bug_expression: "原本笔直的纸质路径在一个接点处向上分叉，形成新的结构。"
+steel_blue_role: "bug"
+steel_blue_expression: "一枚钢蓝色铰接件构成分叉发生的位置，并实际支撑新的分支。"
+human_trace: "一只手正在把新的纸模块接到向上的分支上。"
+
+interpretation: >
+  博客并不是沿原有路径简单恢复更新。旧记录仍然构成基础，但 AI 改变了整理和创作方式，
+  使这次重启从过去的路径上生长出一个新的方向。
+
+alt: "深夜灯下，旧纸页沿桌面排成一条直线，一枚钢蓝色铰接件让纸质结构向上分叉，一只手正在接上新的纸模块"
+
+prompt: |
+  Use case: stylized-concept
+  Asset type: BUG1024 article cover, 4:3 landscape
+  Article premise: After six years away, the author used AI to rebuild a long-running personal blog, reorganize years of notes, and recover the pleasure of making things late at night.
+  Natural order: a disciplined horizontal sequence of worn paper sheets and small folded paper modules forms one clear linear working path across an ink-dark table.
+  Single Bug: fork — at exactly one joint, the otherwise straight paper path makes one deliberate upward branch into a modest rising paper structure.
+  Steel-blue role: the fork itself — one muted steel-blue hinge at that single joint physically enables and supports the new branch; it is causal, not a loose prop, and occupies under 8% of the frame.
+  Primary request: show a human hand quietly fastening one new paper module to the forked structure, with old notes feeding the original straight path. A practical desk lamp and the faint edge of an out-of-focus monitor may imply a two-o'clock working session, but no screen content is visible.
+  Style/medium: constructed editorial still-life between real photography and a carefully handmade editorial model; tactile paper, cardboard, graphite, dark wood, and one brushed steel-blue hinge; believable handling marks and imperfect edges, not glossy 3D.
+  Composition/framing: oblique top-down 4:3 composition, one readable path-to-fork relationship, human hand secondary, purposeful breathing room, all important elements inside the outer 6%, clear at thumbnail size.
+  Lighting/mood: one ordinary warm task lamp against ink-dark surroundings, quiet renewed concentration, restrained and observant, not cinematic or sentimental.
+  Color palette: ink #111A21, paper #F8FAF9, mist #EEF2F3, muted natural paper and wood; steel blue #365B6D only at the fork.
+  Constraints: no words, letters, numbers, logo, title, watermark, readable handwriting, UI, extra blue objects, extra branches, broken pieces, or second anomaly.
+  Avoid: title-card design, generic desk tour, cyberpunk, neon, RGB, robots, glowing brains, circuitry, server racks, glossy corporate stock photography, heroic pose, miniature cuteness, motivational-poster mood.

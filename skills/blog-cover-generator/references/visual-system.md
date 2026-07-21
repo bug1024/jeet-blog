@@ -6,6 +6,7 @@
 - 秩序、Bug 类型与钢蓝作用
 - 默认媒介与作者摄影
 - 视觉简报与验收
+- 视觉档案与 Git 管理
 - 外部签名
 
 ## 定位
@@ -118,6 +119,59 @@ Bug 表现：<画面中唯一可见的偏差>
 6. 删除钢蓝元素后，核心关系是否会明显减弱？
 7. 读者发现 Bug 之前，画面本身是否仍然完整？
 8. 场景是否足够具体，不会同样适用于一篇无关文章？
+
+## 视觉档案与 Git 管理
+
+每张进入“第 1024 格”系列的 AI 生成图，都必须在 `data/visuals/` 中保存一份独立 YAML 档案，并与图片、文章一起纳入 Git 管理。
+
+`alt` 只客观描述画面中可见的内容，不承担隐喻解释。隐喻、Bug 类型、钢蓝作用和最终 Prompt 以视觉档案为唯一事实源。
+
+编号使用连续的 `bug-visual-NNN`。文章通过顶层 front matter 字段建立关联：
+
+```yaml
+visual: "bug-visual-001"
+```
+
+视觉档案的标准结构：
+
+```yaml
+id: "bug-visual-001"
+number: 1
+series: "第 1024 格"
+title: "视觉作品名称"
+article: "article-slug"
+image: "/images/article/article-slug-cover.webp"
+created: "2026-07-21"
+direction: "结构静物"
+source: "ai-generated"
+dimensions: "2400x1800"
+
+natural_order: "画面中原本存在的秩序"
+bug_type: "fork"
+bug_expression: "唯一偏差如何出现"
+steel_blue_role: "patch"
+steel_blue_expression: "钢蓝如何参与偏差或回应"
+human_trace: "可选的人为痕迹"
+
+interpretation: >
+  这组视觉关系如何对应文章，而不是对画面进行文学化改写。
+
+alt: "客观描述画面中可见的内容"
+
+prompt: |
+  Final production prompt...
+```
+
+规则：
+
+- 一张作品一个 YAML 文件，不维护重复的汇总副本；
+- `id` 和 `number` 发布后保持稳定，不因文章排序改变而重排；
+- `article` 使用稳定的无日期 slug；
+- `bug_type` 使用本文件定义的英文标识；
+- `steel_blue_role` 只使用 `bug`、`patch` 或 `trace`；
+- `interpretation` 解释文章与视觉结构的关系，不写宣传语或虚构故事；
+- `prompt` 保存实际用于最终成图的完整英文 Prompt；
+- 调整构图但未改变核心概念时更新原档案；形成独立作品时分配新编号。
 
 ## 外部签名
 
