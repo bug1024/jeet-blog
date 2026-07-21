@@ -1,0 +1,92 @@
+{{ define "main" }}
+{{ $sunset := .Site.Data.works.sunset }}
+<main class="main sunset-work" id="main" data-sunset>
+    <div class="sunset-shell">
+        <header class="sunset-hero">
+            <div class="sunset-hero-copy">
+                <p class="sunset-meta"><span>{{ .Params.workNumber }}</span><span>{{ .Params.workType }}</span><span>{{ $sunset.edition }} · {{ $sunset.span }}</span></p>
+                <h1>{{ .Title }}</h1>
+                <div class="sunset-lede">{{ .Content }}</div>
+                <a href="#sky-index">查看天色索引 <span aria-hidden="true">↓</span></a>
+            </div>
+            <figure class="sunset-hero-photo">
+                <picture>
+                    <source media="(max-width: 720px)" srcset="{{ .Params.heroSmall | relURL }}">
+                    <img src="{{ .Params.hero | relURL }}" alt="{{ .Params.heroAlt }}" width="1350" height="1800" decoding="async" fetchpriority="high">
+                </picture>
+                <figcaption><span>公司</span><time datetime="2026-03-25T17:54:00+08:00">2026.03.25 · 17:54</time></figcaption>
+            </figure>
+        </header>
+
+        <nav class="sunset-index" id="sky-index" aria-label="{{ $sunset.momentCount }} 个落日时刻索引" data-sunset-index>
+            <header>
+                <div><span>天色索引</span><small>{{ $sunset.momentCount }} 个拍摄时刻，颜色取自照片中的真实天色</small></div>
+                <strong data-sunset-index-status>SUNSET 001 · 北京 · 2023.05.31</strong>
+            </header>
+            <ol style="--sunset-count: {{ $sunset.momentCount }}">
+                {{ range $sunset.chapters }}
+                    {{ range $momentIndex, $moment := .moments }}
+                        <li{{ if eq $momentIndex 0 }} class="is-year-start"{{ end }}><button type="button" style="--sunset-tone-a: {{ .toneA }}; --sunset-tone-b: {{ .toneB }}" data-sunset-jump="{{ .id }}" aria-label="查看 {{ .label }}，{{ .place }}，{{ .date }}"><i aria-hidden="true"></i><span>{{ .id }}</span></button></li>
+                    {{ end }}
+                {{ end }}
+            </ol>
+        </nav>
+
+        <div class="sunset-chapters">
+            {{ range $chapterIndex, $chapter := $sunset.chapters }}
+                <section class="sunset-chapter" id="{{ $chapter.id }}" aria-labelledby="sunset-chapter-{{ $chapter.id }}">
+                    <header class="sunset-chapter-head">
+                        <p><span>{{ printf "%02d" (add $chapterIndex 1) }}</span>{{ len $chapter.photos }} 张</p>
+                        <h2 id="sunset-chapter-{{ $chapter.id }}">{{ $chapter.title }}</h2>
+                        <div>{{ $chapter.place }}</div>
+                    </header>
+                    <ol class="sunset-moments">
+                        {{ range $moment := $chapter.moments }}
+                            <li class="sunset-moment{{ if eq (len $moment.photos) 1 }} sunset-moment--single{{ else }} sunset-moment--pair{{ end }}" id="sunset-{{ $moment.id }}" data-sunset-moment="{{ $moment.id }}" data-label="{{ $moment.label }}" data-place="{{ $moment.place }}" data-date="{{ $moment.date }}" data-time="{{ $moment.timeLabel }}">
+                                <aside class="sunset-moment-meta" style="--sunset-tone-a: {{ $moment.toneA }}; --sunset-tone-b: {{ $moment.toneB }}">
+                                    <i aria-hidden="true"></i>
+                                    <span>{{ $moment.label }}</span>
+                                    <time datetime="{{ $moment.isoDate }}T{{ $moment.startTime }}:00+08:00"><b>{{ $moment.date }}</b>{{ $moment.timeLabel }}</time>
+                                    <em>{{ $moment.place }}</em>
+                                </aside>
+                                <div class="sunset-moment-frames">
+                                    {{ range $photo := $moment.photos }}
+                                        <figure class="sunset-photo" id="photo-{{ $photo.id }}">
+                                            <button type="button" data-sunset-open="{{ $photo.id }}" data-large="{{ $photo.large | relURL }}" data-alt="{{ $photo.alt }}" data-place="{{ $photo.place }}" data-date="{{ $photo.date }}" data-time="{{ $photo.time }}" aria-label="放大查看 SUNSET {{ $photo.id }}">
+                                                <picture>
+                                                    <source media="(min-width: 860px)" srcset="{{ $photo.large | relURL }} {{ $photo.largeWidth }}w, {{ $photo.thumb | relURL }} {{ $photo.thumbWidth }}w" sizes="(max-width: 1180px) 41vw, 480px">
+                                                    <img src="{{ $photo.thumb | relURL }}" alt="{{ $photo.alt }}" width="{{ $photo.thumbWidth }}" height="{{ $photo.thumbHeight }}" loading="lazy" decoding="async">
+                                                </picture>
+                                            </button>
+                                            <figcaption>{{ if eq (len $moment.photos) 2 }}SUNSET {{ $photo.id }}{{ end }}</figcaption>
+                                        </figure>
+                                    {{ end }}
+                                </div>
+                            </li>
+                        {{ end }}
+                    </ol>
+                </section>
+            {{ end }}
+        </div>
+
+        <footer class="sunset-epilogue">
+            <p>以后再遇到好看的落日，我还会拍下来，慢慢补进这里。</p>
+            <a href="{{ "/works/" | relURL }}">返回作品</a>
+        </footer>
+    </div>
+
+    <section class="sunset-lightbox" data-sunset-lightbox hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="sunset-lightbox-title">
+        <header>
+            <strong id="sunset-lightbox-title" data-sunset-lightbox-number>SUNSET 001</strong>
+            <button type="button" data-sunset-close aria-label="关闭照片">关闭</button>
+        </header>
+        <div class="sunset-lightbox-stage" data-sunset-lightbox-stage>
+            <button type="button" data-sunset-prev aria-label="上一张照片"><span aria-hidden="true">←</span></button>
+            <img data-sunset-lightbox-image src="" alt="">
+            <button type="button" data-sunset-next aria-label="下一张照片"><span aria-hidden="true">→</span></button>
+        </div>
+        <footer><span data-sunset-lightbox-place></span><time data-sunset-lightbox-date></time></footer>
+    </section>
+    <script src="{{ "/js/sunset-gallery.js" | relURL }}" defer></script>
+</main>
+{{ end }}

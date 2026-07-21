@@ -3370,3 +3370,697 @@ button:focus-visible {
         transition-duration: 0.01ms;
     }
 }
+
+/* W-003 — real skies arranged as a personal time index */
+.sunset-work {
+    --sunset-ink: var(--brand-ink);
+    --sunset-copy: var(--brand-copy);
+    --sunset-slate: var(--brand-slate);
+    --sunset-line: var(--brand-line);
+    --sunset-paper: var(--brand-paper);
+    box-sizing: border-box;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    color: var(--sunset-ink);
+}
+
+.sunset-work *,
+.sunset-work *::before,
+.sunset-work *::after {
+    box-sizing: border-box;
+}
+
+.sunset-shell {
+    width: calc(100% - 64px);
+    max-width: 1180px;
+    margin: 0 auto;
+}
+
+.sunset-hero {
+    display: grid;
+    min-height: 600px;
+    grid-template-columns: minmax(300px, 0.8fr) minmax(360px, 1.2fr);
+    align-items: center;
+    gap: clamp(54px, 8vw, 112px);
+    padding: 62px 0 72px;
+}
+
+.sunset-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 13px;
+    margin: 0 0 30px;
+    color: var(--sunset-slate);
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+}
+
+.sunset-meta span + span::before {
+    margin-right: 13px;
+    color: var(--sunset-line);
+    content: "/";
+}
+
+.sunset-hero h1 {
+    margin: 0;
+    font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+    font-size: clamp(3.45rem, 5.6vw, 5.7rem);
+    font-weight: 600;
+    line-height: 1.03;
+    letter-spacing: -0.065em;
+}
+
+.sunset-lede {
+    max-width: 450px;
+    margin-top: 30px;
+    color: var(--sunset-copy);
+    font-size: 0.84rem;
+    line-height: 1.95;
+}
+
+.sunset-lede p {
+    margin: 0 0 12px;
+}
+
+.sunset-hero-copy > a {
+    display: inline-flex;
+    align-items: center;
+    gap: 28px;
+    margin-top: 28px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--sunset-ink);
+    color: var(--sunset-ink);
+    font-size: 0.72rem;
+    text-decoration: none;
+}
+
+.sunset-hero-copy > a span {
+    color: var(--brand-steel);
+}
+
+.sunset-hero-photo {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 0 0 auto;
+}
+
+.sunset-hero-photo img {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: var(--sunset-line);
+}
+
+.sunset-hero-photo figcaption,
+.sunset-photo figcaption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    margin-top: 10px;
+    color: var(--sunset-slate);
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 0.59rem;
+    letter-spacing: 0.045em;
+}
+
+.sunset-index {
+    position: sticky;
+    z-index: 6;
+    top: 63px;
+    margin: 0;
+    padding: 17px 0 14px;
+    background: var(--sunset-paper);
+    backdrop-filter: blur(12px);
+}
+
+.sunset-index header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 12px;
+}
+
+.sunset-index header > div {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+}
+
+.sunset-index header span,
+.sunset-index header strong {
+    color: var(--sunset-ink);
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+.sunset-index header small,
+.sunset-index header strong {
+    color: var(--sunset-slate);
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 0.56rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+}
+
+.sunset-index ol {
+    display: grid;
+    grid-template-columns: repeat(var(--sunset-count), minmax(7px, 1fr));
+    gap: 3px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sunset-index li.is-year-start:not(:first-child) {
+    margin-left: 6px;
+}
+
+.sunset-index button {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--sunset-slate);
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 0.48rem;
+    cursor: pointer;
+}
+
+.sunset-index button i {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 34px;
+    background: linear-gradient(90deg, var(--sunset-tone-a), var(--sunset-tone-b));
+    transition: height 180ms ease, transform 180ms ease;
+}
+
+.sunset-index button i::after {
+    position: absolute;
+    right: 0;
+    bottom: -5px;
+    left: 0;
+    height: 2px;
+    background: transparent;
+    content: "";
+}
+
+.sunset-index button span {
+    display: none;
+}
+
+.sunset-index button:hover i,
+.sunset-index button.is-active i {
+    height: 42px;
+    transform: translateY(-4px);
+}
+
+.sunset-index button.is-active i::after {
+    background: var(--brand-steel);
+}
+
+.sunset-chapters {
+    padding-top: 68px;
+}
+
+.sunset-chapter {
+    padding: 64px 0 120px;
+    scroll-margin-top: 150px;
+}
+
+.sunset-chapter + .sunset-chapter {
+    padding-top: 80px;
+}
+
+.sunset-chapter-head {
+    display: grid;
+    grid-template-columns: minmax(170px, 0.45fr) minmax(260px, 0.85fr) minmax(240px, 0.7fr);
+    align-items: end;
+    gap: 54px;
+    margin-bottom: 76px;
+}
+
+.sunset-chapter-head::before {
+    grid-column: 1;
+    width: 48px;
+    height: 1px;
+    margin-bottom: 14px;
+    background: var(--sunset-ink);
+    content: "";
+}
+
+.sunset-chapter-head > p {
+    grid-column: 1;
+    margin: -7px 0 0;
+    color: var(--sunset-slate);
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.07em;
+}
+
+.sunset-chapter-head > p span {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--sunset-ink);
+    font-size: 0.74rem;
+}
+
+.sunset-chapter-head h2 {
+    grid-row: 1 / span 2;
+    grid-column: 2;
+    margin: 0;
+    font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+    font-size: clamp(3.1rem, 5vw, 5rem);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.06em;
+}
+
+.sunset-chapter-head > div {
+    grid-row: 1 / span 2;
+    grid-column: 3;
+    align-self: end;
+    margin: 0;
+    color: var(--sunset-copy);
+    font-size: 0.8rem;
+    line-height: 1.9;
+}
+
+.sunset-moments {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(76px, 9vw, 126px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sunset-moment {
+    display: grid;
+    grid-template-columns: 132px minmax(0, 1fr);
+    align-items: start;
+    gap: clamp(28px, 4vw, 54px);
+    scroll-margin-top: 154px;
+}
+
+.sunset-moment-meta {
+    position: relative;
+    display: flex;
+    min-height: 156px;
+    flex-direction: column;
+    padding-top: 69px;
+    color: var(--sunset-slate);
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 0.58rem;
+    font-style: normal;
+    letter-spacing: 0.045em;
+}
+
+.sunset-moment-meta i {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 52px;
+    background: linear-gradient(180deg, var(--sunset-tone-a), var(--sunset-tone-b));
+}
+
+.sunset-moment-meta span {
+    color: var(--sunset-ink);
+    font-size: 0.63rem;
+    font-weight: 500;
+}
+
+.sunset-moment-meta time {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 16px;
+    line-height: 1.5;
+}
+
+.sunset-moment-meta time b {
+    color: var(--sunset-copy);
+    font-weight: 400;
+}
+
+.sunset-moment-meta em {
+    margin-top: 9px;
+    color: var(--sunset-copy);
+    font-style: normal;
+}
+
+.sunset-moment-frames {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    gap: clamp(18px, 2.4vw, 32px);
+}
+
+.sunset-moment--single .sunset-moment-frames {
+    grid-template-columns: minmax(0, 480px);
+    justify-content: center;
+}
+
+.sunset-photo {
+    min-width: 0;
+    margin: 0;
+}
+
+.sunset-photo button {
+    display: flex;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    overflow: hidden;
+    border: 0;
+    background: transparent;
+    cursor: zoom-in;
+}
+
+.sunset-photo picture {
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.sunset-photo img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: clamp(340px, 58vh, 580px);
+    object-fit: contain;
+    object-position: center top;
+    transition: transform 420ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.sunset-photo figcaption {
+    min-height: 14px;
+    justify-content: flex-start;
+    margin-top: 8px;
+    color: var(--sunset-slate);
+    font-size: 0.5rem;
+}
+
+.sunset-photo button:hover img {
+    transform: scale(1.012);
+}
+
+.sunset-epilogue {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 48px;
+    margin-top: 6px;
+    padding: 48px 0 94px;
+    border-top: 1px solid var(--sunset-line);
+}
+
+.sunset-epilogue p {
+    max-width: 550px;
+    margin: 0;
+    color: var(--sunset-copy);
+    font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+    font-size: 1.24rem;
+    line-height: 1.8;
+}
+
+.sunset-epilogue a {
+    color: var(--sunset-slate);
+    font-size: 0.7rem;
+    text-decoration: none;
+}
+
+.sunset-lightbox-open {
+    overflow: hidden;
+}
+
+.sunset-lightbox[hidden] {
+    display: none;
+}
+
+.sunset-lightbox {
+    position: fixed;
+    z-index: 10000;
+    inset: 0;
+    display: grid;
+    box-sizing: border-box;
+    grid-template-rows: 54px minmax(0, 1fr) 48px;
+    padding: 18px 26px;
+    background: rgba(9, 14, 17, 0.97);
+    color: #edf2f1;
+}
+
+.sunset-lightbox > header,
+.sunset-lightbox > footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 0.63rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+}
+
+.sunset-lightbox > header strong {
+    font-weight: 500;
+}
+
+.sunset-lightbox > header button,
+.sunset-lightbox-stage button {
+    border: 0;
+    background: transparent;
+    color: #edf2f1;
+    font: inherit;
+    cursor: pointer;
+}
+
+.sunset-lightbox-stage {
+    display: grid;
+    min-height: 0;
+    grid-template-columns: 58px minmax(0, 1fr) 58px;
+    align-items: center;
+    gap: 18px;
+}
+
+.sunset-lightbox-stage img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    object-fit: contain;
+}
+
+.sunset-lightbox-stage button {
+    height: 100%;
+    color: #8eafba;
+    font-size: 1.2rem;
+}
+
+.sunset-lightbox > footer {
+    justify-content: center;
+    gap: 18px;
+    color: #97a7ad;
+}
+
+.sunset-lightbox > footer span::after {
+    margin-left: 18px;
+    color: #53636a;
+    content: "/";
+}
+
+@media (max-width: 800px) {
+    .sunset-shell {
+        width: calc(100% - 40px);
+    }
+
+    .sunset-hero {
+        min-height: 0;
+        grid-template-columns: 1fr;
+        gap: 52px;
+        padding: 54px 0 68px;
+    }
+
+    .sunset-hero h1 {
+        font-size: clamp(3.25rem, 14vw, 4.5rem);
+    }
+
+    .sunset-hero-photo {
+        width: 86%;
+        max-width: 420px;
+        margin-right: 0;
+    }
+
+    .sunset-index {
+        top: 57px;
+        margin-right: -20px;
+        margin-left: -20px;
+        padding-right: 20px;
+        padding-left: 20px;
+        overflow: hidden;
+    }
+
+    .sunset-index header small {
+        display: none;
+    }
+
+    .sunset-index ol {
+        grid-template-columns: repeat(var(--sunset-count), 30px);
+        gap: 3px;
+        overflow-x: auto;
+        padding-top: 5px;
+        scrollbar-width: none;
+    }
+
+    .sunset-index ol::-webkit-scrollbar {
+        display: none;
+    }
+
+    .sunset-chapters {
+        padding-top: 40px;
+    }
+
+    .sunset-chapter {
+        padding: 50px 0 82px;
+    }
+
+    .sunset-chapter-head {
+        grid-template-columns: 1fr;
+        gap: 0;
+        margin-bottom: 52px;
+    }
+
+    .sunset-chapter-head::before,
+    .sunset-chapter-head > p,
+    .sunset-chapter-head h2,
+    .sunset-chapter-head > div {
+        grid-row: auto;
+        grid-column: 1;
+    }
+
+    .sunset-chapter-head > p {
+        margin-top: 0;
+    }
+
+    .sunset-chapter-head h2 {
+        margin-top: 22px;
+        font-size: 3.5rem;
+    }
+
+    .sunset-chapter-head > div {
+        margin-top: 22px;
+    }
+
+    .sunset-moments {
+        gap: 72px;
+    }
+
+    .sunset-moment {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .sunset-moment-meta {
+        display: grid;
+        min-height: 0;
+        grid-template-columns: 4px auto 1fr;
+        align-items: center;
+        gap: 12px;
+        padding: 0;
+    }
+
+    .sunset-moment-meta i {
+        position: static;
+        width: 4px;
+        height: 36px;
+        grid-row: 1 / span 2;
+    }
+
+    .sunset-moment-meta time {
+        display: block;
+        margin: 0;
+        text-align: right;
+    }
+
+    .sunset-moment-meta time b {
+        margin-right: 8px;
+    }
+
+    .sunset-moment-meta em {
+        grid-column: 2 / span 2;
+        margin: -4px 0 0;
+    }
+
+    .sunset-moment-frames,
+    .sunset-moment--single .sunset-moment-frames {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .sunset-moment--single .sunset-photo {
+        width: 72%;
+        grid-column: 1 / span 2;
+        justify-self: center;
+    }
+
+    .sunset-photo picture,
+    .sunset-photo img {
+        width: 100%;
+        height: auto;
+        max-height: none;
+    }
+
+    .sunset-epilogue {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        padding: 38px 0 72px;
+    }
+
+    .sunset-lightbox {
+        grid-template-rows: 48px minmax(0, 1fr) 44px;
+        padding: 10px 12px;
+    }
+
+    .sunset-lightbox-stage {
+        position: relative;
+        display: block;
+    }
+
+    .sunset-lightbox-stage img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .sunset-lightbox-stage button {
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        bottom: 0;
+        width: 30%;
+        opacity: 0;
+    }
+
+    .sunset-lightbox-stage button:first-child {
+        left: 0;
+    }
+
+    .sunset-lightbox-stage button:last-child {
+        right: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sunset-index button i,
+    .sunset-photo img {
+        transition-duration: 0.01ms;
+    }
+}
