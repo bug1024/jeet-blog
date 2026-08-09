@@ -1,0 +1,14 @@
+{{- $steps := split (.Get "steps") "|" -}}
+{{- $count := len $steps -}}
+<figure class="article-flow{{ if gt $count 4 }} article-flow--long{{ end }}{{ if gt $count 3 }} article-flow--mobile-stack{{ end }}" style="--flow-count: {{ $count }};">
+    {{- with .Get "label" }}<figcaption>{{ . }}</figcaption>{{ end -}}
+    <ol>
+        {{- range $steps }}
+            {{- $parts := split . "｜" -}}
+            <li>
+                <strong>{{ index $parts 0 }}</strong>
+                {{- if gt (len $parts) 1 }}<small>{{ index $parts 1 }}</small>{{ end -}}
+            </li>
+        {{- end }}
+    </ol>
+</figure>

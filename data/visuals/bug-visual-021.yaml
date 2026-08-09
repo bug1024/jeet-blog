@@ -1,0 +1,38 @@
+id: "bug-visual-021"
+number: 21
+series: "第 1024 格"
+title: "在回应之前"
+article: "soul-tty"
+image: "/images/article/soul-tty-cover.webp"
+created: "2026-08-10"
+direction: "结构静物"
+source: "ai-generated"
+dimensions: "2400x1800"
+
+natural_order: "一组木质、石墨与金属模块在听音部件和发声部件之间组成单向、连续的语音传递链路。"
+bug_type: "fork"
+bug_expression: "链路中央出现一次分叉，一个对话模块进入由四层不同材料组成的状态腔体，再回到原有输出路径。"
+steel_blue_role: "patch"
+steel_blue_expression: "钢蓝色铰接件建立并支撑唯一的分叉，使原本直达输出的模块能够经过状态层。"
+human_trace: "磨损的工作台、铅笔、纸张和手工连接处保留了反复搭建与调试的痕迹。"
+
+interpretation: >
+  Soul-TTY 最初只是输入、模型和输出组成的本地语音 Demo，后来才逐渐加入情绪、关系、记忆和行为选择。
+  画面中的直线链路代表最初的问答流程，中部状态腔体代表回答生成以前持续存在的多层状态；钢蓝铰接件不是装饰，而是这次架构演化发生的位置。
+
+alt: "深色工作台上一排木质与金属模块连接左右两个圆形声学部件，中间由钢蓝色铰接件分出一组层叠结构"
+
+prompt: |
+  Use case: stylized-concept
+  Asset type: BUG1024 article cover, 4:3 landscape
+  Article premise: A simple local voice demo gradually evolved into a terminal-based AI companion whose replies pass through persistent emotion, relationship, memory, and agency states.
+  Natural order: A single straight sequence of small tactile graphite-and-wood conversation modules travels from a quiet listening membrane on the left toward a restrained speaking diaphragm on the right, like a simple local voice relay.
+  Single Bug: fork — at one exact midpoint, one module leaves the direct linear relay and passes through a compact layered state chamber made of four thin, materially distinct neutral plates, then returns to the same output path. There must be exactly one fork and no other broken, missing, shifted, or duplicated elements.
+  Steel-blue role: patch — one small functional steel-blue #365B6D hinged connector creates and supports that single detour into the layered state chamber; without it, the direct path cannot enter the state chamber.
+  Primary request: Create a tactile constructed editorial still-life on a real, lightly worn engineer's work surface. Show a clear left-to-right voice relay built from matte graphite, dark wood, translucent smoked glass, paper fiber and brushed metal. The simple row is calm and precisely aligned. At the center, the restrained steel-blue hinge diverts exactly one conversation module through the four-layer chamber before it rejoins the line. The scene should suggest listening, state, decision and speaking through physical relationships, without literal interface diagrams.
+  Style/medium: constructed editorial still-life, between real macro photography and a carefully handmade engineering model; believable materials and small traces of use, not glossy 3D.
+  Composition/framing: one clear focal relationship at the central fork, readable at thumbnail size, balanced 4:3 landscape, purposeful breathing room, all important elements inside the outer 6% safe area, no space reserved for overlaid text.
+  Lighting/mood: quiet practical desk light, restrained curiosity and technical concentration, neutral rather than cinematic or sentimental.
+  Color palette: ink #111A21, mist white #F8FAF9, slate #71838C, natural graphite, dark wood and smoked glass; steel blue occupies under 8% and appears only on the functional hinge connector.
+  Constraints: no words, letters, numbers, logo, title, watermark, readable code, UI labels, generic grid overlay; exactly one Bug, the central fork; no other blue objects.
+  Avoid: cyberpunk, neon cyan, purple-blue gradients, holograms, humanoid robots, robot hands, glowing brains, circuit boards, server racks, binary rain, waveform graphics, literal computer terminal screenshots, giant gears, glossy corporate stock photography, cinematic spectacle, cute miniature diorama, excessive empty space.
