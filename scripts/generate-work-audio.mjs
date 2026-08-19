@@ -1,7 +1,4 @@
-import { execFileSync } from "node:child_process";
-import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { writeFileSync } from "node:fs";
 
 const sampleRate = 44100;
 
@@ -10,17 +7,20 @@ function synthesize(duration, render) {
   const left = new Float64Array(frames);
   const right = new Float64Array(frames);
 
-  function tone(start, frequency, length, amplitude, pan = 0, overtone = 0) {
+  function tone(start, frequency, length, amplitude, options = {}) {
+    const { pan = 0, wave = "sine", overtone = 0, attack = 0.12 } = options;
     const first = Math.floor(start * sampleRate);
     const last = Math.min(frames, Math.ceil((start + length) * sampleRate));
     for (let frame = first; frame < last; frame += 1) {
       const elapsed = frame / sampleRate - start;
-      const attack = Math.min(1, elapsed / 0.12);
-      const release = Math.min(1, (length - elapsed) / 0.42);
-      const envelope = Math.max(0, attack * release);
-      const fundamental = Math.sin(2 * Math.PI * frequency * elapsed);
-      const harmonic = overtone * Math.sin(4 * Math.PI * frequency * elapsed);
-      const value = (fundamental + harmonic) * amplitude * envelope;
+      const floor = 0.0001;
+      const envelope = elapsed <= attack
+        ? floor * Math.pow(amplitude / floor, elapsed / attack)
+        : amplitude * Math.pow(floor / amplitude, (elapsed - attack) / Math.max(0.001, length - attack));
+      const phase = 2 * Math.PI * frequency * elapsed;
+      const fundamental = wave === "triangle" ? (2 / Math.PI) * Math.asin(Math.sin(phase)) : Math.sin(phase);
+      const harmonic = overtone * Math.sin(phase * 2);
+      const value = (fundamental + harmonic) * envelope;
       left[frame] += value * Math.sqrt((1 - pan) / 2);
       right[frame] += value * Math.sqrt((1 + pan) / 2);
     }
@@ -55,39 +55,41 @@ function synthesize(duration, render) {
 
 const works = [
   {
-    output: "static/works/our-little-world/music.mp3",
+    output: "static/works/our-little-world/music.wav",
     duration: 12.8,
     render(tone) {
       const melody = [
         [0, 587.33, 1.15], [1.6, 440, 0.75], [2.6, 369.99, 1.1], [4.2, 440, 0.7],
         [5.2, 493.88, 1.15], [7.1, 440, 0.7], [8.1, 329.63, 1.05], [10.2, 369.99, 1.45]
       ];
-      melody.forEach(([start, frequency, length]) => tone(start, frequency, length, 0.19, 0, 0.2));
-      [146.83, 220, 293.66].forEach((frequency, index) => tone(index * 0.04, frequency, 12.1, 0.032, 0, 0.08));
+      melody.forEach(([start, frequency, length]) => tone(start, frequency, length, 0.18, {
+        wave: "triangle",
+        overtone: 0.09,
+        attack: 0.08
+      }));
+      [146.83, 220, 293.66].forEach((frequency, index) => tone(index * 0.04, frequency, 12.1, 0.025, {
+        wave: "triangle",
+        overtone: 0.09,
+        attack: 0.08
+      }));
     }
   },
   {
-    output: "static/works/our-secret-world/music.mp3",
+    output: "static/works/our-secret-world/music.wav",
     duration: 14.4,
     render(tone) {
       const melody = [
         [0, 329.63, 1.8], [1.8, 392, 1.2], [3.6, 440, 2.1], [6.2, 392, 1.4],
         [8.2, 293.66, 1.8], [10.3, 329.63, 1.2], [12, 261.63, 2.1]
       ];
-      melody.forEach(([start, frequency, length], index) => tone(start, frequency, length, 0.17, index % 2 === 0 ? -0.3 : 0.3));
-      tone(0, 130.81, 13.9, 0.035, -0.16);
-      tone(0.06, 196, 13.84, 0.03, 0.16);
+      melody.forEach(([start, frequency, length], index) => tone(start, frequency, length, 0.15, {
+        pan: index % 2 === 0 ? -0.32 : 0.32,
+        attack: 0.18
+      }));
+      tone(0, 130.81, 13.9, 0.028, { pan: -0.18, attack: 0.18 });
+      tone(0.06, 196, 13.84, 0.022, { pan: 0.18, attack: 0.18 });
     }
   }
 ];
 
-const temporaryDirectory = mkdtempSync(join(tmpdir(), "bug1024-audio-"));
-try {
-  works.forEach((work, index) => {
-    const wavPath = join(temporaryDirectory, `${index}.wav`);
-    writeFileSync(wavPath, synthesize(work.duration, work.render));
-    execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-i", wavPath, "-codec:a", "libmp3lame", "-b:a", "96k", work.output]);
-  });
-} finally {
-  rmSync(temporaryDirectory, { recursive: true, force: true });
-}
+works.forEach((work) => writeFileSync(work.output, synthesize(work.duration, work.render)));

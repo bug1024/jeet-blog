@@ -4625,7 +4625,7 @@ function hc({ src: e, storageKey: t, volume: n }) {
 }
 function pc() {
   return hc({
-    src: "/works/our-secret-world/music.mp3?v=1",
+    src: "/works/our-secret-world/music.wav?v=2",
     storageKey: "our-secret-world:muted",
     volume: 0.68
   });
