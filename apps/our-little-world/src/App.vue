@@ -10,7 +10,7 @@
           <span>2018—2026</span>
         </div>
         <button class="sound-toggle boot-sound" type="button" :aria-label="soundLabel" @click="toggleMusic">
-          <span aria-hidden="true">{{ muted ? "×" : "♪" }}</span>{{ muted ? "声音关闭" : "声音开启" }}
+          <span aria-hidden="true">{{ soundSymbol }}</span>{{ soundText }}
         </button>
 
         <pre class="ascii-house" aria-hidden="true">          ·
@@ -38,7 +38,7 @@
           <p><i></i> 我们的小世界 <small>/ 运行中</small></p>
           <div class="toolbar-actions">
             <button class="sound-toggle" type="button" :aria-label="soundLabel" @click="toggleMusic">
-              <span aria-hidden="true">{{ muted ? "×" : "♪" }}</span>
+              <span aria-hidden="true">{{ soundSymbol }}</span>
             </button>
             <button type="button" class="toolbar-party" @click="showCharacters = true">
               同行角色 <span>02</span>
@@ -136,8 +136,18 @@ const showCharacters = ref(false);
 const showLetter = ref(false);
 const visited = reactive(new Set<string>());
 const activeChapter = computed(() => chapters[activeIndex.value]);
-const { muted, start: startMusic, toggle: toggleMusic } = useWorldMusic();
-const soundLabel = computed(() => (muted.value ? "开启背景音乐" : "关闭背景音乐"));
+const { status: musicStatus, start: startMusic, toggle: toggleMusic } = useWorldMusic();
+const soundLabel = computed(() =>
+  musicStatus.value === "playing" || musicStatus.value === "starting" ? "关闭背景音乐" : "开启背景音乐"
+);
+const soundSymbol = computed(() => musicStatus.value === "playing" ? "♪" : musicStatus.value === "starting" ? "…" : "×");
+const soundText = computed(() => ({
+  idle: "声音待开启",
+  starting: "声音启动中",
+  playing: "声音播放中",
+  muted: "声音已关闭",
+  blocked: "点击重试声音"
+}[musicStatus.value]));
 
 function saveProgress() {
   try {

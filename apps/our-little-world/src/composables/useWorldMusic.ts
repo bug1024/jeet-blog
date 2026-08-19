@@ -1,4 +1,10 @@
-import { onBeforeUnmount, ref } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref } from "vue";
+import {
+  createMobileAudioContext,
+  saveAudioPreference,
+  unlockMobileAudio,
+  type AudioPlaybackState
+} from "../../../shared/src/mobileAudio";
 
 const STORAGE_KEY = "our-little-world:muted";
 const phraseLength = 12.8;
@@ -15,13 +21,15 @@ const melody = [
 
 export function useWorldMusic() {
   const muted = ref(false);
-  const playing = ref(false);
+  const status = ref<AudioPlaybackState>("idle");
+  const playing = computed(() => status.value === "playing");
   let context: AudioContext | null = null;
   let master: GainNode | null = null;
   let timer: number | null = null;
 
   try {
     muted.value = localStorage.getItem(STORAGE_KEY) === "true";
+    if (muted.value) status.value = "muted";
   } catch {
     // Storage is optional.
   }
@@ -59,46 +67,72 @@ export function useWorldMusic() {
     });
   }
 
-  async function start() {
-    if (muted.value) return;
+  async function start(): Promise<boolean> {
+    if (muted.value) {
+      status.value = "muted";
+      return false;
+    }
+    status.value = "starting";
     if (!context) {
-      context = new AudioContext();
+      context = createMobileAudioContext();
+      if (!context) {
+        status.value = "blocked";
+        return false;
+      }
       master = context.createGain();
-      master.gain.value = 0.28;
+      master.gain.value = 0.36;
       master.connect(context.destination);
     }
-    await context.resume();
-    if (playing.value) return;
-    playing.value = true;
+    const unlocked = await unlockMobileAudio(context);
+    if (!unlocked) {
+      status.value = "blocked";
+      return false;
+    }
+    if (timer !== null) {
+      status.value = "playing";
+      return true;
+    }
+    status.value = "playing";
     schedulePhrase(context.currentTime + 0.08);
     timer = window.setInterval(() => {
       if (context?.state === "running") schedulePhrase(context.currentTime + 0.08);
     }, phraseLength * 1000);
+    return true;
   }
 
-  function stop() {
+  function stop(nextStatus: AudioPlaybackState = "idle") {
     if (timer !== null) window.clearInterval(timer);
     timer = null;
-    playing.value = false;
     void context?.close();
     context = null;
     master = null;
+    status.value = nextStatus;
   }
 
   async function toggle() {
-    muted.value = !muted.value;
-    try {
-      localStorage.setItem(STORAGE_KEY, String(muted.value));
-    } catch {
-      // Storage is optional.
+    if (status.value === "playing" || status.value === "starting") {
+      muted.value = true;
+      saveAudioPreference(STORAGE_KEY, true);
+      stop("muted");
+      return;
     }
-    if (muted.value) stop();
-    else await start();
+    muted.value = false;
+    saveAudioPreference(STORAGE_KEY, false);
+    await start();
   }
+
+  async function resumeAfterVisibilityChange() {
+    if (document.visibilityState !== "visible" || muted.value || !context || timer === null) return;
+    const resumed = await unlockMobileAudio(context);
+    status.value = resumed ? "playing" : "blocked";
+  }
+
+  onMounted(() => document.addEventListener("visibilitychange", resumeAfterVisibilityChange));
 
   onBeforeUnmount(() => {
     stop();
+    document.removeEventListener("visibilitychange", resumeAfterVisibilityChange);
   });
 
-  return { muted, playing, start, toggle };
+  return { muted, playing, status, start, toggle };
 }

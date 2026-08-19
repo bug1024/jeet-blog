@@ -15,7 +15,7 @@
           <span aria-hidden="true">●</span> 读取记录
         </button>
         <button type="button" class="entrance-sound" :aria-label="soundLabel" @click="toggle">
-          {{ muted ? "声音关闭" : "声音开启" }}
+          {{ soundText }}
         </button>
       </section>
 
@@ -23,7 +23,7 @@
         <header class="secret-toolbar">
           <button type="button" @click="goMap">返回轨迹</button>
           <p><i></i> 两个信号保持连接</p>
-          <button type="button" :aria-label="soundLabel" @click="toggle">{{ muted ? "×" : "♪" }}</button>
+          <button type="button" :aria-label="soundLabel" @click="toggle">{{ soundSymbol }}</button>
         </header>
 
         <Transition name="secret-shift" mode="out-in">
@@ -101,8 +101,18 @@ const state = ref<State>("entrance");
 const activeIndex = ref(0);
 const visited = reactive(new Set<string>());
 const active = computed(() => chapters[activeIndex.value]);
-const { muted, start, toggle } = useSecretMusic();
-const soundLabel = computed(() => muted.value ? "开启背景音乐" : "关闭背景音乐");
+const { status: musicStatus, start, toggle } = useSecretMusic();
+const soundLabel = computed(() =>
+  musicStatus.value === "playing" || musicStatus.value === "starting" ? "关闭背景音乐" : "开启背景音乐"
+);
+const soundSymbol = computed(() => musicStatus.value === "playing" ? "♪" : musicStatus.value === "starting" ? "…" : "×");
+const soundText = computed(() => ({
+  idle: "声音待开启",
+  starting: "声音启动中",
+  playing: "声音播放中",
+  muted: "声音已关闭",
+  blocked: "点击重试声音"
+}[musicStatus.value]));
 
 function enter() { void start(); state.value = "map"; }
 function goMap() { state.value = "map"; }
