@@ -1,0 +1,11 @@
+{{ define "main" }}
+{{ $styleVersion := md5 (readFile "static/works/our-little-world/app/our-little-world.css") }}
+{{ $scriptVersion := md5 (readFile "static/works/our-little-world/app/our-little-world.js") }}
+<main class="main little-world-work" id="main">
+    <div id="our-little-world-app">
+        <noscript>这个作品需要启用 JavaScript 才能进入。</noscript>
+    </div>
+    <link rel="stylesheet" href="{{ "/works/our-little-world/app/our-little-world.css" | relURL }}?v={{ $styleVersion }}">
+    <script type="module" src="{{ "/works/our-little-world/app/our-little-world.js" | relURL }}?v={{ $scriptVersion }}"></script>
+</main>
+{{ end }}

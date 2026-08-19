@@ -2,6 +2,7 @@
     {{ if and (eq .Kind "section") .Content }}
         {{ partial "pages/post.html" . }}
     {{ else }}
+        {{ $visiblePages := where .Pages "Params.hidden" "ne" true }}
         <main class="main list editorial-list" id="main">
             <div class="main-inner">
                 <header class="editorial-page-head">
@@ -10,7 +11,7 @@
                         <h1 class="list-title">{{ .Title }}</h1>
                     </div>
                     <p class="editorial-page-note">
-                        {{ if eq .Kind "term" }}关于“{{ .Title }}”的文章，共 {{ len .Pages }} 篇。{{ else }}按时间存放写过的文字，新的在前，旧的也保留。{{ end }}
+                        {{ if eq .Kind "term" }}关于“{{ .Title }}”的文章，共 {{ len $visiblePages }} 篇。{{ else }}按时间存放写过的文字，新的在前，旧的也保留。{{ end }}
                     </p>
                     <span class="editorial-blue-block" aria-hidden="true"></span>
                 </header>
@@ -19,10 +20,10 @@
                 {{ if eq .Kind "section" }}
                     {{ $sectionPage := .CurrentSection }}
                     {{ range .Site.RegularPages }}
-                        {{ if .IsDescendant $sectionPage }}{{ $.Scratch.Add "pages" (slice .) }}{{ end }}
+                        {{ if and (.IsDescendant $sectionPage) (ne .Params.hidden true) }}{{ $.Scratch.Add "pages" (slice .) }}{{ end }}
                     {{ end }}
                 {{ else if eq .Kind "term" }}
-                    {{ .Scratch.Set "pages" .Pages }}
+                    {{ .Scratch.Set "pages" $visiblePages }}
                 {{ end }}
 
                 {{ $pages := .Scratch.Get "pages" }}

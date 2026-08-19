@@ -29,6 +29,16 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Build interactive works
+        run: |
+          npm ci
+          npm run typecheck:little-world
+          npm run build:little-world
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5

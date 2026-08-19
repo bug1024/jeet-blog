@@ -10,7 +10,8 @@
         </header>
 
         <ol class="works-directory">
-            {{ range .Pages.ByDate.Reverse }}
+            {{ $visibleWorks := where .Pages "Params.hidden" "ne" true }}
+            {{ range $visibleWorks.ByDate.Reverse }}
                 <li>
                     <a href="{{ .RelPermalink }}">
                         <figure>

@@ -13,3 +13,6 @@ resources/
 
 # Local agent working files
 .superpowers/
+
+# Frontend dependencies
+node_modules/

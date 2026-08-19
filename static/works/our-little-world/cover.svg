@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc" shape-rendering="crispEdges">
+  <title id="title">我们的小世界</title>
+  <desc id="desc">深蓝色星空中，一间亮着暖黄色窗户的像素小屋</desc>
+  <rect width="1600" height="1000" fill="#091016"/>
+  <g fill="#7b8e91" opacity=".72">
+    <rect x="154" y="146" width="5" height="5"/><rect x="272" y="326" width="7" height="7"/><rect x="407" y="112" width="4" height="4"/>
+    <rect x="532" y="244" width="5" height="5"/><rect x="684" y="136" width="8" height="8"/><rect x="831" y="292" width="4" height="4"/>
+    <rect x="1018" y="121" width="6" height="6"/><rect x="1177" y="237" width="4" height="4"/><rect x="1370" y="151" width="7" height="7"/>
+    <rect x="1450" y="370" width="5" height="5"/><rect x="1264" y="498" width="4" height="4"/><rect x="109" y="527" width="6" height="6"/>
+    <rect x="346" y="601" width="4" height="4"/><rect x="1304" y="720" width="6" height="6"/><rect x="225" y="810" width="5" height="5"/>
+  </g>
+  <g fill="#f0c66f">
+    <rect x="307" y="203" width="10" height="10"/><rect x="1210" y="333" width="8" height="8"/><rect x="1397" y="651" width="6" height="6"/>
+  </g>
+  <path d="M556 540h72v-62h72v-62h200v62h72v62h72v52H556z" fill="#7e9293"/>
+  <rect x="616" y="592" width="368" height="212" fill="#b6756c"/>
+  <rect x="682" y="648" width="76" height="68" fill="#f0c66f"/>
+  <rect x="842" y="648" width="76" height="68" fill="#f0c66f"/>
+  <rect x="764" y="696" width="72" height="108" fill="#263943"/>
+  <rect x="464" y="804" width="672" height="18" fill="#526f60"/>
+  <text x="800" y="900" fill="#e7e3d6" font-family="PingFang SC, sans-serif" font-size="36" text-anchor="middle" letter-spacing="8">我们的小世界</text>
+  <text x="800" y="944" fill="#87999c" font-family="PingFang SC, sans-serif" font-size="18" text-anchor="middle" letter-spacing="5">家庭存档 / 2018—2026</text>
+</svg>

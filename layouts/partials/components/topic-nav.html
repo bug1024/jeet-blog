@@ -1,11 +1,15 @@
 {{ $currentSlug := .Params.slug }}
 {{ $pages := where .Site.RegularPages "Section" "posts" }}
+{{ $pages = where $pages "Params.hidden" "ne" true }}
 {{ range $topic := .Site.Data.topics.topics }}
     {{ if eq $topic.type "sequence" }}
         {{ $items := slice }}
         {{ range $groupIndex, $group := $topic.groups }}
             {{ range $group.articles }}
-                {{ $items = $items | append (dict "slug" .slug "group" $group.name "groupIndex" (add $groupIndex 1)) }}
+                {{ $pageMatches := where $pages "Params.slug" .slug }}
+                {{ if gt (len $pageMatches) 0 }}
+                    {{ $items = $items | append (dict "slug" .slug "group" $group.name "groupIndex" (add $groupIndex 1)) }}
+                {{ end }}
             {{ end }}
         {{ end }}
         {{ $currentIndex := -1 }}

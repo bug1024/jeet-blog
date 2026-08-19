@@ -1,6 +1,7 @@
 <main class="main home-main" id="main">
     <div class="home-shell">
         {{ $allPosts := where .Site.RegularPages "Section" "in" .Site.Params.mainSections }}
+        {{ $allPosts = where $allPosts "Params.hidden" "ne" true }}
         {{ $recentPosts := $allPosts }}
         {{ if .Site.Params.enableHideInHomepage }}
             {{ $recentPosts = where $recentPosts ".Params.hideInHomepage" "ne" true }}
