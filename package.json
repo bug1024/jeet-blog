@@ -3,7 +3,10 @@
   "private": true,
   "scripts": {
     "build:little-world": "vite build --config vite.little-world.config.ts",
-    "typecheck:little-world": "vue-tsc --noEmit"
+    "build:secret-world": "vite build --config vite.secret-world.config.ts",
+    "build:works": "npm run build:little-world && npm run build:secret-world",
+    "typecheck:little-world": "vue-tsc --noEmit",
+    "typecheck:works": "vue-tsc --noEmit"
   },
   "dependencies": {
     "vue": "^3.5.13"

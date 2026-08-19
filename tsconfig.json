@@ -14,5 +14,5 @@
     "skipLibCheck": true,
     "noEmit": true
   },
-  "include": ["apps/our-little-world/src/**/*.ts", "apps/our-little-world/src/**/*.vue"]
+  "include": ["apps/*/src/**/*.ts", "apps/*/src/**/*.vue"]
 }

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200" role="img" aria-labelledby="title desc">
+  <title id="title">我们的秘密世界</title>
+  <desc id="desc">暗色网格中，两枚暖色像素通过一条虚线保持连接，又始终相隔一格。</desc>
+  <rect width="1600" height="1200" fill="#0d0d11"/>
+  <g stroke="#302c32" stroke-width="1" opacity=".42">
+    <path d="M0 200h1600M0 400h1600M0 600h1600M0 800h1600M0 1000h1600"/>
+    <path d="M200 0v1200M400 0v1200M600 0v1200M800 0v1200M1000 0v1200M1200 0v1200M1400 0v1200"/>
+  </g>
+  <path d="M545 588h510" stroke="#4b444a" stroke-width="8" stroke-dasharray="30 24"/>
+  <rect x="498" y="548" width="80" height="80" fill="#d6a75f"/>
+  <rect x="1022" y="548" width="80" height="80" fill="#9e7376"/>
+  <rect x="794" y="554" width="12" height="68" fill="#4e484d"/>
+  <text x="800" y="885" fill="#e8e2d9" font-family="PingFang SC, sans-serif" font-size="50" text-anchor="middle" letter-spacing="10">我们的秘密世界</text>
+  <text x="800" y="946" fill="#8a8385" font-family="PingFang SC, sans-serif" font-size="20" text-anchor="middle" letter-spacing="6">始终留有一格距离</text>
+</svg>

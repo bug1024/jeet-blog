@@ -37,8 +37,8 @@ jobs:
       - name: Build interactive works
         run: |
           npm ci
-          npm run typecheck:little-world
-          npm run build:little-world
+          npm run typecheck:works
+          npm run build:works
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
