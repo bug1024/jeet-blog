@@ -1,4 +1,6 @@
 import * as THREE from 'three';
+const { create75 } = await import('./character.js?v=' + encodeURIComponent(new URL(import.meta.url).searchParams.get('v') || 'local'));
+
 import { OrbitControls } from 'three/addons/OrbitControls.js';
 const $=s=>document.querySelector(s), canvas=$('#world');
 let renderer;
@@ -47,29 +49,8 @@ for(let i=0;i<5;i++){const x=-5.0+i*.58;rod([x,.5,-1.1],[x,1.14,-1.1],.055,'#ad9
 // A small cascade at the back of the creek.
 for(let i=0;i<10;i++){ellipsoid([between(-1.7,1.2),between(.18,.38),between(-4.25,-3.7)],[between(.3,.65),between(.3,.52),between(.25,.45)],'#9cae9f',scene,7);}
 const falls=[];for(let i=0;i<32;i++){const x=between(-.85,.2);const o=rod([x,.5,-3.92],[x+between(-.05,.05),.14,-3.64],between(.008,.021),'#d1f1e3');o.castShadow=false;falls.push(o);}
-// 75: a fully dimensional, articulated character, with the original costume and silhouette.
-const girl=new THREE.Group();girl.position.set(-1.83,.26,.25);girl.rotation.y=.12;scene.add(girl);
-ellipsoid([0,-.025,0],[.83,.18,.63],'#c3c7ac',girl,8);
-const orange='#f36b21', orangeDark='#d85419',skin='#ffc995',hair='#503226',blue='#208cc4',shirt='#fff5df';
-for(const x of [-.26,.26]){const leg=mesh(new THREE.CylinderGeometry(.2,.23,.73,9),orange,[x,.79,0],girl);leg.rotation.z=x*.1;ellipsoid([x,.31,.13],[.23,.28,.35],blue,girl);box([x,.12,.17],[.42,.07,.55],'#1674a6',girl);mesh(new THREE.CylinderGeometry(.23,.22,.12,10),blue,[x,.49,0],girl);}
-ellipsoid([0,1.37,0],[.49,.59,.31],shirt,girl);ellipsoid([0,1.02,.02],[.46,.32,.32],orange,girl);box([0,1.28,.257],[.68,.63,.14],orange,girl);box([0,1.18,.344],[.32,.21,.035],orangeDark,girl);box([0,1.195,.371],[.275,.16,.02],orange,girl);
-for(const x of [-.265,.265]){box([x,1.59,.265],[.105,.41,.085],orange,girl);ellipsoid([x,1.52,.324],[.032,.032,.014],'#eed294',girl,8);box([x,1.63,-.2],[.105,.34,.065],orange,girl);}
-rod([0,1.73,0],[0,1.95,0],.17,skin,girl);
-const head=new THREE.Group();head.position.set(0,2.28,0);head.rotation.x=.08;girl.add(head);
-ellipsoid([0,.04,-.035],[.61,.66,.51],hair,head,16);ellipsoid([0,-.055,.19],[.53,.52,.385],skin,head,20);
-for(const x of [-.53,.53]){ellipsoid([x,-.065,.08],[.095,.145,.09],skin,head);ellipsoid([x,-.075,.156],[.04,.07,.02],'#eaa67d',head);}
-// Tapered locks keep the short, side-parted hair recognizable from every angle.
-for(let i=0;i<7;i++){const x=-.47+i*.145;const lock=ellipsoid([x,.35-Math.abs(x)*.23,.393],[.14,.3-(i*.019),.115],i%2?'#653b29':hair,head,8);lock.rotation.z=-.35;}
-ellipsoid([-.495,.02,.23],[.095,.38,.13],hair,head);ellipsoid([.50,-.015,.21],[.09,.32,.13],hair,head);const flick=ellipsoid([-.25,.64,-.025],[.17,.04,.055],hair,head,8);flick.rotation.z=.35;
-const eyes=[];for(const x of [-.205,.205]){const eye=box([x,-.025,.556],[.068,.125,.018],'#332b23',head);eyes.push(eye);box([x-.012,.014,.57],[.022,.025,.01],'#fff5dd',head);const brow=box([x,.13,.548],[.13,.029,.022],hair,head);brow.rotation.z=x<0?-.10:.10;ellipsoid([x*1.55,-.14,.501],[.09,.037,.012],'#eea486',head);}
-ellipsoid([0,-.105,.578],[.047,.054,.045],skin,head);const smile=mesh(new THREE.TorusGeometry(.084,.014,5,12,Math.PI),'#ad583c',[0,-.19,.552],head);smile.rotation.z=Math.PI;
-const leftArm=new THREE.Group();leftArm.position.set(-.44,1.62,0);girl.add(leftArm);rod([0,0,0],[-.16,-.24,.08],.155,shirt,leftArm);rod([-.16,-.24,.08],[-.13,-.53,.28],.102,skin,leftArm);ellipsoid([-.13,-.54,.28],[.12,.13,.105],skin,leftArm);
-const rightArm=new THREE.Group();rightArm.position.set(.43,1.6,0);girl.add(rightArm);rod([0,0,0],[.23,-.17,.10],.154,shirt,rightArm);rod([.23,-.17,.10],[.40,-.30,.38],.102,skin,rightArm);ellipsoid([.40,-.30,.38],[.12,.12,.115],skin,rightArm);
-const netGroup=new THREE.Group();netGroup.position.set(.4,-.30,.38);rightArm.add(netGroup);
-rod([-.13,.12,-.12],[1.53,-.95,.20],.036,'#a47943',netGroup,.033,10);rod([-.13,.12,-.12],[.2,-.1,-.06],.041,'#74523a',netGroup);
-const netCenter=new THREE.Vector3(1.57,-.97,.22);const hoop=mesh(new THREE.TorusGeometry(.48,.027,8,48),'#b69964',netCenter.toArray(),netGroup);hoop.rotation.x=Math.PI/2;const threadMat=new THREE.LineBasicMaterial({color:'#ecf7df',transparent:true,opacity:.85});
-for(let k=0;k<20;k++){const a=k*Math.PI/10,pts=[];for(let j=0;j<=12;j++){const t=j/12,r=.48*(1-t*.82);pts.push(new THREE.Vector3(netCenter.x+Math.cos(a)*r,netCenter.y-.43*Math.sin(t*Math.PI/2),netCenter.z+Math.sin(a)*r));}netGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),threadMat));}
-for(let j=1;j<8;j++){const t=j/8,r=.48*(1-t*.82),pts=[];for(let k=0;k<=40;k++){let a=k*Math.PI/20;pts.push(new THREE.Vector3(netCenter.x+Math.cos(a)*r,netCenter.y-.43*Math.sin(t*Math.PI/2),netCenter.z+Math.sin(a)*r));}netGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),threadMat));}
+// 75's model is kept separate from the creek and fish behavior.
+const {girl,head,rightArm,netGroup,netCenter,updateCharacter}=create75(scene);
 // Open bucket with an actual interior and arching handle.
 const bucket=new THREE.Group();bucket.position.set(-2.68,.48,1.1);scene.add(bucket);mesh(new THREE.CylinderGeometry(.28,.22,.45,18,1,true),new THREE.MeshStandardMaterial({color:'#72cbd4',side:THREE.DoubleSide,roughness:.42}),[0,.23,0],bucket);mesh(new THREE.CylinderGeometry(.22,.22,.035,18),'#53a3b4',[0,.02,0],bucket);const lip=mesh(new THREE.TorusGeometry(.28,.023,8,24),'#b1e7e1',[0,.455,0],bucket);lip.rotation.x=Math.PI/2;const handle=mesh(new THREE.TorusGeometry(.29,.015,6,24,Math.PI),'#466b68',[0,.44,0],bucket);mesh(new THREE.CylinderGeometry(.234,.234,.01,18),new THREE.MeshStandardMaterial({color:'#4e9fa4',roughness:.2}),[0,.18,0],bucket);
 // Fish keep their own heading and react to nearby disturbances.
@@ -94,16 +75,16 @@ function resize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMa
 let lastNetPos=new THREE.Vector3();
 function animate(now){requestAnimationFrame(animate);const dt=Math.min((now-last)/1000,.04);last=now;if(running)time+=dt;const step=running?dt:0;controls.update();
 if(waterMaterial.userData.shader)waterMaterial.userData.shader.uniforms.uTime.value=time*(.3+flow*1.8);if(grassMaterial.userData.shader)grassMaterial.userData.shader.uniforms.uTime.value=time;
-head.rotation.z=Math.sin(time*.75)*.035;head.rotation.y=Math.sin(time*.45)*.10;head.position.y=2.28+Math.sin(time*2)*.015;const blink=time%4.7;eyes.forEach(e=>e.scale.y=blink>4.53?.12:1);leftArm.rotation.x=Math.sin(time*1.5)*.025;
-if(scoopTime>=0){scoopTime+=step;const u=scoopTime;rightArm.rotation.z=u<.5?-.22*Math.sin(u/.5*Math.PI/2):u<1.1?-.22+.95*Math.sin((u-.5)/.6*Math.PI/2):u<2?.73:.73*(1-THREE.MathUtils.smoothstep(u,2,3));girl.rotation.z=-rightArm.rotation.z*.07;head.rotation.x=.08+Math.sin(u*2)*.08;netGroup.getWorldPosition(lastNetPos);
+if(scoopTime>=0){scoopTime+=step;const u=scoopTime;rightArm.rotation.z=u<.5?-.22*Math.sin(u/.5*Math.PI/2):u<1.1?-.22+.95*Math.sin((u-.5)/.6*Math.PI/2):u<2?.73:.73*(1-THREE.MathUtils.smoothstep(u,2,3));girl.rotation.z=-rightArm.rotation.z*.07;netGroup.getWorldPosition(lastNetPos);
 if(u>.6&&u-step<=.6){const p=netGroup.localToWorld(netCenter.clone());ripple(p.x,p.z);let nearest=null,distance=1.2;fishes.forEach(f=>{const d=Math.hypot(f.g.position.x-p.x,f.g.position.z-p.z);if(d<distance){distance=d;nearest=f;}f.panic=.7;});scoopCandidate=nearest;}
 if(u>1.3&&u-step<=1.3){if(scoopCandidate){caught++;$('#count').textContent=caught;say('捞到啦！',2.8);scoopCandidate.g.visible=true;}else say('咦？又跑掉了…',2.8);}
-if(u>3){scoopTime=-1;rightArm.rotation.z=0;girl.rotation.z=0;head.rotation.x=.08;$('#scoop').disabled=false;if(scoopCandidate){scoopCandidate.g.visible=true;scoopCandidate.z=-3.2;scoopCandidate=null;}}}
+if(u>3){scoopTime=-1;rightArm.rotation.z=0;girl.rotation.z=0;$('#scoop').disabled=false;if(scoopCandidate){scoopCandidate.g.visible=true;scoopCandidate.z=-3.2;scoopCandidate=null;}}}
+updateCharacter(time,scoopTime,scoopTime>1.3&&!!scoopCandidate);
 for(const f of fishes){f.phase+=step*f.speed*(.5+flow*1.5)*(1+f.panic*3);f.panic=Math.max(0,f.panic-step*.6);const z=Math.sin(f.phase)*3.55,x=riverX(z)+f.offset+Math.sin(f.phase*2.7+f.z)*.2;const nextZ=Math.sin(f.phase+.01)*3.55,nextX=riverX(nextZ)+f.offset+Math.sin((f.phase+.01)*2.7+f.z)*.2;f.g.position.set(x,-.06+Math.sin(time*2+f.z)*.02,z);if(f===scoopCandidate&&scoopTime>1.3){f.g.position.copy(netGroup.localToWorld(netCenter.clone().add(new THREE.Vector3(0,-.25,0))));}f.g.rotation.y=-Math.atan2(nextZ-z,nextX-x);f.tail.rotation.y=Math.sin(time*(9+f.panic*9)+f.z)*.45;}
 for(let i=ripples.length-1;i>=0;i--){const r=ripples[i];r.age+=step;r.o.visible=r.age>=0;const s=Math.max(.01,r.age*.8);r.o.scale.setScalar(s);r.o.material.opacity=Math.max(0,.55-r.age*.3);if(r.age>1.85){scene.remove(r.o);r.o.geometry.dispose();r.o.material.dispose();ripples.splice(i,1);}}
 for(const f of flecks){f.o.position.z=((f.z+time*(.06+flow*.18)+4.3)%8.6)-4.3;f.o.material.opacity=.15+Math.pow(Math.max(0,Math.sin(time*1.5+f.phase)),7)*.6;}
 for(const m of motes){m.o.position.set(m.p.x+Math.sin(time*.4+m.phase)*.3,m.p.y+Math.sin(time*.7+m.phase)*.18,m.p.z+Math.cos(time*.3+m.phase)*.2);}
 dragonfly.position.set(1.7+Math.sin(time*.7)*.5,1.2+Math.sin(time*1.1)*.12,-1.2+Math.cos(time*.7)*.4);dragonfly.rotation.y=-time*.7;wings.forEach((w,i)=>w.rotation.x=Math.sin(time*70+i)*.5);falls.forEach((o,i)=>o.scale.y=.85+Math.sin(time*7+i)*.15);
-const anchor=girl.localToWorld(new THREE.Vector3(.3,3.08,0)).project(camera);$('#bubble').style.left=`${(anchor.x*.5+.5)*innerWidth}px`;$('#bubble').style.top=`${(-anchor.y*.5+.5)*innerHeight}px`;$('#bubble').style.opacity=time<bubbleUntil&&anchor.z<1?1:0;
+const anchor=girl.localToWorld(new THREE.Vector3(.3,3.4,.15)).project(camera);$('#bubble').style.left=`${(anchor.x*.5+.5)*innerWidth}px`;$('#bubble').style.top=`${(-anchor.y*.5+.5)*innerHeight}px`;$('#bubble').style.opacity=time<bubbleUntil&&anchor.z<1?1:0;
 renderer.render(scene,camera);}
 requestAnimationFrame(animate);$('#loading').style.opacity=0;setTimeout(()=>$('#loading').remove(),600);

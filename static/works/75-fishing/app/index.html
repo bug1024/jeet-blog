@@ -4,5 +4,28 @@
 <header><a class="brand" href="../" target="_top" aria-label="75捞鱼作品"><span class="brand-number">75<span class="dot">●</span></span><span class="brand-caption">捞鱼日记<br><small>75 FISHING</small></span></a><div class="live"><i></i><span>溪边，营业中</span><button id="pause" aria-label="暂停动画" aria-pressed="false">Ⅱ</button></div></header>
 <section class="title"><div class="eyebrow"><span></span>75 的小世界</div><h1>今天，<br>在溪边。</h1><p>水慢慢流，鱼慢慢游。<br>75 认真营业中。</p><div class="catch-note"><span class="fish-icon">↝</span><span>今日捞到 <strong id="count">0</strong> 条小鱼</span></div></section>
 <div id="bubble" role="status" aria-live="polite">我看看…</div>
-<aside class="panel" aria-label="溪边设置"><div class="panel-top"><span>溪边时光</span><button id="reset" aria-label="重置视角" title="重置视角">↺</button></div><label for="flow">水流 <output id="flow-value">轻轻的</output></label><input id="flow" type="range" min="0" max="100" value="40"><label for="sun">日光 <output id="sun-value">午后</output></label><input id="sun" type="range" min="0" max="100" value="70"><button id="scoop" class="scoop">捞一下 <span>↗</span></button><p class="panel-note">也可以直接点一点75</p></aside>
-<footer><a href="/works/" target="_top" class="back-to-works">← 返回作品</a><span class="help">拖动旋转 <b>·</b> 滚轮缩放 <b>·</b> 点击水面惊鱼</span><button id="photo" aria-label="保存当前画面">保存画面 ↗</button></footer><div id="loading">正在走到溪边…</div><div id="error" hidden>场景未能加载。请使用支持 WebGL 2 的浏览器，然后刷新重试。</div><noscript><div id="error">这个互动作品需要启用 JavaScript。<a href="/works/" target="_top">返回作品目录</a></div></noscript><script type="module" src="main.js"></script></body></html>
+<aside class="panel" id="creek-panel" aria-label="溪边设置"><div class="panel-top"><span>溪边时光</span><div class="panel-actions"><button id="reset" aria-label="重置视角" title="重置视角">↺</button><button id="panel-hide" aria-label="收起控制面板" title="收起面板">−</button></div></div><label for="flow">水流 <output id="flow-value">轻轻的</output></label><input id="flow" type="range" min="0" max="100" value="40"><label for="sun">日光 <output id="sun-value">午后</output></label><input id="sun" type="range" min="0" max="100" value="70"><button id="scoop" class="scoop">捞一下 <span>↗</span></button><p class="panel-note">也可以直接点一点75</p></aside><button id="panel-show" class="panel-show" aria-controls="creek-panel" aria-expanded="false" hidden>溪边设置 <span aria-hidden="true">＋</span></button>
+<footer><a href="/works/" target="_top" class="back-to-works">← 返回作品</a><span class="help">拖动旋转 <b>·</b> 滚轮缩放 <b>·</b> 点击水面惊鱼</span><button id="photo" aria-label="保存当前画面">保存画面 ↗</button></footer><div id="loading">正在走到溪边…</div><div id="error" hidden>场景未能加载。请使用支持 WebGL 2 的浏览器，然后刷新重试。</div><noscript><div id="error">这个互动作品需要启用 JavaScript。<a href="/works/" target="_top">返回作品目录</a></div></noscript><script type="module">
+const version = new URL(location.href).searchParams.get('v') || 'local';
+document.querySelector('link[rel="stylesheet"]').href = './style.css?v=' + encodeURIComponent(version);
+const panel = document.getElementById('creek-panel');
+const showPanel = document.getElementById('panel-show');
+const hidePanel = document.getElementById('panel-hide');
+function setPanelOpen(open, moveFocus = false) {
+  panel.hidden = !open;
+  showPanel.hidden = open;
+  showPanel.setAttribute('aria-expanded', String(open));
+  if (moveFocus) (open ? hidePanel : showPanel).focus({preventScroll:true});
+}
+setPanelOpen(!matchMedia('(max-width: 760px)').matches);
+panel.dataset.ready = 'true';
+hidePanel.addEventListener('click', () => setPanelOpen(false, true));
+showPanel.addEventListener('click', () => setPanelOpen(true, true));
+panel.addEventListener('keydown', event => {
+  if (event.key === 'Escape') {event.preventDefault();setPanelOpen(false, true);}
+});
+import('./main.js?v=' + encodeURIComponent(version)).catch(() => {
+  document.getElementById('loading')?.remove();
+  document.getElementById('error').hidden = false;
+});
+</script></body></html>

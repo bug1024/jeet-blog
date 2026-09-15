@@ -1,6 +1,6 @@
 {{ define "main" }}
 {{ $appPath := "static/works/75-fishing/app/" }}
-{{ $version := md5 (printf "%s%s%s" (readFile (printf "%sindex.html" $appPath)) (readFile (printf "%smain.js" $appPath)) (readFile (printf "%sstyle.css" $appPath))) }}
+{{ $version := md5 (printf "%s%s%s%s" (readFile (printf "%sindex.html" $appPath)) (readFile (printf "%smain.js" $appPath)) (readFile (printf "%sstyle.css" $appPath)) (readFile (printf "%scharacter.js" $appPath))) }}
 <main class="main fishing-work" id="main" aria-label="75捞鱼互动作品">
     <iframe
         class="fishing-work-frame"
