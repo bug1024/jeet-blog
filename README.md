@@ -5,7 +5,7 @@ Hugo + Meme，GitHub Actions 自动部署到 GitHub Pages。
 
 ## 写作
 
-Codex 创建或修改文章前应先读取 [`docs/content/article-authoring.md`](docs/content/article-authoring.md)。
+文章写作能力由 [`skills/blog-article-writer/`](skills/blog-article-writer/) 管理，详细规则统一维护在 [`docs/content/article-authoring.md`](docs/content/article-authoring.md)。Codex 创建、改写或审阅文章前应完整读取两者。
 
 ```bash
 hugo new content/posts/YYYY-MM-DD-my-topic.md   # 新建文章（自动生成 slug，写完把 draft 改为 false）

@@ -4,9 +4,10 @@
 
 创建、改写或发布任何博客文章之前，必须完整阅读：
 
+- `skills/blog-article-writer/SKILL.md`
 - `docs/content/article-authoring.md`
 
-该文档是文章定位、文案语气、front matter、摄影题图、图注和无图回退方式的唯一详细规范。
+Skill 负责写作流程与任务路由；文档是文章定位、文案语气、中文标点、front matter、摄影题图、图注和无图回退方式的唯一详细规范。不得在其他平台维护内容不同的副本。
 
 ## 设计任务
 
