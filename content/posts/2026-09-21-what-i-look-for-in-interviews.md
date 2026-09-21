@@ -6,6 +6,14 @@ author: "Bug1024"
 slug: "what-i-look-for-in-interviews"
 draft: false
 hideInHomepage: true
+visual: "bug-visual-022"
+cover:
+  image: "/images/article/what-i-look-for-in-interviews-cover.webp"
+  alt: "磨损的工作台上，一排白色卡片整齐放在金属槽中，一张钢蓝色卡片被抽出并露出下方的纸片、木块和金属件"
+  position: "50% 50%"
+  fit: "cover"
+images:
+    - "/images/article/what-i-look-for-in-interviews-cover.webp"
 tags:
     - 工作与系统
 ---

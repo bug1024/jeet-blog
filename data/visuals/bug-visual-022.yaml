@@ -1,0 +1,38 @@
+id: "bug-visual-022"
+number: 22
+series: "第 1024 格"
+title: "问题清单之外"
+article: "what-i-look-for-in-interviews"
+image: "/images/article/what-i-look-for-in-interviews-cover.webp"
+created: "2026-09-21"
+direction: "结构静物"
+source: "ai-generated"
+dimensions: "2400x1800"
+
+natural_order: "八张无字卡片在浅金属槽中组成一条整齐、连续的面试问题序列。"
+bug_type: "offset"
+bug_expression: "序列中只有一张卡片被抽离原位，露出卡片下方带有使用痕迹的纸张、木块与金属连接件。"
+steel_blue_role: "bug"
+steel_blue_expression: "被抽离的卡片本身采用钢蓝色，它既是唯一的位移，也是进入下层项目证据的入口。"
+human_trace: "磨损的工作台、石墨痕迹、纸张纤维和旧金属保留了真实使用与反复处理问题的痕迹。"
+
+interpretation: >
+  整齐排列的白色卡片对应面试前准备的问题清单，位移的钢蓝卡片则代表一次没有停留在标准答案上的追问。
+  它露出的不是另一道题，而是项目中实际存在的限制、取舍和结果，回应文章从覆盖知识点转向寻找真实证据的面试方式。
+
+alt: "磨损的工作台上，一排白色卡片整齐放在金属槽中，一张钢蓝色卡片被抽出并露出下方的纸片、木块和金属件"
+
+prompt: |
+  Use case: stylized-concept
+  Asset type: BUG1024 article cover, 4:3 landscape
+  Article premise: A technical interviewer moves beyond a prepared checklist and follows concrete project details to judge whether a candidate understands the work, has truly done it, can carry it to completion, and can keep growing.
+  Natural order: Eight thin, uniform mist-white interview cards sit in one precise horizontal sequence inside a shallow ink-dark metal filing track on a lightly worn worktable. Every card is blank and evenly aligned.
+  Single Bug: offset — at one exact position, a single card has been deliberately slid outward from the row, exposing one recessed layer beneath it containing tactile evidence of real work: a graphite-smudged paper fragment, one worn wooden joint, and one brushed-metal fastener, all contained within the footprint of that card. No other card is shifted, missing, open, broken, duplicated, or differently sized.
+  Steel-blue role: the displaced card itself is muted steel blue #365B6D; it is the only colored element and the only Bug. Removing this card would remove both the deviation and the access to the deeper evidence.
+  Primary request: Create a tactile constructed editorial still-life viewed from a restrained high three-quarter angle. The aligned blank cards should first read as an orderly interview question list. The single steel-blue card pulled out from the row should reveal the quiet, imperfect material evidence underneath, expressing a move from prepared answers toward actual project experience. The relationship must be readable without text and remain clear at small thumbnail size.
+  Style/medium: constructed editorial still-life between real macro photography and a carefully handmade publishing model; believable paper fibers, lightly oxidized metal, graphite traces, worn wood, subtle fingerprints; not glossy 3D and not a cute miniature.
+  Composition/framing: balanced 4:3 landscape, the row occupies the central horizontal band with the single displaced card as the secondary discovery, purposeful breathing room without empty spectacle, important objects inside the outer 6% safe area, no area reserved for overlaid title text.
+  Lighting/mood: soft neutral daylight from one side, calm concentration, restrained and observant, no drama or sentimentality.
+  Color palette: ink #111A21, paper white #F8FAF9, mist #EEF2F3, line gray #D3DCE0, natural graphite, dark worn wood and brushed metal; steel blue #365B6D occupies less than 8% of the image and appears only on the displaced card.
+  Constraints: exactly one Bug, the offset steel-blue card; no words, letters, numbers, checkmarks, logos, title, watermark, readable handwriting, UI, labels, people, hands, faces, extra blue objects, generic grid overlay, multiple anomalies.
+  Avoid: recruitment website imagery, handshake, office portraits, interview table with people, resumes with fake text, cyberpunk, neon cyan, purple-blue gradients, holograms, humanoid robots, robot hands, glowing brains, circuit boards, server racks, binary rain, giant gears, glossy corporate stock photography, cinematic spectacle, motivational-poster mood, excessive empty space.
