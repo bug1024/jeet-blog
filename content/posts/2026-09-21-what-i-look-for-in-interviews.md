@@ -5,7 +5,6 @@ date: 2026-09-21
 author: "Bug1024"
 slug: "what-i-look-for-in-interviews"
 draft: false
-hideInHomepage: true
 visual: "bug-visual-022"
 cover:
   image: "/images/article/what-i-look-for-in-interviews-cover.webp"
