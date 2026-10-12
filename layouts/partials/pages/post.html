@@ -47,13 +47,9 @@
                     </figure>
                 {{ else }}
                     <aside class="article-coordinate" aria-label="文章坐标">
-                        <span class="article-coordinate-type">POST</span>
+                        <span class="article-coordinate-type">文章</span>
                         <strong>{{ printf "%03d" $postNumber }}</strong>
                         <div class="article-coordinate-meta">
-                            <time datetime="{{ .PublishDate.Format "2006-01-02" }}">
-                                <span>{{ .PublishDate.Format "2006" }}</span>
-                                <span>{{ .PublishDate.Format "01 / 02" }}</span>
-                            </time>
                             <span>{{ .ReadingTime }} 分钟阅读</span>
                         </div>
                     </aside>

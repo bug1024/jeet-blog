@@ -14,15 +14,9 @@
                     <h1>{{ $topic.title }}</h1>
                     <p>{{ $topic.description }}</p>
                 </div>
-                <aside class="career-scale" aria-label="专题分组数量">
-                    <strong>{{ printf "%02d" $groupCount }}</strong>
-                    <span>GROUPS</span>
-                </aside>
             </header>
 
-            <div class="career-intro">
-                {{ range $topic.intro }}<p>{{ . }}</p>{{ end }}
-            </div>
+            {{ if eq $topicSlug "technical-archive" }}<p class="topic-version-note">部分工具和版本已变化。</p>{{ end }}
 
             <div class="career-stages">
                 {{ $articleNumber := 0 }}
@@ -35,7 +29,6 @@
                             </div>
                             <div>
                                 <h2>{{ $group.name }}</h2>
-                                <p>{{ $group.note }}</p>
                             </div>
                         </header>
                         <ol class="career-articles">
@@ -63,7 +56,7 @@
                     <header>
                         <p class="editorial-eyebrow">补充阅读</p>
                         <h2>{{ .title }}</h2>
-                        <p>{{ .note }}</p>
+                        <p>写于当时的记录。</p>
                     </header>
                     <ol>
                         {{ range .articles }}

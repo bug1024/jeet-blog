@@ -7,12 +7,9 @@
             <div class="main-inner">
                 <header class="editorial-page-head">
                     <div>
-                        <p class="editorial-eyebrow">{{ if eq .Kind "term" }}主题索引{{ else }}写作存档{{ end }}</p>
                         <h1 class="list-title">{{ .Title }}</h1>
                     </div>
-                    <p class="editorial-page-note">
-                        {{ if eq .Kind "term" }}关于“{{ .Title }}”的文章，共 {{ len $visiblePages }} 篇。{{ else }}按时间存放写过的文字，新的在前，旧的也保留。{{ end }}
-                    </p>
+                    {{ if eq .Kind "term" }}<span>{{ len $visiblePages }} 篇</span>{{ end }}
                     <span class="editorial-blue-block" aria-hidden="true"></span>
                 </header>
 

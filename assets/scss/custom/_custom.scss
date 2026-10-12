@@ -4222,3 +4222,159 @@ button:focus-visible {
         transition-duration: 0.01ms;
     }
 }
+
+// Shared editorial surfaces: content-first spacing. Standalone works keep their own layout.
+.home-main, .career-page, .works-page { padding-top: 56px; }
+.editorial-list, .about-page, .article-page { padding-top: 56px; padding-bottom: 56px; }
+.editorial-list .main-inner, .about-page .main-inner, .article-page .main-inner { padding-top: 0; }
+.home-shell { display: flex; flex-direction: column; gap: 36px; }
+.home-hero { padding: 30px 0 0; }
+.home-hero-stage { display: block; }
+.home-hero h1 { max-width: none; font-size: clamp(2rem, 3.3vw, 3rem); line-height: 1.35; }
+.home-hero h1 em { margin-left: 0; }
+.home-hero-intro { margin-top: 12px; }
+.home-reading-index, .home-selected, .home-recent { padding: 0; border: 0; }
+.home-section-head { margin-bottom: 16px; }
+.home-section-head > p:first-child {
+    display: block;
+    color: var(--brand-ink);
+    font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-size: .95rem;
+    font-weight: 600;
+    letter-spacing: .02em;
+}
+.home-recent-list article { padding: 18px 0; }
+.home-recent-list h2 { font-size: 1.35rem; }
+.home-recent-list p { margin-top: 8px; }
+.home-index-board { grid-template-columns: repeat(3, minmax(0, 1fr)); min-height: 0; border-top: 0; gap: 20px; }
+.home-index-board::before { display: none; }
+.home-index-board li, .home-index-board li.is-primary { grid-column: auto; border: 0; }
+.home-index-board a, .home-index-board .is-primary a { min-height: 0; padding: 20px; background: transparent; border-top: 2px solid transparent; }
+.home-index-board a:hover { background: transparent; }
+.home-index-board .is-primary a { border-top-color: var(--brand-steel); }
+.home-index-board .is-primary::before { display: none; }
+.home-index-board header { gap: 8px; }
+.home-index-count, .home-index-board .is-primary .home-index-count { margin: 16px 0 0; display: flex; align-items: baseline; gap: 6px; }
+.home-index-count strong, .home-index-board .is-primary .home-index-count strong { font-size: 1.5rem; color: var(--brand-slate); }
+.home-index-copy { margin: 0; padding-top: 12px; }
+.home-index-copy h2, .home-index-board .is-primary .home-index-copy h2 { font-size: 1.45rem; }
+.home-index-copy p { margin-top: 10px; }
+.home-index-board footer { margin-top: 18px; padding-top: 0; border: 0; }
+.home-selected-grid article,
+.home-selected-grid article + article,
+.home-selected-grid article:last-child {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+    padding: 20px;
+    border: 0;
+}
+.home-selected-meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    color: var(--brand-slate);
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: .62rem;
+    letter-spacing: .07em;
+}
+.home-selected-meta small { font-size: inherit; }
+.home-selected-grid article > p { flex: 1; }
+.home-selected-grid { gap: 20px; }
+.home-selected-grid h2 { margin-top: 18px; font-size: 1.4rem; }
+.home-selected-grid article > a { position: static; margin-top: 16px; justify-self: start; }
+
+.editorial-page-head, .about-page-head, .career-head, .works-head {
+    display: flex; align-items: baseline; gap: 16px; min-height: 0; padding: 26px 0 22px;
+}
+.editorial-page-head .list-title, .about-page-head .post-title, .career-head h1, .works-head h1 {
+    margin: 0; font-size: clamp(1.8rem, 3vw, 2.5rem); line-height: 1.3;
+}
+.career-head-copy > p { margin-top: 12px; }
+.career-head-copy > .editorial-eyebrow { margin: 0 0 10px; }
+.editorial-blue-block { display: none; }
+.archive-year-group { padding: 28px 0; gap: 32px; }
+.archive-entries li { padding: 14px 0; margin: 0; border: 0; }
+.tag-index-grid { gap: 0 40px; padding: 12px 0 48px; }
+.tag-index-item { min-height: 56px; border-bottom: 1px solid var(--brand-line); }
+.tag-index-line { visibility: hidden; }
+.topic-directory a { grid-template-columns: 40px minmax(0, 1fr) 60px 20px; gap: 20px; min-height: 0; padding: 24px 0; }
+.topic-directory h2 { font-size: 1.65rem; }
+.topic-directory p { margin-top: 8px; }
+.career-stage { padding: 32px 0; }
+.career-stage-head { padding-right: 28px; }
+.career-stage-index { margin-bottom: 16px; }
+.career-articles li { padding: 16px 0; }
+.topic-related { padding: 32px 0; }
+.topic-version-note { margin: 18px 0 0; color: var(--brand-slate); font-size: .85rem; }
+.about-layout { grid-template-columns: 190px minmax(0, 700px); justify-content: start; gap: 48px; padding: 28px 0 48px; }
+.about-journey li { min-height: 0; padding-bottom: 24px; }
+.about-article .post-body > h2 { margin: 1.8em 0 .65em; padding-top: 0; border: 0; }
+.about-article .post-body > h2:first-child { margin-top: 0; }
+.works-directory { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
+.works-directory > li > a { display: flex; flex-direction: column; min-height: 0; padding: 0 0 20px; }
+.works-directory figure { width: 100%; aspect-ratio: 4 / 3; }
+.works-directory figure img { width: 100%; height: 100%; object-fit: cover; }
+.works-card-copy { padding: 18px 0 0; min-height: 0; }
+.works-card-copy h2 { margin: 16px 0 12px; font-size: 1.8rem; }
+.works-card-copy footer { margin-top: 18px; border: 0; padding-top: 0; }
+
+.article-hero { min-height: 0; padding: 26px 0 24px; grid-template-columns: minmax(0, 1fr) 150px; gap: 32px; }
+.article-hero--with-cover { grid-template-columns: minmax(0, 1fr) 260px; gap: 32px; }
+.article-hero .post-title { margin: 18px 0 0; font-size: clamp(2.1rem, 3.5vw, 3rem); line-height: 1.35; }
+.article-hero .post-description { margin-top: 14px; }
+.article-coordinate { min-height: 0; padding: 18px; align-self: center; }
+.article-coordinate::after { display: none; }
+.article-coordinate > strong { font-size: 2.4rem; margin: 12px 0; }
+.article-coordinate-meta { margin-top: 0; }
+.article-body { margin-top: 30px !important; }
+.about-article .post-body { margin-top: 0 !important; }
+.article-body > h2 { margin: 1.8em 0 .65em; }
+.article-body > h3 { margin: 1.4em 0 .6em; }
+.article-finish { margin-top: 32px; padding-top: 16px; border-top: 0; }
+.career-article-nav { margin-top: 24px; padding-top: 20px; }
+
+@media (max-width: 720px) {
+    .home-shell { gap: 28px; padding-bottom: 40px; }
+    .home-hero { padding: 24px 0 0; }
+    .home-hero h1 { font-size: 1.9rem; }
+    .home-hero-intro { margin-top: 10px; }
+    .home-reading-index, .home-selected, .home-recent { padding: 0; }
+    .home-recent-list article { padding: 16px 0; }
+    .home-recent-list h2 { font-size: 1.2rem; }
+    .home-index-board { grid-template-columns: 1fr; gap: 12px; }
+    .home-index-board li.is-primary { grid-column: auto; }
+    .home-index-board a, .home-index-board .is-primary a { min-height: 0; padding: 18px; }
+    .home-selected-grid { gap: 0; }
+    .home-selected-grid article,
+    .home-selected-grid article + article,
+    .home-selected-grid article:last-child { min-height: 0; padding: 20px 0; }
+    .home-selected-grid h2 { margin-top: 16px; }
+    .editorial-page-head, .about-page-head, .career-head, .works-head { min-height: 0; padding: 24px 0 20px; }
+    .archive-year-group { padding: 24px 0; gap: 16px; }
+    .archive-entries li { padding: 12px 0; }
+    .tag-index-grid { grid-template-columns: 1fr; }
+    .topic-directory a { grid-template-columns: 28px minmax(0, 1fr) 40px 14px; gap: 12px; padding: 20px 0; min-height: 0; }
+    .topic-directory h2 { font-size: 1.35rem; }
+    .career-stage { padding: 28px 0; }
+    .career-stage-head { padding-right: 0; }
+    .career-stage-index { margin-bottom: 12px; }
+    .career-articles li { padding: 14px 0; }
+    .about-layout { grid-template-columns: 1fr; gap: 24px; padding: 24px 0 40px; }
+    .about-journey li { padding-bottom: 0; }
+    .about-article .post-body > h2 { margin: 1.8em 0 .65em; }
+    .works-directory { grid-template-columns: 1fr; gap: 24px; }
+    .works-card-copy { min-height: 0; padding: 18px 0 0; }
+    .works-card-copy h2 { margin-top: 16px; }
+    .article-hero, .article-hero--with-cover { grid-template-columns: 1fr; gap: 20px; padding: 24px 0; }
+    .article-hero .post-title { font-size: 1.85rem; margin-top: 16px; }
+    .article-cover { width: unquote("min(100%, 280px)"); }
+    .article-coordinate { display: flex; flex-direction: row; align-items: center; justify-content: flex-start; gap: 14px; min-height: 0; padding: 10px 14px; }
+    .article-coordinate > strong { margin: 0; font-size: 1.4rem; }
+    .article-coordinate-meta { margin: 0; }
+    .article-body { margin-top: 26px !important; }
+    .article-body > h2 { margin: 1.8em 0 .65em; }
+    .article-body > h3 { margin: 1.4em 0 .6em; }
+}
