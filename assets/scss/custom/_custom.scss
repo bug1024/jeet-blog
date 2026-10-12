@@ -7,6 +7,7 @@
     --brand-mist: #eef2f3;
     --brand-paper: #f8faf9;
     --brand-copy: #42525a;
+    --brand-red: #a34b45;
 }
 
 :root[data-theme="dark"] {
@@ -84,6 +85,35 @@ button:focus-visible {
 .menu-item.active a,
 .menu-item a:hover {
     color: var(--brand-ink);
+}
+
+.editorial-page-head h1,
+.career-head h1,
+.works-head h1,
+.article-hero .post-title,
+.storybook-intro h1,
+.journey-hero-copy h1,
+.sunset-hero-copy h1 {
+    position: relative;
+}
+
+.editorial-page-head h1::before,
+.career-head h1::before,
+.works-head h1::before,
+.article-hero .post-title::before,
+.storybook-intro h1::before,
+.journey-hero-copy h1::before,
+.sunset-hero-copy h1::before {
+    content: "";
+    position: absolute;
+    top: .65em;
+    top: calc(.5lh - 2px);
+    left: -14px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--brand-red);
+    pointer-events: none;
 }
 
 .home-main {
@@ -4272,6 +4302,7 @@ button:focus-visible {
     .home-yaya { position: absolute; top: calc(50% + 26px); right: 4px; width: 100px; padding: 8px; transform: translateY(-75%); }
     .home-yaya-art { position: relative; }
     .home-yaya-art::before { content: ""; position: absolute; z-index: 0; top: 77.5%; left: -12px; right: -12px; border-top: 1px solid var(--brand-line); }
+    .home-yaya-art::after { content: ""; position: absolute; z-index: 2; top: calc(77.5% - 1.5px); right: -14px; width: 4px; height: 4px; border-radius: 50%; background: var(--brand-red); pointer-events: none; }
     .home-yaya-art > img { position: relative; z-index: 1; display: block; width: 100%; height: auto; margin: 0; border: 0; }
     .home-yaya-art > canvas { position: absolute; z-index: 1; inset: 0; display: block; width: 100%; height: 100%; opacity: 0; }
     .home-yaya-art.is-ready > img { visibility: hidden; }
