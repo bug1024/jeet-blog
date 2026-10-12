@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 340" width="320" height="340" role="img" aria-labelledby="title desc">
+  <title id="title">三花猫侧影 · 第一稿</title>
+  <desc id="desc">一只朝左安静坐着的三花猫，白色身体、墨色轮廓，耳边和背部有橘色与黑色毛斑，尾巴沿脚边轻轻卷起。</desc>
+  <defs>
+    <path id="body" d="M145 151 C163 146 181 156 192 179 C204 204 237 223 237 256 C237 277 222 290 199 291 L135 291 C126 291 121 286 124 281 C128 276 136 278 143 277 L143 218 C129 202 126 177 132 164 Z"/>
+    <path id="head" d="M132 78 L113 52 Q108 74 111 97 Q98 104 97 116 L79 127 Q76 134 88 140 L107 145 Q116 165 139 165 Q161 164 173 147 Q185 128 174 106 L178 64 L151 80 Q141 76 132 78 Z"/>
+    <clipPath id="body-clip"><use href="#body"/></clipPath>
+    <clipPath id="head-clip"><use href="#head"/></clipPath>
+  </defs>
+  <g stroke="#111A21" stroke-linecap="round" stroke-linejoin="round">
+    <!-- The tail curls along the feet rather than framing the whole illustration. -->
+    <path d="M219 271 C248 267 274 283 268 302 C264 315 242 314 216 309 L170 301" fill="none" stroke-width="16"/>
+    <path d="M219 271 C248 267 274 283 268 302 C264 315 242 314 216 309 L170 301" fill="none" stroke="#F8FAF9" stroke-width="8"/>
+    <path d="M186 304 L170 301" fill="none" stroke-width="13"/>
+    <use href="#body" fill="#F8FAF9" stroke="none"/>
+    <g clip-path="url(#body-clip)" stroke="none">
+      <path d="M158 155 C176 144 195 161 201 186 C189 194 172 194 164 180 C158 171 157 163 158 155 Z" fill="#CF9A61"/>
+      <path d="M234 228 C210 218 194 231 197 250 C200 267 220 274 241 263 Z" fill="#111A21"/>
+    </g>
+    <use href="#body" fill="none" stroke-width="4.5"/>
+    <path d="M159 225 L159 276 Q173 275 175 283 Q175 290 161 291" fill="none" stroke-width="3.5"/>
+    <path d="M214 263 Q197 262 192 279" fill="none" stroke-width="3"/>
+    <use href="#head" fill="#F8FAF9" stroke="none"/>
+    <g clip-path="url(#head-clip)" stroke="none">
+      <path d="M98 48 L137 70 C143 92 133 108 114 110 L101 103 Z" fill="#CF9A61"/>
+      <path d="M169 60 L187 54 L188 131 Q177 136 167 125 Q157 112 162 94 Z" fill="#111A21"/>
+    </g>
+    <use href="#head" fill="none" stroke-width="4.5"/>
+    <circle cx="111" cy="121" r="3" fill="#111A21" stroke="none"/>
+    <path d="M79 129 L85 132 L80 135 Z" fill="#111A21" stroke-width="2"/>
+    <path d="M96 138 L78 143 M100 145 L84 152" fill="none" stroke-width="2"/>
+  </g>
+</svg>

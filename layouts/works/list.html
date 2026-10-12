@@ -12,9 +12,6 @@
             {{ range $visibleWorks.ByDate.Reverse }}
                 <li>
                     <a href="{{ .RelPermalink }}">
-                        <figure>
-                            <img src="{{ .Params.cover | relURL }}" alt="{{ .Params.coverAlt }}" loading="lazy" decoding="async">
-                        </figure>
                         <div class="works-card-copy">
                             <header>
                                 <span>{{ .Params.workNumber }}</span>
@@ -22,8 +19,13 @@
                             </header>
                             <h2>{{ .Title }}</h2>
                             <p>{{ .Description }}</p>
-                            <footer><span>查看作品</span><i aria-hidden="true">→</i></footer>
                         </div>
+                        {{ $coverAlt := .Params.coverAlt | default .Title }}
+                        {{ with .Params.cover }}
+                        <figure>
+                            <img src="{{ . | relURL }}" alt="{{ $coverAlt }}" loading="lazy" decoding="async">
+                        </figure>
+                        {{ end }}
                     </a>
                 </li>
             {{ end }}

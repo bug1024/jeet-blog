@@ -11,3 +11,7 @@
         </script>
     {{- end }}
 {{- end }}
+<script type="module" src="{{ "/js/header-boundary.js" | relURL }}"></script>
+{{- if .IsHome }}
+    <script type="module" src="{{ "/js/yaya-portrait.js" | relURL }}"></script>
+{{- end }}

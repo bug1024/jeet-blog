@@ -1,5 +1,5 @@
 <main class="main home-main" id="main">
-    <div class="home-shell">
+    <div class="home-shell home-directory">
         {{ $allPosts := where .Site.RegularPages "Section" "in" .Site.Params.mainSections }}
         {{ $allPosts = where $allPosts "Params.hidden" "ne" true }}
         {{ $recentPosts := $allPosts }}
@@ -17,23 +17,28 @@
                         <em>也谈工作与生活。</em>
                     </h1>
                 </div>
+                <div class="home-yaya" data-yaya-region>
+                    <div class="home-yaya-art">
+                        <img src="{{ "/images/illustrations/yaya-original.png" | relURL }}" width="1086" height="1448" alt="三花猫丫丫" decoding="async">
+                        <canvas data-yaya data-src="{{ "/images/illustrations/yaya-original.png" | relURL }}" width="1086" height="1448" role="img" aria-label="安静坐着的三花猫丫丫"></canvas>
+                    </div>
+                </div>
             </div>
         </section>
 
         <section class="home-recent" aria-labelledby="recent-title">
             <header class="home-section-head">
-                <p id="recent-title">最近写作</p>
+                <h2 id="recent-title">最近写作</h2>
                 <a href="{{ "/posts/" | relLangURL }}">全部文章 <span aria-hidden="true">→</span></a>
             </header>
             <div class="home-recent-list">
                 {{ range $recentPosts }}
                     <article>
-                        <time datetime="{{ .Date.Format "2006-01-02" }}"><strong>{{ .Date.Format "2006" }}</strong><span>{{ .Date.Format "01 / 02" }}</span></time>
                         <div>
-                            <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
-                            <p>{{ .Description }}</p>
+                            <h3><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h3>
+                            {{ with .Description }}<p>{{ . }}</p>{{ end }}
                         </div>
-                        <a href="{{ .RelPermalink }}" aria-label="阅读《{{ .LinkTitle }}》">→</a>
+                        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006.01.02" }}</time>
                     </article>
                 {{ end }}
             </div>
@@ -41,58 +46,47 @@
 
         <section class="home-reading-index" aria-labelledby="reading-index-title">
             <header class="home-section-head">
-                <p id="reading-index-title">阅读索引</p>
+                <h2 id="reading-index-title">阅读索引</h2>
                 <a href="{{ "/topics/" | relLangURL }}">全部专题 <span aria-hidden="true">→</span></a>
             </header>
-            <ol class="home-index-board">
-                {{ range $index, $topic := $topics }}
-                    <li{{ if eq $index 0 }} class="is-primary"{{ end }}>
+            <ul class="home-topic-list">
+                {{ range $topics }}
+                    {{ $topic := . }}
+                    <li>
                         <a href="{{ printf "/topics/%s/" $topic.slug | relLangURL }}">
-                            <header>
-                                <span>{{ printf "%02d" (add $index 1) }}</span>
-                                <small>{{ $topic.label }}</small>
-                            </header>
-                            <div class="home-index-count">
-                                <strong>{{ printf "%02d" $topic.article_count }}</strong>
-                                <small>篇</small>
-                            </div>
-                            <div class="home-index-copy">
-                                <h2>{{ $topic.title }}</h2>
+                            <div>
+                                <h3>{{ $topic.title }}</h3>
                                 <p>{{ $topic.description }}</p>
                             </div>
-                            <footer>
-                                <span>进入专题</span>
-                                <i aria-hidden="true">→</i>
-                            </footer>
+                            <span class="home-topic-count">{{ $topic.article_count }} 篇 <span aria-hidden="true">↗</span></span>
                         </a>
                     </li>
                 {{ end }}
-            </ol>
+            </ul>
         </section>
 
         <section class="home-selected" aria-labelledby="selected-title">
             <header class="home-section-head">
-                <p id="selected-title">精选文章</p>
+                <h2 id="selected-title">精选文章</h2>
             </header>
             <div class="home-selected-grid">
                 {{ $selectedSlugs := slice "why-i-restart" "after-several-work-reviews" "old-writings-2010" }}
-                {{ range $index, $slug := $selectedSlugs }}
+                {{ range $selectedSlugs }}
+                    {{ $slug := . }}
                     {{ $matches := where $allPosts "Params.slug" $slug }}
                     {{ with index $matches 0 }}
                         <article>
+                            <div>
+                                <h3><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h3>
+                                {{ with .Description }}<p>{{ . }}</p>{{ end }}
+                            </div>
                             <header class="home-selected-meta">
-                                <span>{{ printf "%02d" (add $index 1) }}</span>
                                 <small>{{ with .Params.tags }}{{ index . 0 }}{{ else }}文章{{ end }}</small>
                             </header>
-                            <h2><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h2>
-                            <p>{{ .Description }}</p>
-                            <a href="{{ .RelPermalink }}" aria-label="阅读《{{ .LinkTitle }}》">阅读 <span aria-hidden="true">→</span></a>
                         </article>
                     {{ end }}
                 {{ end }}
             </div>
         </section>
-
-
     </div>
 </main>

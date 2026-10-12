@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>丫丫 · 动画预览</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; color: #111a21; background: #f8faf9; font-family: "PingFang SC", sans-serif; }
+    main { max-width: 900px; margin: 0 auto; padding: 48px 24px; }
+    header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 16px; }
+    h1 { margin: 0; font: 400 28px/1.5 "Songti SC", serif; }
+    p { color: #53646d; line-height: 1.7; font-size: 14px; }
+    .stage { display: flex; justify-content: center; padding: 24px; min-height: 390px; }
+    .portrait { width: 250px; padding: 15px; }
+    canvas { width: 100%; height: auto; display: block; }
+    button { padding: 8px 14px; color: #365b6d; border: 1px solid #d3dce0; background: transparent; border-radius: 3px; font: inherit; cursor: pointer; }
+    button:focus-visible { outline: 2px solid #365b6d; outline-offset: 4px; }
+    .scale { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .scale button[aria-pressed="true"] { border-color: #365b6d; }
+    @media (max-width: 500px) { main { padding-top: 24px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header><h1>丫丫 · 动画预览</h1><button id="blink" type="button">看一次眨眼</button></header>
+    <p>偶尔眨眼，鼠标靠近时尾尖轻摆。身体保持静止，鼠标离开后尾巴回到原位。</p>
+    <div class="stage"><div class="portrait" data-yaya-region><canvas data-yaya data-src="/images/illustrations/yaya-original.png" role="img" aria-label="安静坐着的三花猫丫丫"></canvas></div></div>
+    <div class="scale" aria-label="预览尺寸">
+      <button type="button" data-size="250" aria-pressed="true">大图检查</button>
+      <button type="button" data-size="150" aria-pressed="false">首页尺寸</button>
+    </div>
+    <p>启用系统“减少动态效果”时显示静态图。本页用于检查局部动画，首页采用更小的展示尺寸。</p>
+  </main>
+  <script type="module" src="/js/yaya-portrait.js"></script>
+  <script>
+    document.querySelector('#blink').addEventListener('click', () => document.querySelector('[data-yaya]').dispatchEvent(new Event('yaya:blink')));
+    document.querySelectorAll('[data-size]').forEach(button => button.addEventListener('click', () => {
+      document.querySelector('.portrait').style.width = `${button.dataset.size}px`;
+      document.querySelectorAll('[data-size]').forEach(other => other.setAttribute('aria-pressed', String(other === button)));
+    }));
+  </script>
+</body>
+</html>
