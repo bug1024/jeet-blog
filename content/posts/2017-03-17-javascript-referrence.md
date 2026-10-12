@@ -13,23 +13,23 @@ draft: true
 
 ## 声明 ##
 
-- 变量声明必须加var关键字，严格控制作用域；
-- 建议使用驼峰式命名变量和函数，如：functionNamesLikeThis, variableNamesLikeThis, ClassNamesLikeThis,namespaceNamesLikeThis；
-- 私有成员变量和方法命名以下划线开头，如：var _this；
-- 常量定义单词全部大写，以下划线连接，但不要用const关键字来声明，如：SOME_CONSTANTS；
-- 函数参数大于3个时，应以对象形式作为参数集传递；
-- 禁止在代码块中声明函数，错误的范例：if (true) {function foo() {}}；
-- 禁止用new来实例化**基本类型**，错误的范例：var x = new Boolean(false)；
-- 直接定义数组或对象，而不使用new关键字声明，错误的范例：var a = new Array();var o = new Object()；
-- 使用单引号来定义字符串；
-- 文件名必须全部用小写，文件名分隔符用**中划线**连接，版本连接符用**实心点**，合并文件的文件名连接符用**下划线**，如：passport-core.min.js和reset-1.0_utils-1.0.css；
+- 变量声明必须加var关键字，严格控制作用域。
+- 建议使用驼峰式命名变量和函数，如：functionNamesLikeThis, variableNamesLikeThis, ClassNamesLikeThis,namespaceNamesLikeThis。
+- 私有成员变量和方法命名以下划线开头，如：var _this。
+- 常量定义单词全部大写，以下划线连接，但不要用const关键字来声明，如：SOME_CONSTANTS。
+- 函数参数大于3个时，应以对象形式作为参数集传递。
+- 禁止在代码块中声明函数，错误的范例：if (true) {function foo() {}}。
+- 禁止用new来实例化**基本类型**，错误的范例：var x = new Boolean(false)。
+- 直接定义数组或对象，而不使用new关键字声明，错误的范例：var a = new Array();var o = new Object()。
+- 使用单引号来定义字符串。
+- 文件名必须全部用小写，文件名分隔符用**中划线**连接，版本连接符用**实心点**，合并文件的文件名连接符用**下划线**，如：passport-core.min.js和reset-1.0_utils-1.0.css。
 
 ## 安全 ##
 
-- 审查用户输入，如：从URL获取参数，使用跳转页面的referer，用于eval或DOM操作的用户数据；
-- 禁止通过在iframe使用script进行跨域回调；
-- 警惕jquery xss，禁止这样的写法：$(window.location.hash)；
-- 禁止引用站外资源；
+- 审查用户输入，如：从URL获取参数，使用跳转页面的referer，用于eval或DOM操作的用户数据。
+- 禁止通过在iframe使用script进行跨域回调。
+- 警惕jquery xss，禁止这样的写法：$(window.location.hash)。
+- 禁止引用站外资源。
 
 ## 分号 ##
 
@@ -75,15 +75,15 @@ draft: true
 
 ## 面向对象编程 ##
 
-- 类中的成员变量使用构造函数来初始化；
-- 除非是必须移除类的成员，否则析构函数中对成员的销毁应通过将其设置为null，而不是用delete，因为重新赋值方式性能比用delete好；
-- 避免通过prototype方式污染内置对象原型链；
+- 类中的成员变量使用构造函数来初始化。
+- 除非是必须移除类的成员，否则析构函数中对成员的销毁应通过将其设置为null，而不是用delete，因为重新赋值方式性能比用delete好。
+- 避免通过prototype方式污染内置对象原型链。
 
 ## 作用域相关 ##
 
-- 不使用with关键字，容易造成作用域混乱；
-- this仅用于类成员函数或对象中；
-- 通用全局函数，特别是通用组件代码应将业务逻辑放入闭包中，并通过“命名空间”将其引入；
+- 不使用with关键字，容易造成作用域混乱。
+- this仅用于类成员函数或对象中。
+- 通用全局函数，特别是通用组件代码应将业务逻辑放入闭包中，并通过“命名空间”将其引入。
 - 若函数中使用到全局变量，则访问全局变量时应使用window来引入，如：
 
         var somevar = 10；
@@ -140,7 +140,7 @@ draft: true
     });
     ```
 
-  - 在做长方法链时使用缩进.
+  - 在做长方法链时使用缩进。
 
     ```javascript
     // bad
@@ -319,7 +319,7 @@ draft: true
     itemsCopy = items.slice();
     ```
 
-  - 使用slice将类数组的对象转成数组.
+  - 使用slice将类数组的对象转成数组。
 
     ```javascript
     function trigger() {
@@ -347,7 +347,7 @@ draft: true
     ```
 
   - 超过80个字符的字符串应该使用字符串连接换行
-  - 注: 如果过度使用，长字符串连接可能会对性能有影响. [jsPerf](http://jsperf.com/ya-string-concat) & [Discussion](https://github.com/airbnb/javascript/issues/40)
+  - 注：如果过度使用，长字符串连接可能会对性能有影响。[jsPerf](http://jsperf.com/ya-string-concat) & [Discussion](https://github.com/airbnb/javascript/issues/40)
 
     ```javascript
     // bad
@@ -415,7 +415,7 @@ draft: true
 
 ## 函数 ##
 
-  - 函数表达式:
+  - 函数表达式：
 
     ```javascript
     // 匿名函数表达式
@@ -435,7 +435,7 @@ draft: true
     ```
 
   - 绝对不要在一个非函数块里声明一个函数，把那个函数赋给一个变量。浏览器允许你这么做，但是它们解析不同。
-  - **注:** ECMA-262定义把`块`定义为一组语句，函数声明不是一个语句。[阅读ECMA-262对这个问题的说明](http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf#page=97).
+  - **注：** ECMA-262定义把`块`定义为一组语句，函数声明不是一个语句。[阅读ECMA-262对这个问题的说明](http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf#page=97).
 
     ```javascript
     // bad
@@ -453,7 +453,7 @@ draft: true
     }
     ```
 
-  - 绝对不要把参数命名为 `arguments`, 这将会逾越函数作用域内传过来的 `arguments` 对象.
+  - 绝对不要把参数命名为 `arguments`，这将会逾越函数作用域内传过来的 `arguments` 对象。
 
     ```javascript
     // bad
@@ -469,7 +469,7 @@ draft: true
 
 ## 属性 ##
 
-  - 当使用变量访问属性时使用中括号.
+  - 当使用变量访问属性时使用中括号。
 
     ```javascript
     var luke = {
@@ -533,8 +533,8 @@ draft: true
     + **Undefined** 被计算为 **false**
     + **Null** 被计算为 **false**
     + **布尔值** 被计算为 **布尔的值**
-    + **数字** 如果是 **+0, -0, or NaN** 被计算为 **false** , 否则为 **true**
-    + **字符串** 如果是空字符串 `''` 则被计算为 **false**, 否则为 **true**
+    + **数字** 如果是 **+0, -0, or NaN** 被计算为 **false**，否则为 **true**
+    + **字符串** 如果是空字符串 `''` 则被计算为 **false**，否则为 **true**
 
     ```javascript
     if ([0]) {
@@ -543,7 +543,7 @@ draft: true
     }
     ```
 
-  - 使用快捷方式.
+  - 使用快捷方式。
 
     ```javascript
     // bad
@@ -629,7 +629,7 @@ draft: true
     }
     ```
 
-  - 使用 `//` 进行单行注释，在评论对象的上面进行单行注释，注释前放一个空行.
+  - 使用 `//` 进行单行注释，在评论对象的上面进行单行注释，注释前放一个空行。
 
     ```javascript
     // bad
@@ -683,8 +683,8 @@ draft: true
 
 ## 类型转换 ##
 
-  - 在语句的开始执行类型转换.
-  - 字符串:
+  - 在语句的开始执行类型转换。
+  - 字符串：
 
     ```javascript
     //  => this.reviewScore = 9;
@@ -702,7 +702,7 @@ draft: true
     var totalScore = this.reviewScore + ' total score';
     ```
 
-  - 对数字使用 `parseInt` 并且总是带上类型转换的基数.
+  - 对数字使用 `parseInt` 并且总是带上类型转换的基数。
 
     ```javascript
     var inputValue = '4';
@@ -734,7 +734,7 @@ draft: true
     var val = inputValue >> 0;
     ```
 
-  - 布尔值:
+  - 布尔值：
 
     ```javascript
     var age = 0;
@@ -994,7 +994,7 @@ draft: true
     });
     ```
 
-    更好:
+    更好：
 
     ```js
     // good
@@ -1061,7 +1061,7 @@ draft: true
 
 ## 杂项 ##
 
-- 尽量使用优雅的模版写法，避免多行字符串用\加换行的方式或使用+运算连接字符串这种难维护的编码方式；
+- 尽量使用优雅的模版写法，避免多行字符串用\加换行的方式或使用+运算连接字符串这种难维护的编码方式。
 
 ## 常用词命名统一 ##
 规则：

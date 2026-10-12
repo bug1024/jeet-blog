@@ -219,7 +219,7 @@ draft: true
 ```
 
 ## 批量插入返回自增id
-版本3.3.1之后才支持, 入参的集合名称必须叫collection、list、array
+版本3.3.1之后才支持，入参的集合名称必须叫collection、list、array
 ```java
     int  batchInsert(List<Area> list);
 ```

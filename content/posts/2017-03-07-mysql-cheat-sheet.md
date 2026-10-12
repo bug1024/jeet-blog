@@ -121,4 +121,4 @@ draft: true
 * SELECT： 执行select操作，选择指定的列，插入到虚拟表VT8中。
 * DISTINCT： 对VT8中的记录进行去重。产生虚拟表VT9.
 * ORDER BY: 将虚拟表VT9中的记录按照<order_by_list>进行排序操作，产生虚拟表VT10.
-* LIMIT：取出指定行的记录，产生虚拟表VT11, 并将结果返回。
+* LIMIT：取出指定行的记录，产生虚拟表VT11，并将结果返回。

@@ -39,10 +39,10 @@ draft: true
  - WeakHashMap WeakHashMap是一种改进的HashMap，它对key实行“弱引用”，如果一个key不再被外部所引用，那么该key可以被GC回收。
 
 ## Map
- - HashMap：基于散列表实现，是无序的；
- - TreeMap：基于红黑树实现，按Key排序；
- - LinkedHashMap：保存了插入顺序；
- - Hashtable：是同步的，与HashMap类似；
+ - HashMap：基于散列表实现，是无序的。
+ - TreeMap：基于红黑树实现，按Key排序。
+ - LinkedHashMap：保存了插入顺序。
+ - Hashtable：是同步的，与HashMap类似。
 
 ## LinkedHashMap
  - 底层使用哈希表与双向链表来实现迭代有序，非同步的HashMap

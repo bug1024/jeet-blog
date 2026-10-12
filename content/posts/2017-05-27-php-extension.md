@@ -165,14 +165,14 @@ PHP类实现
     };
 ```
 
-  函数和方法的异同 函数和方法都是在编译阶段注册到compiler_globals变量中的，二者都使用相同的内核处理函数zend_do_begin_function_declaration() 和zend_do_end_function_declaration()来完成这一过程，不同的的地方在于定义（注册）的实现和调用的实现
+函数和方法都在编译阶段注册到compiler_globals变量中，使用相同的内核处理函数zend_do_begin_function_declaration()和zend_do_end_function_declaration()完成这一过程。不同之处在于定义、注册和调用的实现。
 
 ## 编写扩展的基本步骤
 * 下载php-src源码
-* 通过ext目录下ext_skel脚本生成扩展的基本框架：./ext_skel --extname=your_extname；
-* 修改config.m4配置：设置编译配置参数、设置扩展的源文件、依赖库/函数检查等等；
-* 编写扩展要实现的功能：按照PHP扩展的格式以及PHP提供的API编写功能；
-* 生成configure：扩展编写完成后执行phpize脚本生成configure及其它配置文件；
+* 通过ext目录下ext_skel脚本生成扩展的基本框架：./ext_skel --extname=your_extname。
+* 修改config.m4配置：设置编译配置参数、设置扩展的源文件、依赖库/函数检查等等。
+* 编写扩展要实现的功能：按照PHP扩展的格式以及PHP提供的API编写功能。
+* 生成configure：扩展编写完成后执行phpize脚本生成configure及其它配置文件。
 * 编译&安装：./configure、make、make install，然后将扩展的.so路径添加到php.ini中。
 
 ## 扩展中参数的解析
@@ -199,7 +199,7 @@ PHP类实现
 
 ## PHP进程通信
 * pcntl扩展：主要的进程扩展，完成进程的创建，子进程的创建，也是当前使用比较广的多进程
-* posix扩展：完成posix兼容机通用api,如获取进程id,杀死进程等。主要依赖 IEEE 1003.1 (POSIX.1) ，兼容posi
+* posix扩展：完成posix兼容机通用api，如获取进程id，杀死进程等。主要依赖 IEEE 1003.1 (POSIX.1) ，兼容posi
 * sysvmsg扩展：实现system v方式的进程间通信之消息队列
 * sysvsem扩展：实现system v方式的信号量
 * sysvshm扩展：实现system v方式的共享内存
@@ -207,10 +207,10 @@ PHP类实现
 * php也有一些封装好的异步进程处理框架：例如swoole,workman等
 
 ## Zend内存池
-zend针对内存的操作封装了一层，用于替换直接的内存操作：malloc、free等，实现了更高效率的内存利用，其实现主要参考了tcmalloc的设计。
+zend封装了一层内存操作，用于替换直接调用malloc、free等函数的方式，其实现主要参考了tcmalloc的设计。
 内存池是内核中最底层的内存操作，定义了三种粒度的内存块：chunk、page、slot，每个chunk的大小为2M，page大小为4KB，一个chunk被切割为512个page，而一个或若干个page被切割为多个slot，所以申请内存时按照不同的申请大小决定具体的分配策略：
 * Huge(chunk): 申请内存大于2M，直接调用系统分配，分配若干个chunk
 * Large(page): 申请内存大于3092B(3/4 page_size)，小于2044KB(511 page_size)，分配若干个page
 * Small(slot): 申请内存小于等于3092B(3/4 page_size)，内存池提前定义好了30种同等大小的内存(8,16,24,32，...3072)，他们分配在不同的page上(不同大小的内存可能会分配在多个连续的page)，申请内存时直接在对应page上查找可用位置
 
-未完待续。。。
+未完待续
