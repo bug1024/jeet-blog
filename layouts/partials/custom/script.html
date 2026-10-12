@@ -12,6 +12,6 @@
     {{- end }}
 {{- end }}
 <script type="module" src="{{ "/js/header-boundary.js" | relURL }}"></script>
-{{- if .IsHome }}
+{{- if or .IsHome (eq .Layout "about") }}
     <script type="module" src="{{ "/js/yaya-portrait.js" | relURL }}"></script>
 {{- end }}

@@ -12,6 +12,8 @@ class YayaPortrait {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.image = new Image();
+    this.noTail = canvas.hasAttribute('data-yaya-still');
+    this.eyeSpecs = canvas.dataset.yayaEyes ? JSON.parse(canvas.dataset.yayaEyes) : EYES;
     this.motion = matchMedia('(prefers-reduced-motion: reduce)');
     this.visible = true;
     this.near = false;
@@ -37,9 +39,11 @@ class YayaPortrait {
     });
     this.observer.observe(canvas);
     this.image.onload = () => {
-      canvas.width = W;
-      canvas.height = H;
-      this.eyes = EYES.map(eye => {
+      this.width = this.noTail ? this.image.naturalWidth : W;
+      this.height = this.noTail ? this.image.naturalHeight : H;
+      canvas.width = this.width;
+      canvas.height = this.height;
+      this.eyes = this.eyeSpecs.map(eye => {
         const texture = document.createElement('canvas');
         texture.width = eye.rx * 2;
         texture.height = eye.ry * 2;
@@ -69,6 +73,7 @@ class YayaPortrait {
   }
 
   setNear(near) {
+    if (this.noTail) return;
     this.near = near;
     if (this.enabled) this.start();
   }
@@ -137,14 +142,20 @@ class YayaPortrait {
 
   draw(closure) {
     const ctx = this.ctx;
-    ctx.clearRect(0, 0, W, H);
-    ctx.drawImage(this.image, 0, 0, W, TAIL_START, 0, 0, W, TAIL_START);
-    // Displacement starts at zero, preserving the join and keeping the body still.
-    for (let y = TAIL_START; y < H; y += 2) {
-      const height = Math.min(2, H - y);
-      const progress = (y - TAIL_START) / (H - TAIL_START);
-      const offset = Math.sin(this.phase) * 72 * progress * progress * this.amplitude;
-      ctx.drawImage(this.image, 0, y, W, height, offset, y, W, height);
+    const width = this.width || W;
+    const height = this.height || H;
+    ctx.clearRect(0, 0, width, height);
+    if (this.noTail) {
+      ctx.drawImage(this.image, 0, 0, width, height);
+    } else {
+      ctx.drawImage(this.image, 0, 0, W, TAIL_START, 0, 0, W, TAIL_START);
+      // Displacement starts at zero, preserving the join and keeping the body still.
+      for (let y = TAIL_START; y < H; y += 2) {
+        const stripHeight = Math.min(2, H - y);
+        const progress = (y - TAIL_START) / (H - TAIL_START);
+        const offset = Math.sin(this.phase) * 72 * progress * progress * this.amplitude;
+        ctx.drawImage(this.image, 0, y, W, stripHeight, offset, y, W, stripHeight);
+      }
     }
     if (closure < 0.005) return;
     for (const eye of this.eyes) this.drawEye(eye, closure);

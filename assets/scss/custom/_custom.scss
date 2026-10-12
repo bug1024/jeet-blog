@@ -1278,6 +1278,72 @@ button:focus-visible {
     letter-spacing: 0.08em;
 }
 
+.about-yaya {
+    position: relative;
+    width: 220px;
+    max-width: 100%;
+    margin: 16px 0 0 auto;
+}
+
+.about-yaya::after {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    // Ground the visible chassis, not the transparent image bounds.
+    top: 96.5%;
+    right: calc(13% - 8px);
+    width: 180%;
+    border-top: 1px solid var(--brand-line);
+    pointer-events: none;
+}
+
+.about-yaya > img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    border: 0;
+}
+
+.about-yaya > canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+.about-yaya.is-ready > img { visibility: hidden; }
+.about-yaya.is-ready > canvas { opacity: 1; }
+
+.about-diary {
+    position: absolute;
+    z-index: 3;
+    top: 96.5%;
+    left: calc(-80% + 8px);
+    width: 60px;
+    // Align the actual book's bottom edge, excluding transparent padding.
+    transform: translateY(-89%);
+    pointer-events: none;
+}
+
+.about-diary img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    border: 0;
+}
+
+@media (max-width: 720px) {
+    .about-yaya { width: 170px; margin-top: 12px; }
+    .about-yaya::after {
+        width: 145%;
+        max-width: calc(100vw - 40px);
+    }
+    .about-diary { left: calc(-45% + 12px); width: 44px; }
+}
+
 .about-next {
     display: grid;
     grid-template-columns: 1fr auto auto;

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>幼猫丫丫与 Mac · 预览</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f8faf9; color: #111a21; font-family: "PingFang SC", sans-serif; }
+    main { max-width: 900px; margin: auto; padding: 32px 20px; }
+    h1 { font: 400 24px/1.5 "Songti SC", serif; }
+    p { color: #53646d; font-size: 14px; line-height: 1.7; }
+    .controls { display: flex; flex-wrap: wrap; gap: 12px; }
+    button { background: transparent; color: #365b6d; border: 1px solid #d3dce0; padding: 8px 12px; font: inherit; cursor: pointer; }
+    button:focus-visible { outline: 2px solid #365b6d; outline-offset: 4px; }
+    .stage { display: flex; justify-content: flex-end; margin-top: 48px; }
+    .portrait { position: relative; width: 280px; max-width: 100%; }
+    img, canvas { display: block; width: 100%; height: auto; }
+    canvas { position: absolute; inset: 0; height: 100%; opacity: 0; }
+    .is-ready img { visibility: hidden; }
+    .is-ready canvas { opacity: 1; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>幼猫丫丫与 Mac</h1>
+    <p>只检查形象与眨眼，尚未接入关于页。画稿边缘的雾影仍需清理。</p>
+    <div class="controls">
+      <button type="button" id="blink">看一次眨眼</button>
+      <button type="button" data-size="280">小尺寸</button>
+      <button type="button" data-size="600">放大检查</button>
+    </div>
+    <div class="stage">
+      <div class="portrait">
+        <img src="/previews/yaya-mac/kitten-mac-v2.png" width="1536" height="1024" alt="幼猫丫丫从 Mac 电脑屏幕后探头">
+        <canvas data-yaya data-yaya-still data-src="/previews/yaya-mac/kitten-mac-v2.png" data-yaya-eyes='[{"x":430,"y":240,"rx":29,"ry":29,"angle":-0.15},{"x":551,"y":225,"rx":28,"ry":29,"angle":-0.15}]' role="img" aria-label="偶尔眨眼的幼猫丫丫和 Mac 电脑"></canvas>
+      </div>
+    </div>
+  </main>
+  <script type="module" src="/js/yaya-portrait.js"></script>
+  <script>
+    document.querySelector('#blink').addEventListener('click', () => document.querySelector('canvas').dispatchEvent(new Event('yaya:blink')));
+    document.querySelectorAll('[data-size]').forEach(button => button.addEventListener('click', () => {
+      document.querySelector('.portrait').style.width = `${button.dataset.size}px`;
+    }));
+  </script>
+</body>
+</html>

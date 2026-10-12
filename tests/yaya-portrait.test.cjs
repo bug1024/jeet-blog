@@ -65,4 +65,15 @@ cat.visible = true;
 context.document.hidden = true;
 cat.sync();
 assert.equal(cat.enabled, false, 'background tab stays inactive');
-console.log('OK: tail approach/settle, blink, idle, reduced motion and visibility');
+const kitten = Object.create(context.Portrait.prototype);
+const draws = [];
+Object.assign(kitten, {
+  noTail: true, width: 1536, height: 1024, image: {}, near: false,
+  ctx: { clearRect: (...args) => draws.push(args), drawImage: (...args) => draws.push(args) },
+});
+kitten.setNear(true);
+assert.equal(kitten.near, false, 'kitten scene does not move on pointer approach');
+kitten.draw(0);
+assert.equal(draws.length, 2, 'still scene draws one complete image, no tail strips');
+assert.deepEqual(draws[0], [0, 0, 1536, 1024], 'still scene uses its own image dimensions');
+console.log('OK: tail approach/settle, blink, idle, reduced motion, visibility and still kitten scene');
