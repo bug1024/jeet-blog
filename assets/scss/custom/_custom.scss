@@ -972,16 +972,6 @@ button:focus-visible {
     font-size: 0.7rem;
 }
 
-.archive-year-group.is-latest .archive-year::before {
-    content: "";
-    position: absolute;
-    top: 3px;
-    left: -22px;
-    width: 9px;
-    height: 9px;
-    background: var(--brand-steel);
-}
-
 .archive-entries {
     margin: 0;
     padding: 0;
@@ -2446,11 +2436,6 @@ button:focus-visible {
         grid-template-columns: 1fr;
         gap: 26px;
         padding: 40px 0 48px;
-    }
-
-    .archive-year-group.is-latest .archive-year::before {
-        left: auto;
-        right: 0;
     }
 
     .archive-entries li {
@@ -4379,15 +4364,15 @@ button:focus-visible {
     .home-recent, .home-reading-index, .home-selected {
         display: grid;
         grid-template-columns: 148px minmax(0, 1fr);
-        gap: 32px;
+        gap: 24px;
     }
     .home-section-head { display: block; margin: 0; padding-top: 3px; }
     .home-section-head h2 { margin: 0; color: var(--home-secondary); font: 400 18px/1.5 "Songti SC", "STSong", "Noto Serif CJK SC", serif; letter-spacing: .01em; }
     .home-section-head > a { display: inline-block; margin-top: 12px; font-size: .7rem; line-height: 1.6; letter-spacing: 0; color: var(--home-secondary); }
     .home-reading-index, .home-selected { position: relative; }
-    .home-reading-index::before, .home-selected::before { position: absolute; content: ""; top: -16px; left: 180px; right: 0; border-top: 1px dashed var(--brand-line); }
+    .home-reading-index::before, .home-selected::before { position: absolute; content: ""; top: -16px; left: 172px; right: 0; border-top: 1px dashed var(--brand-line); }
 
-    .home-recent-list article { grid-template-columns: minmax(0, 1fr) 100px; align-items: baseline; gap: 20px; padding: 0 0 20px; }
+    .home-recent-list article { display: block; padding: 0 0 20px; }
     .home-recent-list article + article { border: 0; padding-top: 0; }
     .home-recent-list article:last-child { padding-bottom: 0; }
     .home-recent-list h3 { margin: 0; font: 600 1.25rem/1.5 "Songti SC", "STSong", "Noto Serif CJK SC", serif; }
@@ -4405,16 +4390,30 @@ button:focus-visible {
     .home-selected-grid { grid-template-columns: 1fr; gap: 20px; }
     .home-selected-grid article,
     .home-selected-grid article + article,
-    .home-selected-grid article:last-child { padding: 0; border: 0; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 100px; align-items: baseline; gap: 20px; }
+    .home-selected-grid article:last-child { padding: 0; border: 0; min-height: 0; display: block; }
     .home-selected-meta { display: block; text-align: right; font: 400 .7rem/1.5 "PingFang SC", "Microsoft YaHei", sans-serif; letter-spacing: 0; color: var(--home-secondary); }
     .home-selected-grid h3 { margin: 0; font: 600 1.25rem/1.5 "Songti SC", "STSong", "Noto Serif CJK SC", serif; }
-    .home-selected-grid h3 a { color: var(--brand-ink); text-decoration: none; }
     .home-selected-grid p { margin: 5px 0 0; max-width: 38em; font-size: .75rem; line-height: 1.7; color: var(--home-secondary); }
-    .home-selected-grid article > a { display: inline-block; margin-top: 10px; font-size: .7rem; line-height: 1.6; }
-    .home-recent-list article:hover h3 a,
-    .home-recent-list article:focus-within h3 a,
-    .home-selected-grid article:hover h3 a,
-    .home-selected-grid article:focus-within h3 a,
+    .home-recent-list .home-article-link,
+    .home-selected-grid .home-article-link {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 100px;
+        align-items: baseline;
+        gap: 20px;
+        position: static;
+        margin: 0;
+        min-width: 0;
+        grid-column: auto;
+        grid-row: auto;
+        justify-self: stretch;
+        color: var(--brand-ink);
+        font: inherit;
+        text-decoration: none;
+    }
+    .home-article-link:hover,
+    .home-article-link:focus-visible { text-decoration: none; }
+    .home-article-link:hover h3,
+    .home-article-link:focus-visible h3,
     .home-topic-list a:hover h3,
     .home-topic-list a:focus-visible h3,
     .home-section-head > a:hover,
@@ -4447,16 +4446,15 @@ button:focus-visible {
         .home-recent, .home-reading-index, .home-selected { grid-template-columns: 1fr; gap: 16px; }
         .home-section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 0; }
         .home-section-head > a { margin: 0; }
-        .home-recent-list article { grid-template-columns: minmax(0, 1fr); gap: 4px; padding-bottom: 20px; }
-        .home-recent-list article > div { grid-column: auto; }
+        .home-recent-list article { padding-bottom: 20px; }
+        .home-recent-list .home-article-link,
+        .home-selected-grid .home-article-link { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+        .home-recent-list .home-article-link > div { grid-column: auto; }
         .home-recent-list time { grid-column: auto; text-align: left; grid-row: 1; font-size: .65rem; }
         .home-recent-list h3, .home-topic-list h3, .home-selected-grid h3 { font-size: 1.15rem; }
         .home-topic-list a { grid-template-columns: minmax(0, 1fr) 65px; gap: 12px; }
         .home-topic-count > span { margin-left: 6px; }
         .home-reading-index::before, .home-selected::before { left: 0; top: -14px; }
-        .home-selected-grid article,
-        .home-selected-grid article + article,
-        .home-selected-grid article:last-child { grid-template-columns: 1fr; gap: 4px; }
         .home-selected-meta { grid-row: 1; text-align: left; font-size: .65rem; }
     }
 }

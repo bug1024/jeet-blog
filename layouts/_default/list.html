@@ -25,8 +25,8 @@
 
                 {{ $pages := .Scratch.Get "pages" }}
                 <div class="editorial-archive">
-                    {{ range $groupIndex, $group := $pages.GroupByDate "2006" }}
-                        <section class="archive-year-group{{ if eq $groupIndex 0 }} is-latest{{ end }}">
+                    {{ range $group := $pages.GroupByDate "2006" }}
+                        <section class="archive-year-group">
                             <header class="archive-year">
                                 <h2>{{ $group.Key }}</h2>
                                 <span>{{ len $group.Pages }} 篇</span>

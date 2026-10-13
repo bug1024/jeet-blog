@@ -34,11 +34,13 @@
             <div class="home-recent-list">
                 {{ range $recentPosts }}
                     <article>
-                        <div>
-                            <h3><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h3>
-                            {{ with .Description }}<p>{{ . }}</p>{{ end }}
-                        </div>
-                        <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006.01.02" }}</time>
+                        <a class="home-article-link" href="{{ .RelPermalink }}">
+                            <div>
+                                <h3>{{ .LinkTitle }}</h3>
+                                {{ with .Description }}<p>{{ . }}</p>{{ end }}
+                            </div>
+                            <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006.01.02" }}</time>
+                        </a>
                     </article>
                 {{ end }}
             </div>
@@ -76,13 +78,15 @@
                     {{ $matches := where $allPosts "Params.slug" $slug }}
                     {{ with index $matches 0 }}
                         <article>
-                            <div>
-                                <h3><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h3>
-                                {{ with .Description }}<p>{{ . }}</p>{{ end }}
-                            </div>
-                            <header class="home-selected-meta">
-                                <small>{{ with .Params.tags }}{{ index . 0 }}{{ else }}文章{{ end }}</small>
-                            </header>
+                            <a class="home-article-link" href="{{ .RelPermalink }}">
+                                <div>
+                                    <h3>{{ .LinkTitle }}</h3>
+                                    {{ with .Description }}<p>{{ . }}</p>{{ end }}
+                                </div>
+                                <div class="home-selected-meta">
+                                    <small>{{ with .Params.tags }}{{ index . 0 }}{{ else }}文章{{ end }}</small>
+                                </div>
+                            </a>
                         </article>
                     {{ end }}
                 {{ end }}
