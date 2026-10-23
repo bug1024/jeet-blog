@@ -4195,3 +4195,133 @@ time,
         transition: none;
     }
 }
+
+// Article detail: title, body, ending and comments share one left edge.
+.article-body,
+.article-finish,
+.article-page .career-article-nav,
+.article-page .load-comments,
+.article-page #giscus,
+.article-page .giscus {
+    max-width: 860px;
+    margin-left: 0 !important;
+    margin-right: auto !important;
+}
+
+.article-page .career-article-nav {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px dashed var(--brand-line);
+}
+
+.article-adjacent-nav nav strong,
+.career-article-nav nav strong {
+    font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.career-article-nav nav a:hover strong,
+.career-article-nav nav a:focus-visible strong {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: .2em;
+}
+
+.article-page .load-comments {
+    margin-top: 48px;
+    text-align: left;
+}
+
+.article-page #load-comments {
+    padding: 6px 14px;
+    border: 1px solid var(--brand-line);
+    border-radius: 2px;
+    background: transparent;
+    color: var(--brand-copy);
+    font-size: var(--fs-small);
+    transition: border-color 120ms ease, color 120ms ease;
+}
+
+.article-page #load-comments:hover {
+    border-color: var(--brand-ink);
+    background: transparent;
+    color: var(--brand-ink);
+}
+
+// Topic index and topic detail: same rules, titles and hover as the article list.
+.topic-directory li + li,
+.career-articles li + li {
+    border-top-style: dashed;
+}
+
+.career-articles strong {
+    font-family: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+    font-size: 1.08rem;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.career-articles small {
+    margin-top: 4px;
+}
+
+.career-articles li:hover strong {
+    color: var(--brand-ink);
+}
+
+.topic-directory a,
+.career-articles li {
+    border-radius: 2px;
+    transition: background-color 120ms ease, box-shadow 120ms ease;
+}
+
+.topic-directory a:hover,
+.career-articles li:hover {
+    background: var(--brand-mist);
+    box-shadow: 0 0 0 10px var(--brand-mist);
+}
+
+.topic-directory a > strong {
+    font-variant-numeric: tabular-nums;
+}
+
+.career-stage {
+    padding: 24px 0;
+}
+
+// Group markers are structure, not emphasis: every group gets the same hairline.
+.career-stage:first-child .career-stage-index i {
+    height: 1px;
+    background: var(--brand-line);
+}
+
+// About: the side directory already numbers the sections, so the body drops its own counters.
+.about-article .post-body > h2::before {
+    display: none;
+}
+
+.about-article .post-body > p,
+.about-article .post-body > ul li,
+.about-article .post-body > ol li {
+    text-align: justify;
+    hanging-punctuation: allow-end;
+}
+
+.about-next {
+    padding: 20px 0 56px;
+    border-top: 1px dashed var(--brand-line);
+}
+
+.about-next > span {
+    font-family: var(--font-sans);
+    letter-spacing: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .topic-directory a,
+    .career-articles li,
+    .article-page #load-comments {
+        transition: none;
+    }
+}

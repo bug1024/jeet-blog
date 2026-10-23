@@ -1,4 +1,5 @@
 {{ $currentSlug := .Params.slug }}
+{{ $inSequence := false }}
 {{ $pages := where .Site.RegularPages "Section" "posts" }}
 {{ $pages = where $pages "Params.hidden" "ne" true }}
 {{ range $topic := .Site.Data.topics.topics }}
@@ -17,6 +18,7 @@
             {{ if eq $item.slug $currentSlug }}{{ $currentIndex = $index }}{{ end }}
         {{ end }}
         {{ if ge $currentIndex 0 }}
+            {{ $inSequence = true }}
             {{ $current := index $items $currentIndex }}
             <aside class="career-article-nav" aria-label="{{ $topic.title }}阅读顺序">
                 <header>
@@ -41,5 +43,25 @@
                 </nav>
             </aside>
         {{ end }}
+    {{ end }}
+{{ end }}
+{{/* Articles outside a sequence topic still get chronological neighbours. */}}
+{{ if not $inSequence }}
+    {{ $timeline := sort $pages "Date" "asc" }}
+    {{ $position := -1 }}
+    {{ range $index, $page := $timeline }}
+        {{ if eq $page.RelPermalink $.RelPermalink }}{{ $position = $index }}{{ end }}
+    {{ end }}
+    {{ if ge $position 0 }}
+        <aside class="career-article-nav article-adjacent-nav" aria-label="按时间继续阅读">
+            <nav>
+                {{ if gt $position 0 }}
+                    {{ with index $timeline (sub $position 1) }}<a href="{{ .RelPermalink }}"><small>上一篇</small><strong>{{ .LinkTitle }}</strong></a>{{ end }}
+                {{ else }}<span></span>{{ end }}
+                {{ if lt $position (sub (len $timeline) 1) }}
+                    {{ with index $timeline (add $position 1) }}<a href="{{ .RelPermalink }}"><small>下一篇</small><strong>{{ .LinkTitle }}</strong></a>{{ end }}
+                {{ else }}<span></span>{{ end }}
+            </nav>
+        </aside>
     {{ end }}
 {{ end }}

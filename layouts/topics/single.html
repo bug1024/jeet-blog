@@ -10,7 +10,7 @@
         <div class="career-shell">
             <header class="career-head">
                 <div class="career-head-copy">
-                    <p class="editorial-eyebrow"><a href="{{ "/topics/" | relLangURL }}">专题</a> · {{ printf "%02d" $topic.article_count }} 篇</p>
+                    <p class="editorial-eyebrow"><a href="{{ "/topics/" | relLangURL }}">专题</a> · {{ $topic.article_count }} 篇</p>
                     <h1>{{ $topic.title }}</h1>
                     <p>{{ $topic.description }}</p>
                 </div>
