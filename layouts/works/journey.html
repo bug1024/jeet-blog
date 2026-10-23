@@ -1,15 +1,27 @@
 {{ define "main" }}
 {{ $journey := .Site.Data.works.journey }}
+{{ $lifeSpan := sub $journey.endYear $journey.birthYear }}
 {{ $scriptVersion := md5 (readFile "static/js/journey.js") }}
 {{ $styleVersion := md5 (readFile "static/works/journey/journey.css") }}
+{{ $geoVersion := md5 (readFile "static/works/journey/geo.json") }}
 <link rel="stylesheet" href="{{ "/works/journey/journey.css" | relURL }}?v={{ $styleVersion }}">
 <main class="main journey-work journey-archive" id="main" data-journey>
     <aside class="journey-atlas" aria-label="随阅读展开的足迹地图">
-        <canvas class="journey-canvas" data-journey-canvas aria-label="从寿宁、福州、厦门，到北京和南京的生活轨迹"></canvas>
-        <div class="journey-atlas-current" aria-live="polite" aria-atomic="true">
-            <strong data-journey-map-place>闽东 · 福州 · 北京 · 南京</strong>
+        <canvas class="journey-canvas" data-journey-canvas data-journey-geo="{{ "/works/journey/geo.json" | relURL }}?v={{ $geoVersion }}" aria-label="从寿宁、福州、厦门，到北京和南京的生活轨迹"></canvas>
+        <div class="journey-atlas-current">
+            <p class="journey-clock" aria-hidden="true"><time data-journey-year>{{ $journey.birthYear }}</time><span data-journey-age>出生</span></p>
+            <strong data-journey-map-place aria-live="polite" aria-atomic="true">宁德 · 福州 · 北京 · 南京</strong>
         </div>
-        <p class="journey-map-caption">生活轨迹示意 · 坐标约至乡镇和城区</p>
+        <div class="journey-ruler" aria-hidden="true">
+            <ol class="journey-ruler-stages">
+                {{ range $journey.stages }}
+                <li style="left:{{ div (mul (sub .from $journey.birthYear) 100.0) $lifeSpan }}%;width:{{ div (mul (sub .to .from) 100.0) $lifeSpan }}%"><span>{{ .place }}</span></li>
+                {{ end }}
+            </ol>
+            <div class="journey-ruler-track"><span data-journey-lived></span><i data-journey-mark></i></div>
+            <div class="journey-ruler-years"><span>{{ $journey.birthYear }}</span><span>{{ $journey.endYear }}</span></div>
+        </div>
+        <p class="journey-map-caption">生活轨迹示意 · 坐标约至乡镇和城区 · 地形 AWS Terrain Tiles · 地理 Natural Earth</p>
     </aside>
 
     <div class="journey-reader" data-journey-flow>
@@ -32,7 +44,12 @@
         </nav>
 
         {{ range $index, $chapter := $journey.chapters }}
-        <section class="journey-chapter{{ if ge $chapter.durationYears 7 }} journey-chapter-long{{ end }}" id="journey-{{ $chapter.id }}" data-journey-scene="{{ $index }}" data-journey-chapter="{{ $index }}" data-journey-theme="{{ $chapter.theme }}" aria-labelledby="journey-heading-{{ $chapter.id }}">
+        {{/* Reading distance follows the years spent there: the time until the next move, or the stated stay. */}}
+        {{ $nextYear := $journey.endYear }}
+        {{ if lt (add $index 1) (len $journey.chapters) }}{{ $nextYear = (index $journey.chapters (add $index 1)).startYear }}{{ end }}
+        {{ $weight := math.Max (sub $nextYear $chapter.startYear) $chapter.durationYears 0.6 }}
+        <section class="journey-chapter{{ if ge $chapter.durationYears 7 }} journey-chapter-long{{ end }}" id="journey-{{ $chapter.id }}" style="--weight:{{ $weight }}" data-journey-scene="{{ $index }}" data-journey-chapter="{{ $index }}" data-journey-theme="{{ $chapter.theme }}" aria-labelledby="journey-heading-{{ $chapter.id }}">
+            <div class="journey-chapter-body">
             <header class="journey-chapter-head">
                 <p class="journey-period">{{ $chapter.period }}</p>
                 <p class="journey-stay">{{ $chapter.duration }}</p>
@@ -53,6 +70,7 @@
                 <ul>{{ range $tripIndex, $trip := . }}<li><button type="button" data-journey-trip="{{ $tripIndex }}" aria-pressed="false"><time>{{ $trip.year }}</time>{{ $trip.place }}</button></li>{{ end }}</ul>
             </details>
             {{ end }}
+            </div>
         </section>
         {{ end }}
 
@@ -60,6 +78,17 @@
             <p class="journey-kicker"><span>{{ $journey.endYear }}</span><span>写在南京</span></p>
             <h2 id="journey-ending-title">现在，在南京</h2>
             <div class="journey-prose">{{ range $journey.epilogue }}<p>{{ . }}</p>{{ end }}</div>
+            <ol class="journey-life" aria-label="{{ $lifeSpan }} 年里的落脚处">
+                {{ range $journey.stages }}
+                {{ $years := sub .to .from }}
+                <li style="--years:{{ $years }}">
+                    <span class="journey-life-bar" aria-hidden="true"></span>
+                    <strong>{{ .place }}</strong>
+                    <span><time>{{ .from }}</time>—{{ if eq .to $journey.endYear }}至今{{ else }}<time>{{ .to }}</time>{{ end }}</span>
+                    <span>{{ $years }} 年</span>
+                </li>
+                {{ end }}
+            </ol>
             <p class="journey-method">记录至{{ $journey.endYear }}年，短暂停留另列。</p>
             <div class="journey-ending-links"><a href="#journey-start">回到起点 ↑</a><a href="{{ "/works/" | relURL }}">返回作品</a></div>
         </section>
