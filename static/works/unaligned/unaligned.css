@@ -1,0 +1,41 @@
+/* W-007: ink modules on mist, one steel module. Everything else stays out of the way. */
+.unaligned-work{box-sizing:border-box;width:100%;max-width:none;margin:0!important;padding:96px 32px 96px!important;background:var(--brand-paper);color:var(--brand-ink)}
+.unaligned-work *{box-sizing:border-box}
+.unaligned-shell{max-width:1120px;margin:0 auto}
+.unaligned-head{max-width:720px}
+.unaligned-meta{display:flex;gap:14px;margin:0 0 18px;font:12px/1.5 "SFMono-Regular","SF Mono",Menlo,Consolas,monospace;font-variant-numeric:tabular-nums;color:var(--brand-slate)}
+.unaligned-head h1{position:relative;margin:0;font:600 clamp(2.4rem,4.4vw,3.6rem)/1.2 "Songti SC","STSong","Noto Serif CJK SC",serif;letter-spacing:-.03em}
+.unaligned-head h1::before{content:"";position:absolute;left:-14px;top:calc(.5lh - 2px);width:4px;height:4px;border-radius:50%;background:var(--brand-red);pointer-events:none}
+.unaligned-lede{margin:18px 0 0;font-size:1rem;line-height:1.9;color:var(--brand-copy)}
+.unaligned-stage{display:block;width:100%;margin:64px 0 0;padding:0;border:0;background:none;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.unaligned-stage canvas{display:block;width:100%;height:auto}
+.unaligned-stage:focus{outline:none}
+.unaligned-stage:focus-visible{outline:2px solid var(--brand-steel);outline-offset:8px}
+.unaligned-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.unaligned-fallback{display:block;width:100%;height:auto;margin-top:64px}
+.unaligned-status{display:flex;justify-content:space-between;gap:20px;margin:40px 0 0;font:12px/1.6 "SFMono-Regular","SF Mono",Menlo,Consolas,monospace;font-variant-numeric:tabular-nums;color:var(--brand-slate)}
+.unaligned-hint{font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif}
+.unaligned-hint[hidden]{display:none}
+.unaligned-hint-touch{display:none}
+@media(pointer:coarse){.unaligned-hint-fine{display:none}.unaligned-hint-touch{display:inline}}
+.unaligned-count span{white-space:nowrap}
+.unaligned-ending{max-width:720px;margin:72px 0 0}
+.unaligned-ending[hidden]{display:none}
+.unaligned-final{margin:0;font:600 clamp(1.6rem,2.6vw,2.1rem)/1.5 "Songti SC","STSong","Noto Serif CJK SC",serif;letter-spacing:-.02em}
+.unaligned-count{margin:16px 0 0;font-size:.9375rem;line-height:1.9;color:var(--brand-copy)}
+.unaligned-date{margin:6px 0 0;font-size:.8125rem;color:var(--brand-slate)}
+.unaligned-actions{display:flex;gap:28px;align-items:center;margin-top:32px;font-size:.875rem}
+.unaligned-actions button{padding:6px 14px;border:1px solid var(--brand-line);border-radius:2px;background:transparent;color:var(--brand-ink);font:inherit;cursor:pointer;transition:border-color 120ms ease}
+.unaligned-actions button:hover{border-color:var(--brand-ink)}
+.unaligned-actions a{color:var(--brand-copy);text-decoration:none}
+.unaligned-actions a:hover{color:var(--brand-ink);text-decoration:underline;text-underline-offset:.3em}
+.unaligned-work~.footer,.unaligned-work~#back-to-top{display:none}
+@media(min-width:721px){.unaligned-ending{animation:unaligned-in 900ms ease both}}
+@keyframes unaligned-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media(max-width:720px){
+.unaligned-work{padding:72px 16px 64px!important}
+.unaligned-stage{margin-top:48px}
+.unaligned-status{flex-direction:column;gap:4px;margin-top:28px}
+.unaligned-ending{margin-top:48px}
+}
+@media(prefers-reduced-motion:reduce){.unaligned-ending{animation:none}.unaligned-actions button{transition:none}}
