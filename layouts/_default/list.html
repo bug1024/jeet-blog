@@ -34,9 +34,10 @@
                             <ol class="archive-entries">
                                 {{ range $group.Pages }}
                                     <li>
-                                        <time datetime="{{ .PublishDate.Format "2006-01-02" }}">{{ .PublishDate.Format "01 / 02" }}</time>
+                                        <time datetime="{{ .PublishDate.Format "2006-01-02" }}">{{ .PublishDate.Format "01.02" }}</time>
                                         <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
-                                        {{ with .Params.tags }}<span class="archive-tag">{{ index . 0 }}</span>{{ end }}
+                                        <span class="archive-tag">{{ with .Params.tags }}{{ index . 0 }}{{ end }}</span>
+                                        <span class="archive-read">{{ .ReadingTime }} 分钟</span>
                                     </li>
                                 {{ end }}
                             </ol>
