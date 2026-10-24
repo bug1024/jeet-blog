@@ -752,6 +752,8 @@ class GachaChamber {
 }
 
 // 使用统一总线与压缩器合成鼓、低音、和弦和旋律，声音跟随每个机器动作。
+// 0.1 秒静音，用于让旧版 iOS 在静音模式下也放出 Web Audio。
+const SILENT_WAV = 'data:audio/wav;base64,UklGRkQDAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YSADAACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgA==';
 class MagicAudio {
   constructor(isMuted) { this.isMuted = isMuted; this.context = null; this.level = 'starlight'; this.voices = new Set(); this.warningVoices = new Set(); }
   setup(ctx) {
@@ -764,8 +766,26 @@ class MagicAudio {
     const data = this.noise.getChannelData(0);
     for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
   }
+  // iPhone 打开静音开关时会静音 Web Audio，但不会静音媒体播放。
+  // iOS 17 起声明为播放类音频即可；更早的系统靠一段循环播放的静音 <audio> 进入同样的模式。
+  // 必须在点击事件里同步调用，所以放在 unlock() 的第一个 await 之前。
+  keepAudible() {
+    if (this.audible) return;
+    this.audible = true;
+    if (navigator.audioSession) {
+      try { navigator.audioSession.type = 'playback'; return; } catch { /* 退回静音音频。 */ }
+    }
+    // 只有 iPhone / iPad 需要；安卓不会因静音模式静音 Web Audio，循环媒体反而会出现播放通知。
+    const apple = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    if (!apple) return;
+    const silence = new Audio(SILENT_WAV);
+    silence.loop = true;
+    silence.play().catch(() => { this.audible = false; });
+    this.silence = silence;
+  }
   async unlock() {
     if (this.isMuted()) return;
+    this.keepAudible();
     try {
       if (!this.context) {
         this.setup(new (window.AudioContext || window.webkitAudioContext)());
