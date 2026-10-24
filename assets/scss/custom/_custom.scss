@@ -1307,9 +1307,10 @@ button:focus-visible {
     z-index: 3;
     top: 96.5%;
     left: calc(-80% + 8px);
-    width: 60px;
+    // Sized to the laptop: an A5 notebook is a little over half the width of the laptop's base.
+    width: 98px;
     // Align the actual book's bottom edge, excluding transparent padding.
-    transform: translateY(-89%);
+    transform: translateY(-92.5%);
     pointer-events: none;
 }
 
@@ -1327,7 +1328,7 @@ button:focus-visible {
         width: 145%;
         max-width: calc(100vw - 40px);
     }
-    .about-diary { left: calc(-45% + 12px); width: 44px; }
+    .about-diary { left: calc(-45% + 12px); width: 76px; }
 }
 
 .about-next {
