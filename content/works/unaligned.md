@@ -1,6 +1,6 @@
 ---
 title: "不归位"
-description: "一个不肯归位的模块。点一下，系统就校正一次。"
+description: "一开始，这里只有一个方块。点一下，放下一些，直到你看出它们在拼什么。"
 date: 2026-10-24
 slug: "unaligned"
 layout: "unaligned"
@@ -9,5 +9,5 @@ workNumber: "W-007"
 workType: "交互"
 workYear: "2026"
 cover: "/works/unaligned/cover.svg"
-coverAlt: "由方块拼成的 BUG1024 字标，G 旁边一枚钢蓝色方块偏离了网格"
+coverAlt: "浅色网格上零散落着一些墨色方块，中间一枚钢蓝色方块不在网格点上"
 ---

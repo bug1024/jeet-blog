@@ -8,23 +8,24 @@
         <header class="unaligned-head">
             <p class="unaligned-meta"><span>{{ .Params.workNumber }}</span><span>{{ .Params.workType }}</span><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006.01.02" }}</time></p>
             <h1>{{ .Title }}</h1>
-            <p class="unaligned-lede">系统每次都会校正。只有一处，从来没有回去。</p>
+            <p class="unaligned-lede">一开始，这里只有一个方块。</p>
         </header>
 
         <button class="unaligned-stage" type="button" data-unaligned-stage aria-describedby="unaligned-status">
             <canvas aria-hidden="true"></canvas>
-            <span class="unaligned-sr">校正一次。由方块拼成的 BUG1024 字标，G 旁边一枚钢蓝色方块不在网格上。</span>
+            <span class="unaligned-sr">放下一些方块。网格上只有一枚钢蓝色方块，它不在网格点上。</span>
         </button>
         <noscript><img class="unaligned-fallback" src="{{ .Params.cover | relURL }}" alt="{{ .Params.coverAlt }}"></noscript>
 
         <p class="unaligned-status" id="unaligned-status">
-            <span data-unaligned-count aria-live="polite">校正 0 / {{ $unaligned.corrections }}</span>
-            <span class="unaligned-hint" data-unaligned-hint><span class="unaligned-hint-fine">点一下字标，或按空格</span><span class="unaligned-hint-touch">轻点字标</span></span>
+            <span data-unaligned-count aria-live="polite">1 / 1024</span>
+            <span class="unaligned-hint" data-unaligned-hint><span class="unaligned-hint-fine">点一下，放下一些方块；也可以按空格</span><span class="unaligned-hint-touch">轻点，放下一些方块</span></span>
         </p>
 
         <section class="unaligned-ending" data-unaligned-ending aria-live="polite" hidden>
-            <p class="unaligned-final">这不是要修复的地方。</p>
-            <p class="unaligned-count">1023 个方块回到了网格上，1 个没有。<span>一共 1024 个。</span></p>
+            <p class="unaligned-final">先有这一点偏差，后来才有了这一切。</p>
+            <p class="unaligned-count">你放下的 1023 个方块，都被重新安排了位置。只有它，一开始就在自己的地方。<span>一共 1024 个。</span></p>
+            <p class="unaligned-code"><code>module.y = 37.5; // 不在网格上，是故意的。</code><small>这一行在这个作品的源码里。</small></p>
             <p class="unaligned-date">写于 2026 年 10 月 24 日</p>
             <div class="unaligned-actions">
                 <button type="button" data-unaligned-reset>再来一次</button>

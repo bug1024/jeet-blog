@@ -23,7 +23,10 @@
 .unaligned-ending[hidden]{display:none}
 .unaligned-final{margin:0;font:600 clamp(1.6rem,2.6vw,2.1rem)/1.5 "Songti SC","STSong","Noto Serif CJK SC",serif;letter-spacing:-.02em}
 .unaligned-count{margin:16px 0 0;font-size:.9375rem;line-height:1.9;color:var(--brand-copy)}
-.unaligned-date{margin:6px 0 0;font-size:.8125rem;color:var(--brand-slate)}
+.unaligned-code{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px;margin:28px 0 0;padding:14px 0;border-top:1px solid var(--brand-line);border-bottom:1px solid var(--brand-line)}
+.unaligned-code code{padding:0;background:none;color:var(--brand-ink);font:13px/1.7 "SFMono-Regular","SF Mono",Menlo,Consolas,monospace}
+.unaligned-code small{font-size:.75rem;color:var(--brand-slate)}
+.unaligned-date{margin:20px 0 0;font-size:.8125rem;color:var(--brand-slate)}
 .unaligned-actions{display:flex;gap:28px;align-items:center;margin-top:32px;font-size:.875rem}
 .unaligned-actions button{padding:6px 14px;border:1px solid var(--brand-line);border-radius:2px;background:transparent;color:var(--brand-ink);font:inherit;cursor:pointer;transition:border-color 120ms ease}
 .unaligned-actions button:hover{border-color:var(--brand-ink)}

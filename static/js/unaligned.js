@@ -1,29 +1,8 @@
-/* W-007 不归位. A real correction loop: the grid drifts, every input corrects it, one module never returns. */
+/* W-007 不归位. Every input lays down a few modules; only at the end does the system show what they were for. */
 (function (global) {
     'use strict';
 
-    // Pure rules, shared with tests: how far the module rests from its slot after k corrections.
-    function createModel(data) {
-        var module = data.module;
-        var base = {x: module.x - module.homeX, y: module.y - module.homeY};
-        var model = {
-            corrections: data.corrections,
-            count: 0,
-            done: false,
-            restOffset: function (k) {
-                var grow = 1 + .06 * k;
-                return {x: base.x * grow, y: base.y * grow};
-            },
-            correct: function () {
-                if (model.done) return false;
-                model.count += 1;
-                if (model.count >= model.corrections) model.done = true;
-                return true;
-            },
-            reset: function () {model.count = 0;model.done = false;}
-        };
-        return model;
-    }
+    // Pure rules, shared with tests.
     function inkCells(data) {
         var cells = [];
         data.grid.forEach((row, gy) => {
@@ -31,7 +10,34 @@
         });
         return cells;
     }
-    global.UnalignedModel = {createModel: createModel, inkCells: inkCells};
+    function batchSizes(total, steps) {
+        var base = Math.floor(total / steps), extra = total % steps;
+        return Array.from({length: steps}, (_, i) => base + (i < extra ? 1 : 0));
+    }
+    function createModel(data) {
+        var sizes = batchSizes(inkCells(data).length, data.steps);
+        var model = {
+            steps: data.steps,
+            total: inkCells(data).length + 1,
+            step: 0,
+            placed: 0,
+            done: false,
+            // Lays down the next batch and returns how many modules it holds; 0 once everything is placed.
+            next: function () {
+                if (model.done) return 0;
+                var n = sizes[model.step];
+                model.step += 1;model.placed += n;
+                model.done = model.step >= model.steps;
+                return n;
+            },
+            reset: function () {model.step = 0;model.placed = 0;model.done = false;}
+        };
+        return model;
+    }
+    function random(seed) {
+        return function () {seed = (seed * 1664525 + 1013904223) >>> 0;return seed / 4294967296;};
+    }
+    global.UnalignedModel = {createModel: createModel, inkCells: inkCells, batchSizes: batchSizes};
 
     var doc = global.document;
     var root = doc && doc.querySelector('[data-unaligned]');
@@ -48,106 +54,78 @@
     var reduceQuery = global.matchMedia('(prefers-reduced-motion: reduce)');
     var reduced = reduceQuery.matches;
 
+    var CELL = data.cell, COLS = data.grid[0].length, ROWS = data.grid.length;
+    var module = {x: data.module.x, w: data.module.w, h: data.module.h};
+    module.y = 37.5; // 不在网格上，是故意的。
+    var targets = inkCells(data);
     var model = createModel(data);
-    var cells = inkCells(data);
-    var M = data.module, CELL = data.cell;
     var PAD = {x: 8, y: 6};
     var W = 0, H = 0, scale = 1;
     var colors = {};
-    var start = performance.now();
+    var rand = random(1024);
+    var placed = [], taken = new Set();
+    var finale = null, animateUntil = 0, endingTimer = 0;
+    var bornAt = performance.now();
 
-    // Per-cell drift: amplitude grows with time since that cell was last corrected.
-    var phase = cells.map((c, i) => [Math.sin(i * 12.9898) * 43758.5453 % 6.283, Math.cos(i * 78.233) * 12345.678 % 6.283,
-        .0011 + (i * 7 % 13) / 13 * .0012, .0009 + (i * 11 % 17) / 17 * .0013]);
-    var settledAt = cells.map(() => 0), resetAt = cells.map(() => -1), ampAtReset = cells.map(() => 0);
-    var SNAP = 220, CALM = 1800;
-
-    var modulePos = {x: M.x, y: M.y};
-    var moduleAnim = null;
-    var finale = null; // {t0}
+    // The cells the steel module covers, plus a margin, stay free while modules are laid down.
+    var moduleCells = {x0: Math.floor(module.x / CELL) - 1, x1: Math.ceil((module.x + module.w) / CELL),
+        y0: Math.floor(module.y / CELL) - 1, y1: Math.ceil((module.y + module.h) / CELL)};
+    function free(gx, gy) {
+        if (gx < 0 || gy < 0 || gx >= COLS || gy >= ROWS) return false;
+        if (gx >= moduleCells.x0 && gx <= moduleCells.x1 && gy >= moduleCells.y0 && gy <= moduleCells.y1) return false;
+        return !taken.has(gx + ',' + gy);
+    }
 
     function ease(t) {t = Math.min(1, Math.max(0, t));return t * t * (3 - 2 * t);}
     function easeOut(t) {t = Math.min(1, Math.max(0, t));return 1 - Math.pow(1 - t, 3);}
-    function orderliness() {return model.count / model.corrections;}
-    function growth(elapsed) {
-        // The system decays a little slower each time it has been corrected.
-        var rate = .00045 * (1 - .55 * orderliness()), cap = 1.25 * (1 - .6 * orderliness());
-        return Math.min(cap, Math.max(0, elapsed) * rate);
-    }
-    function amplitude(i, now) {
-        if (finale) return 0;
-        if (reduced) return 0;
-        var r = resetAt[i];
-        if (r >= 0 && now >= r) {
-            if (now < r + SNAP) return ampAtReset[i] * (1 - easeOut((now - r) / SNAP));
-            settledAt[i] = r + SNAP;resetAt[i] = -1;
-        }
-        return growth(now - settledAt[i]);
-    }
     function readColors() {
         var style = getComputedStyle(doc.documentElement);
         var pick = (name, fallback) => (style.getPropertyValue(name) || '').trim() || fallback;
-        colors = {ink: pick('--brand-ink', '#111a21'), paper: pick('--brand-paper', '#f8faf9'),
-            steel: pick('--brand-steel', '#365b6d'), line: pick('--brand-slate', '#71838c')};
+        colors = {ink: pick('--brand-ink', '#111a21'), steel: pick('--brand-steel', '#365b6d'), line: pick('--brand-slate', '#71838c')};
     }
     function toPx(x, y) {return [(x + PAD.x) * scale, (y + PAD.y) * scale];}
+    function keepAnimating(ms) {animateUntil = Math.max(animateUntil, performance.now() + ms);requestDraw();}
+    function updateCount() {countText.textContent = (model.placed + 1) + ' / ' + model.total;}
 
-    function correct(originX, originY) {
-        if (!model.correct()) return;
-        var now = performance.now();
+    // Each input lays a batch on free grid cells around where it was asked for. Nothing hints at the shape yet.
+    function lay(originX, originY) {
+        var n = model.next();
+        if (!n) return;
         if (hint) hint.hidden = true;
-        countText.textContent = '校正 ' + model.count + ' / ' + model.corrections;
-        // The correction travels outward from where it was asked for.
-        var speed = .32 + .02 * model.count;
-        cells.forEach((c, i) => {
-            var delay = reduced ? 0 : Math.hypot(c.x + CELL / 2 - originX, c.y + CELL / 2 - originY) / speed;
-            var at = now + delay;
-            ampAtReset[i] = growth(at - settledAt[i]);
-            resetAt[i] = at;
-        });
-        var previous = model.restOffset(model.count - 1), next = model.restOffset(model.count);
-        var home = {x: M.homeX, y: M.homeY};
-        var near = {x: home.x + previous.x * .12, y: home.y + previous.y * .12};
-        var rest = {x: home.x + next.x, y: home.y + next.y};
-        if (reduced) {
-            modulePos = model.done ? {x: M.x, y: M.y} : rest;
-            if (model.done) finish(now);
-            requestDraw();
-            return;
+        var now = performance.now(), cx = originX / CELL, cy = originY / CELL, spread = 7;
+        for (var i = 0, tries = 0; i < n && tries < 20000; tries++) {
+            var angle = rand() * Math.PI * 2, radius = Math.sqrt(-2 * Math.log(rand() + 1e-9)) * spread;
+            var gx = Math.round(cx + Math.cos(angle) * radius), gy = Math.round(cy + Math.sin(angle) * radius * .7);
+            if (tries % 300 === 299) spread *= 1.4;
+            if (!free(gx, gy)) continue;
+            taken.add(gx + ',' + gy);
+            placed.push({x: gx * CELL, y: gy * CELL, born: reduced ? 0 : now + i * 14});
+            i += 1;
         }
-        var delay = Math.hypot(modulePos.x + M.w / 2 - originX, modulePos.y + M.h / 2 - originY) / speed;
-        moduleAnim = {t0: now + delay, from: {x: modulePos.x, y: modulePos.y}, near: near, rest: rest, last: model.done};
-        requestDraw();
+        updateCount();
+        keepAnimating(n * 14 + 400);
+        if (model.done) reveal(now + (reduced ? 0 : 700));
     }
-    function animateModule(now) {
-        var a = moduleAnim;
-        if (!a || now < a.t0) return;
-        var t = now - a.t0, PULL = 420, HOLD = 170, BACK = 950;
-        var lerp = (p, q, k) => ({x: p.x + (q.x - p.x) * k, y: p.y + (q.y - p.y) * k});
-        // Pulled almost into its slot, it stops short and drifts back a little further than before.
-        if (t < PULL) modulePos = lerp(a.from, a.near, easeOut(t / PULL));
-        else if (t < PULL + HOLD) modulePos = a.near;
-        else if (t < PULL + HOLD + BACK) modulePos = lerp(a.near, a.rest, ease((t - PULL - HOLD) / BACK));
-        else {
-            modulePos = a.rest;moduleAnim = null;
-            if (a.last) finish(now + 250);
-        }
-    }
-    function finish(at) {
-        finale = {t0: at, from: {x: modulePos.x, y: modulePos.y}};
-        countText.textContent = '校正 ' + model.corrections + ' / ' + model.corrections + ' · 不再校正';
-        global.setTimeout(() => {
+
+    // Only now are the modules given their places. The steel one was already in its own.
+    function reveal(at) {
+        var order = (a, b) => a.x - b.x || a.y - b.y;
+        var from = placed.slice().sort(order), to = targets.slice().sort(order);
+        from.forEach((p, i) => {p.tx = to[i].x;p.ty = to[i].y;p.delay = to[i].x / data.width * 650;});
+        finale = {t0: at};
+        var FLY = 1000, CLOSE = 900;
+        var total = reduced ? 0 : 700 + 650 + FLY + CLOSE + 600;
+        keepAnimating(total + 200);
+        endingTimer = global.setTimeout(() => {
             ending.hidden = false;
             resetButton.focus({preventScroll: true});
-        }, reduced ? 0 : Math.max(0, at - performance.now()) + 1100);
+        }, total);
     }
     function reset() {
+        global.clearTimeout(endingTimer);
         model.reset();
-        finale = null;moduleAnim = null;
-        modulePos = {x: M.x, y: M.y};
-        var now = performance.now();
-        settledAt = cells.map(() => now);resetAt = cells.map(() => -1);
-        countText.textContent = '校正 0 / ' + model.corrections;
+        placed = [];taken = new Set();finale = null;rand = random(1024);
+        updateCount();
         ending.hidden = true;
         if (hint) hint.hidden = false;
         stage.focus({preventScroll: true});
@@ -159,44 +137,46 @@
     function requestDraw() {if (!pending) {pending = true;global.requestAnimationFrame(draw);}}
     function draw(now) {
         pending = false;
-        animateModule(now);
-        // In the end the grid moves half a cell to meet the module, and the gaps close.
-        var f = finale ? (reduced ? 1 : ease((now - finale.t0) / 1400)) : 0;
-        if (finale && !reduced && now >= finale.t0) {
-            var g = ease((now - finale.t0) / 900);
-            modulePos = {x: finale.from.x + (M.x - finale.from.x) * g, y: finale.from.y + (M.y - finale.from.y) * g};
-        }
-        var gridShiftY = (M.y % CELL) * f;
+        var FLY = 1000;
+        var settle = finale ? (reduced ? 1 : ease((now - finale.t0 - 650 - FLY) / 900)) : 0;
         ctx.clearRect(0, 0, W, H);
         var cellPx = CELL * scale;
-        // Faint grid points: the system the letters are held to.
-        var every = cellPx < 6 ? 2 : 1;
-        ctx.globalAlpha = .22 * (1 - f);
+        // Faint grid points: the order every ink module is held to. The steel module sits between them.
+        ctx.globalAlpha = .24 * (1 - settle);
         ctx.fillStyle = colors.line;
-        var dot = Math.max(1, scale * .35);
-        for (var gx = -2; (gx * CELL) < data.width + PAD.x; gx += every) {
-            for (var gy = -2; (gy * CELL) < data.height + PAD.y; gy += every) {
-                var q = toPx(gx * CELL, gy * CELL + gridShiftY);
-                ctx.fillRect(q[0] - dot / 2, q[1] - dot / 2, dot, dot);
+        var every = cellPx < 6 ? 2 : 1, dot = Math.max(1, scale * .35);
+        for (var gx = -2; gx * CELL < data.width + PAD.x; gx += every) {
+            for (var gy = -2; gy * CELL < data.height + PAD.y; gy += every) {
+                var d = toPx(gx * CELL, gy * CELL);
+                ctx.fillRect(d[0] - dot / 2, d[1] - dot / 2, dot, dot);
             }
         }
         ctx.globalAlpha = 1;
-        // Closed gaps overlap and snap to whole pixels so no seams show between neighbouring squares.
-        var gap = Math.max(.6, cellPx * .2) * (1 - f) - f;
-        var size = cellPx - gap;
-        var snap = f > .98 ? Math.round : v => v;
+        // Closed gaps overlap and snap to whole pixels so no seams show in the finished wordmark.
+        var gap = Math.max(.6, cellPx * .2) * (1 - settle) - settle;
+        var snap = settle > .98 ? Math.round : v => v;
         ctx.fillStyle = colors.ink;
-        cells.forEach((c, i) => {
-            var a = amplitude(i, now), p = phase[i];
-            var dx = a * Math.sin(now * p[2] + p[0]), dy = a * Math.cos(now * p[3] + p[1]);
-            var q = toPx(c.x + dx, c.y + dy);
-            ctx.fillRect(snap(q[0] + gap / 2), snap(q[1] + gap / 2), snap(size), snap(size));
+        placed.forEach(p => {
+            var grow = reduced ? 1 : easeOut((now - p.born) / 260);
+            if (grow <= 0) return;
+            var x = p.x, y = p.y;
+            if (finale && p.tx !== undefined) {
+                var t = reduced ? 1 : ease((now - finale.t0 - p.delay) / FLY);
+                x = p.x + (p.tx - p.x) * t;
+                y = p.y + (p.ty - p.y) * t - Math.sin(Math.PI * t) * 4;
+            }
+            var size = (cellPx - gap) * grow, q = toPx(x, y);
+            var offset = (cellPx - size) / 2;
+            ctx.fillRect(snap(q[0] + offset), snap(q[1] + offset), snap(size), snap(size));
         });
-        var m = toPx(modulePos.x, modulePos.y);
+        // The steel module was the first one here, and it never moves.
+        var arrive = reduced ? 1 : ease((now - bornAt) / 900);
+        var m = toPx(module.x, module.y), g = Math.max(.6, cellPx * .2) * (1 - settle);
+        ctx.globalAlpha = arrive;
         ctx.fillStyle = colors.steel;
-        ctx.fillRect(m[0] + gap / 2, m[1] + gap / 2, M.w * scale - gap, M.h * scale - gap);
-        var settling = finale && now < finale.t0 + 1500;
-        if (!reduced && (!finale || settling) || moduleAnim) requestDraw();
+        ctx.fillRect(m[0] + g / 2, m[1] + g / 2, module.w * scale - g, module.h * scale - g);
+        ctx.globalAlpha = 1;
+        if (now < animateUntil) requestDraw();
     }
     function resize() {
         var bounds = canvas.getBoundingClientRect();
@@ -211,10 +191,10 @@
     }
 
     stage.addEventListener('click', event => {
-        // Keyboard activation has no pointer position; the correction then starts from the module itself.
-        if (event.detail === 0 || !event.clientX) {correct(modulePos.x + M.w / 2, modulePos.y + M.h / 2);return;}
+        // Keyboard activation has no pointer position, so the batch lands somewhere along the line.
+        if (event.detail === 0 || !event.clientX) {lay(rand() * data.width, data.height * (.25 + rand() * .5));return;}
         var b = canvas.getBoundingClientRect();
-        correct((event.clientX - b.left) / scale - PAD.x, (event.clientY - b.top) / scale - PAD.y);
+        lay((event.clientX - b.left) / scale - PAD.x, (event.clientY - b.top) / scale - PAD.y);
     });
     resetButton.addEventListener('click', reset);
     reduceQuery.addEventListener('change', event => {reduced = event.matches;requestDraw();});
@@ -222,7 +202,7 @@
     var resizeTimer;
     global.addEventListener('resize', () => {clearTimeout(resizeTimer);resizeTimer = setTimeout(resize, 100);});
     readColors();
-    // The wordmark starts perfectly in place; the drift only begins after a quiet moment.
-    settledAt = cells.map(() => start + CALM);
+    updateCount();
     resize();
+    keepAnimating(1000);
 })(typeof window !== 'undefined' ? window : globalThis);
