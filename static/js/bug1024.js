@@ -93,7 +93,7 @@
     var PAD = {x: 8, y: 6};
     var W = 0, H = 0, scale = 1, colors = {};
     var audio = null, master = null, soundOn = true, startedAt = 0, playing = false, finished = false, blinkTimer = 0;
-    var VOLUME = 1, starting = false;
+    var VOLUME = 1, starting = false, endAt = END + .5;
 
     // Where every binary cell goes when the eleven digits fold into 1024: proportional by position.
     var finalBinary = binaryLayout(scene, data, SHIFTS).cells;
@@ -242,9 +242,12 @@
                 source.buffer = buffer;source.connect(master);
                 startedAt = audio.currentTime + .05;
                 source.start(startedAt);
+                // The picture is complete at 10.24 s; the replay cue waits until the last hit has rung out.
+                endAt = buffer.duration;
             } else {
                 if (audio) {audio.close();audio = null;}
                 startedAt = now() + .05;
+                endAt = END + .5;
             }
             playing = true;
             root.classList.add('is-playing');
@@ -257,7 +260,7 @@
         var t = now() - startedAt;
         draw(Math.max(0, t));
         setClock(t, '■');
-        if (t >= END + .5) {
+        if (t >= endAt) {
             playing = false;finished = true;
             root.classList.remove('is-playing');
             setClock(END, '↻');
