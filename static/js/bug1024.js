@@ -76,26 +76,43 @@
     function score() {
         var notes = [];
         var add = (t, voice, note, dur, vol) => notes.push({t: t, voice: voice, note: note, dur: dur, vol: vol});
-        // Bar 0: the cursor, two quiet blips.
-        add(0, 'pulse', 69, .08, .25);add(.512, 'pulse', 69, .08, .25);
-        // One step up an A-minor pentatonic for every doubling; the echo carries each note into the next.
-        [57, 60, 62, 64, 67, 69, 72, 74, 76, 79].forEach((n, k) => add(SHIFT_START + k * SHIFT_EVERY, 'pulse', n, .4, .3));
-        // Bass: long notes, two bars each, A - F - C, stopping for the silent beat.
-        [[BAR, 33], [3 * BAR, 29], [5 * BAR, 36]].forEach(b => add(b[0], 'triangle', b[1], 2 * BAR - .05, .5));
-        // A soft kick at the start of bars 4 to 6, and no other drums.
-        for (var b = 4; b <= 6; b++) add(b * BAR, 'kick', 0, .14, .35);
-        // Bar 7: one beat of silence, then the bug arrives slightly out of tune.
-        [84, 79, 91, 73, 88, 77, 95, 70, 86].forEach((n, i) => add(BUG_ENTER + i * .064, 'pulse', n + (i % 3 === 1 ? .4 : 0), .05, .16));
-        add(BUG_ENTER + 9 * .064, 'bend', 90, .2, .14);
-        // Bar 8: it lands; C, 0 and 8 turn into G, U and B on one falling note each.
-        add(LAND, 'kick', 0, .14, .4);add(LAND, 'triangle', 29, BAR - .05, .5);
-        [[G_AT, 76], [U_AT, 72], [B_AT, 69]].forEach(hit => add(hit[0], 'pulse', hit[1], .45, .3));
-        // Bar 9: the number folds into 1024 on a slow climb over a G.
-        add(FOLD, 'triangle', 31, BAR - .05, .5);
-        [60, 64, 67, 71, 72, 76, 79, 83].forEach((n, i) => add(FOLD + i * .128, 'pulse', n, .2, .18));
-        // The last chord lands exactly on 10.24 s: C major seventh, quiet rather than triumphant.
-        [60, 64, 67, 71].forEach(n => add(END, 'pulse', n, 1.8, .14));
-        add(END, 'triangle', 36, 1.8, .5);add(END, 'kick', 0, .16, .4);
+        var SIX = .064;
+        // Bar 0: a boot chime, twice, like a machine waking up.
+        [[0, [81, 88]], [.512, [84, 93]]].forEach(c => c[1].forEach(n => add(c[0], 'pulse', n, .3, .14)));
+        // Bars 1-6: Prelude-style arpeggios over a slow Am - F - G - Em - F - G. The run starts an octave low and
+        // every doubling starts it one chord tone higher, and the line slowly gets louder; bar 6 pulls back to the bass alone.
+        var chords = [[57, 60, 64], [53, 57, 60], [55, 59, 62], [52, 55, 59], [53, 57, 60], [55, 59, 62]];
+        var roots = [45, 41, 43, 40, 41, 43];
+        var tones = chord => {var out = [];for (var o = -12; o <= 36; o += 12) chord.forEach(n => out.push(n + o));return out.sort((a, b) => a - b);};
+        for (var k = 0; k < SHIFTS; k++) {
+            var t0 = SHIFT_START + k * SHIFT_EVERY, bar = Math.floor(t0 / BAR + 1e-9) - 1, ladder = tones(chords[bar]);
+            var start = ladder.indexOf(chords[bar][0] - 12) + k;
+            [0, 1, 2, 3, 2, 1, 2, 3].forEach((step, i) => add(t0 + i * SIX, 'pulse', ladder[start + step], .09, .09 + k * .011));
+            add(t0, 'square', ladder[start + 4], .22, .1 + k * .008);
+        }
+        roots.forEach((root, b) => {
+            var t0 = (b + 1) * BAR;
+            add(t0, 'triangle', root, .48, .5);add(t0 + 2 * BEAT, 'triangle', b === 5 ? root : root + 12, .48, .42);
+        });
+        for (var kb = 3; kb <= 5; kb++) add(kb * BAR, 'kick', 0, .14, .3);
+        // Bar 7: Metroid-style emptiness. One silent beat, then a low drone, a little noise and the bug, out of tune.
+        add(BUG_ENTER, 'triangle', 40, LAND - BUG_ENTER - .02, .32);
+        [0, 3, 6].forEach(i => add(BUG_ENTER + i * SIX, 'noise', 0, .05, .12));
+        [84, 79, 91, 73, 88, 77, 95, 70, 86].forEach((n, i) => add(BUG_ENTER + i * SIX, 'pulse', n + (i % 3 === 1 ? .4 : 0), .05, .13));
+        add(BUG_ENTER + 9 * SIX, 'bend', 90, .2, .12);
+        // Bar 8: it lands. Each letter clicks into place with a short rising discovery sting, each one higher.
+        add(LAND, 'kick', 0, .16, .4);
+        add(LAND, 'triangle', 41, B_AT - LAND - .02, .45);add(B_AT, 'triangle', 43, FOLD - B_AT - .02, .45);
+        [[G_AT, [64, 69, 72, 76]], [U_AT, [69, 72, 77, 81]], [B_AT, [71, 74, 79, 83]]].forEach(sting => {
+            sting[1].forEach((n, i) => add(sting[0] + i * .04, 'square', n, i === 3 ? .3 : .05, .16));
+        });
+        // Bar 9: the number folds into 1024 over E major, the dominant, climbing and getting louder.
+        add(FOLD, 'kick', 0, .14, .35);add(FOLD, 'triangle', 40, BAR - .02, .5);
+        [52, 56, 59, 64, 68, 71, 76, 80, 52, 56, 59, 64, 68, 71, 76, 80].forEach((n, i) => add(FOLD + i * SIX, 'pulse', n + (i >= 8 ? 12 : 0), .07, .1 + i * .008));
+        // 10.24 s: the minor key turns major. A major, the last note exactly on time.
+        add(END, 'square', 81, 1.6, .16);
+        [69, 73, 76].forEach(n => add(END, 'pulse', n, 1.6, .14));
+        add(END, 'triangle', 45, 1.6, .5);add(END, 'kick', 0, .16, .4);
         return notes.sort((a, b) => a.t - b.t);
     }
 
@@ -234,20 +251,35 @@
         pulseWave = ac.createPeriodicWave(real, imag);
         return pulseWave;
     }
+    var noiseBuffer = null;
+    function noise(ac) {
+        if (noiseBuffer) return noiseBuffer;
+        noiseBuffer = ac.createBuffer(1, Math.round(ac.sampleRate * .2), ac.sampleRate);
+        var d = noiseBuffer.getChannelData(0), seed = 1024;
+        for (var i = 0; i < d.length; i++) {seed = (seed * 1664525 + 1013904223) >>> 0;d[i] = seed / 2147483648 - 1;}
+        return noiseBuffer;
+    }
     function voice(ac, out, note) {
-        var t = startedAt + note.t, gain = ac.createGain(), osc = ac.createOscillator();
+        var t = startedAt + note.t, gain = ac.createGain();
         gain.connect(out);
+        gain.gain.setValueAtTime(.0001, t);
+        gain.gain.exponentialRampToValueAtTime(note.vol, t + .006);
+        gain.gain.exponentialRampToValueAtTime(.0001, t + note.dur);
+        if (note.voice === 'noise') {
+            var src = ac.createBufferSource(), filter = ac.createBiquadFilter();
+            src.buffer = noise(ac);filter.type = 'bandpass';filter.frequency.value = 2400;
+            src.connect(filter);filter.connect(gain);src.start(t);src.stop(t + note.dur + .02);
+            return;
+        }
+        var osc = ac.createOscillator();
         if (note.voice === 'kick') {
             osc.type = 'triangle';
             osc.frequency.setValueAtTime(120, t);osc.frequency.exponentialRampToValueAtTime(38, t + note.dur);
         } else {
-            if (note.voice === 'triangle') osc.type = 'triangle';else osc.setPeriodicWave(pulse(ac));
+            if (note.voice === 'triangle' || note.voice === 'square') osc.type = note.voice;else osc.setPeriodicWave(pulse(ac));
             osc.frequency.setValueAtTime(midi(note.note), t);
             if (note.voice === 'bend') osc.frequency.exponentialRampToValueAtTime(midi(note.note - 24), t + note.dur);
         }
-        gain.gain.setValueAtTime(.0001, t);
-        gain.gain.exponentialRampToValueAtTime(note.vol, t + .006);
-        gain.gain.exponentialRampToValueAtTime(.0001, t + note.dur);
         osc.connect(gain);osc.start(t);osc.stop(t + note.dur + .05);
     }
 
