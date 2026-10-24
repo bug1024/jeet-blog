@@ -52,10 +52,10 @@ assert.ok(notes.every(n => n.t >= 0 && n.t <= timing.END));
 assert.equal(Math.max(...notes.map(n => n.t)), timing.END);
 assert.equal(notes.filter(n => n.t === timing.END).length >= 1, true);
 // Every pitched note is a real note in a playable range; the arpeggios never run off their ladder.
-const pitched = notes.filter(n => n.voice !== "kick" && n.voice !== "noise");
+const pitched = notes.filter(n => !["kick", "noise", "riser"].includes(n.voice));
 assert.ok(pitched.every(n => Number.isFinite(n.note) && n.note >= 28 && n.note <= 100));
 // The piece starts in A minor and ends on A major: the last chord holds a C sharp.
-const last = notes.filter(n => n.t === timing.END && n.voice !== "kick" && n.voice !== "noise").map(n => n.note % 12);
+const last = notes.filter(n => n.t === timing.END && !["kick", "noise", "riser"].includes(n.voice)).map(n => n.note % 12);
 assert.ok(last.includes(1) && last.includes(9) && !last.includes(0));
 
 vm.runInNewContext(source, { window: { document: { querySelector: () => null } } });

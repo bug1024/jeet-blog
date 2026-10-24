@@ -75,7 +75,8 @@
     function midi(n) {return 440 * Math.pow(2, (n - 69) / 12);}
     function score() {
         var notes = [];
-        var add = (t, voice, note, dur, vol) => notes.push({t: t, voice: voice, note: note, dur: dur, vol: vol});
+        // `from`, when given, is the pitch a note slides up from.
+        var add = (t, voice, note, dur, vol, from) => notes.push({t: t, voice: voice, note: note, dur: dur, vol: vol, from: from});
         var SIX = .064;
         // Bar 0: a boot chime, twice, like a machine waking up.
         [[0, [81, 88]], [.512, [84, 93]]].forEach(c => c[1].forEach(n => add(c[0], 'pulse', n, .3, .14)));
@@ -100,31 +101,37 @@
         [0, 3, 6].forEach(i => add(BUG_ENTER + i * SIX, 'noise', 0, .05, .12));
         [84, 79, 91, 73, 88, 77, 95, 70, 86].forEach((n, i) => add(BUG_ENTER + i * SIX, 'pulse', n + (i % 3 === 1 ? .4 : 0), .05, .13));
         add(BUG_ENTER + 9 * SIX, 'bend', 90, .2, .12);
-        // Bars 8-9, Contra-style: a driving triangle bass on eighths, snare on 2 and 4, square power-chord stabs
-        // and a short heroic line. The melody is original; only the way it moves is borrowed.
-        var EIGHTH = .128;
-        [45, 45, 57, 45, 45, 45, 57, 45, 41, 41, 53, 41, 43, 43, 40, 52].forEach((n, i) => add(LAND + i * EIGHTH, 'triangle', n, .11, .55));
-        [LAND, FOLD].forEach(bar => {
-            add(bar, 'kick', 0, .14, .5);add(bar + 2 * BEAT, 'kick', 0, .14, .45);
-            add(bar + BEAT, 'noise', 1800, .1, .3);add(bar + 3 * BEAT, 'noise', 1800, .1, .3);
+        // The last beat of bar 7 rises into the drop: a noise sweep and a pulse sliding up two octaves.
+        add(LAND - BEAT, 'riser', 0, BEAT, .24);
+        add(LAND - BEAT, 'pulse', 81, BEAT - .01, .12, 57);
+
+        // Bars 8-9, Contra-style and original: a galloping triangle bass, a kick on every beat, a hard snare on
+        // 2 and 4, hats on the off-sixteenths, power-chord stabs on each letter and a syncopated lead hook.
+        var drive = [45, 45, 41, 43, 41, 43, 40, 40];
+        drive.forEach((root, b) => {
+            var t0 = LAND + b * BEAT;
+            [root, root, root + 12, root].forEach((n, i) => add(t0 + i * SIX, 'triangle', n, .058, .62));
+            add(t0, 'kick', 0, .14, .6);
+            if (b % 2) add(t0, 'noise', 1800, .14, .45);
+            [1, 3].forEach(i => add(t0 + i * SIX, 'noise', 9000, .025, .07));
         });
-        // The module lands on a crash and a low stab; each letter that clicks into place gets a higher stab.
-        add(LAND, 'noise', 6000, .45, .2);
-        [[LAND, [57, 64]], [G_AT, [69, 76]], [U_AT, [72, 79]], [B_AT, [74, 81]]].forEach(stab => {
-            stab[1].forEach(n => {add(stab[0], 'square', n, .1, .17);add(stab[0] + SIX, 'square', n, .06, .1);});
+        add(LAND, 'noise', 6000, .5, .3);
+        [[LAND, [57, 64, 69]], [G_AT, [64, 69, 76]], [U_AT, [65, 72, 77]], [B_AT, [67, 74, 79]]].forEach(stab => {
+            stab[1].forEach(n => {add(stab[0], 'square', n, .09, .2);add(stab[0] + SIX + SIX, 'square', n, .05, .12);});
         });
-        // Under the stabs, a quiet sixteenth-note ostinato keeps the engine running.
-        for (var o = 0; o < 16; o++) add(LAND + o * SIX, 'pulse', [69, 69, 76, 69][o % 4], .05, .07);
-        // Bar 9: the number folds into 1024 on a climbing line that ends on the leading tone.
-        [[0, 69, 2], [2, 72, 1], [3, 76, 1], [4, 81, 2], [6, 79, 2], [8, 77, 1], [9, 76, 1], [10, 74, 1], [11, 76, 1], [12, 80, 4]].forEach(m => {
-            add(FOLD + m[0] * SIX, 'square', m[1], m[2] * SIX - .01, .17);
-            add(FOLD + m[0] * SIX, 'pulse', m[1] - 12, m[2] * SIX - .01, .08);
+        // The hook: answered in bar 9 a step higher, ending on the leading tone that pulls toward A.
+        [[0, 69, 2], [2, 69, 1], [3, 72, 2], [5, 69, 1], [6, 74, 2], [8, 76, 3], [11, 79, 1], [12, 76, 2], [14, 74, 1], [15, 72, 1],
+            [16, 77, 2], [18, 76, 1], [19, 74, 2], [21, 76, 1], [22, 79, 2], [24, 80, 4], [28, 81, 2], [30, 83, 1], [31, 85, 1]].forEach(m => {
+            var t0 = LAND + m[0] * SIX;
+            add(t0, 'lead', m[1], m[2] * SIX - .008, .2);
+            if (m[0] >= 16) add(t0, 'pulse', m[1] - 4, m[2] * SIX - .008, .08);
         });
-        for (var r = 0; r < 4; r++) add(FOLD + 3 * BEAT + r * SIX, 'noise', 1800, .05, .14 + r * .05);
-        // 10.24 s: the minor key turns major. A major, the last note exactly on time.
-        add(END, 'square', 81, 1.6, .16);
+        for (var r = 0; r < 4; r++) add(FOLD + 3 * BEAT + r * SIX, 'noise', 1800, .05, .2 + r * .06);
+        // 10.24 s: the minor key turns major. The lead slides up onto E, the chord is A major, the last note on time.
+        add(END, 'lead', 88, 1.6, .2, 85);
+        add(END, 'square', 81, 1.6, .14);
         [69, 73, 76].forEach(n => add(END, 'pulse', n, 1.6, .14));
-        add(END, 'triangle', 45, 1.6, .5);add(END, 'kick', 0, .16, .45);add(END, 'noise', 6000, .8, .16);
+        add(END, 'triangle', 45, 1.6, .55);add(END, 'kick', 0, .16, .55);add(END, 'noise', 6000, .9, .22);
         return notes.sort((a, b) => a.t - b.t);
     }
 
@@ -251,17 +258,17 @@
     }
 
     // ---------- sound ----------
-    // A thin 12.5% pulse, the narrowest of the NES duty cycles.
-    var pulseWave = null;
-    function pulse(ac) {
-        if (pulseWave) return pulseWave;
-        var n = 64, real = new Float32Array(n), imag = new Float32Array(n), d = .125;
+    // NES pulse waves: 12.5% duty for the thin arpeggios, 25% for the lead.
+    var pulseWaves = {};
+    function pulse(ac, d) {
+        if (pulseWaves[d]) return pulseWaves[d];
+        var n = 64, real = new Float32Array(n), imag = new Float32Array(n);
         for (var i = 1; i < n; i++) {
             var a = 2 / (i * Math.PI) * Math.sin(i * Math.PI * d);
             real[i] = a * Math.cos(i * Math.PI * d);imag[i] = a * Math.sin(i * Math.PI * d);
         }
-        pulseWave = ac.createPeriodicWave(real, imag);
-        return pulseWave;
+        pulseWaves[d] = ac.createPeriodicWave(real, imag);
+        return pulseWaves[d];
     }
     var noiseBuffer = null;
     function noise(ac) {
@@ -277,10 +284,19 @@
         gain.gain.setValueAtTime(.0001, t);
         gain.gain.exponentialRampToValueAtTime(note.vol, t + .006);
         gain.gain.exponentialRampToValueAtTime(.0001, t + note.dur);
-        if (note.voice === 'noise') {
+        if (note.voice === 'noise' || note.voice === 'riser') {
             var src = ac.createBufferSource(), filter = ac.createBiquadFilter();
-            src.buffer = noise(ac);filter.type = 'bandpass';filter.frequency.value = note.note || 2400;
-            src.connect(filter);filter.connect(gain);src.start(t);src.stop(t + note.dur + .02);
+            src.buffer = noise(ac);src.loop = true;filter.type = 'bandpass';
+            if (note.voice === 'riser') {
+                // Swells instead of decaying, and the filter opens as it goes.
+                filter.frequency.setValueAtTime(600, t);filter.frequency.exponentialRampToValueAtTime(8000, t + note.dur);
+                gain.gain.cancelScheduledValues(t);
+                gain.gain.setValueAtTime(.0001, t);gain.gain.exponentialRampToValueAtTime(note.vol, t + note.dur - .01);
+                gain.gain.exponentialRampToValueAtTime(.0001, t + note.dur + .02);
+            } else {
+                filter.frequency.value = note.note || 2400;
+            }
+            src.connect(filter);filter.connect(gain);src.start(t);src.stop(t + note.dur + .03);
             return;
         }
         var osc = ac.createOscillator();
@@ -288,8 +304,20 @@
             osc.type = 'triangle';
             osc.frequency.setValueAtTime(120, t);osc.frequency.exponentialRampToValueAtTime(38, t + note.dur);
         } else {
-            if (note.voice === 'triangle' || note.voice === 'square') osc.type = note.voice;else osc.setPeriodicWave(pulse(ac));
-            osc.frequency.setValueAtTime(midi(note.note), t);
+            if (note.voice === 'triangle' || note.voice === 'square') osc.type = note.voice;
+            else osc.setPeriodicWave(pulse(ac, note.voice === 'lead' ? .25 : .125));
+            if (note.from) {
+                osc.frequency.setValueAtTime(midi(note.from), t);osc.frequency.exponentialRampToValueAtTime(midi(note.note), t + Math.min(.06, note.dur));
+            } else {
+                osc.frequency.setValueAtTime(midi(note.note), t);
+            }
+            // Held lead notes get the delayed vibrato NES composers wrote by hand.
+            if (note.voice === 'lead' && note.dur > .15) {
+                var lfo = ac.createOscillator(), depth = ac.createGain();
+                lfo.frequency.value = 6;
+                depth.gain.setValueAtTime(0, t + .08);depth.gain.linearRampToValueAtTime(midi(note.note) * .007, t + .2);
+                lfo.connect(depth);depth.connect(osc.frequency);lfo.start(t);lfo.stop(t + note.dur + .05);
+            }
             if (note.voice === 'bend') osc.frequency.exponentialRampToValueAtTime(midi(note.note - 24), t + note.dur);
         }
         osc.connect(gain);osc.start(t);osc.stop(t + note.dur + .05);
