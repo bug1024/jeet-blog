@@ -1,0 +1,33 @@
+/* W-007: ink modules on mist, one steel module, one play button. */
+.bug1024-work{box-sizing:border-box;width:100%;max-width:none;margin:0!important;padding:96px 32px!important;background:var(--brand-paper);color:var(--brand-ink)}
+.bug1024-work *{box-sizing:border-box}
+.bug1024-shell{max-width:1120px;margin:0 auto}
+.bug1024-head{max-width:720px}
+.bug1024-meta{display:flex;gap:14px;margin:0 0 18px;font:12px/1.5 "SFMono-Regular","SF Mono",Menlo,Consolas,monospace;font-variant-numeric:tabular-nums;color:var(--brand-slate)}
+.bug1024-head h1{position:relative;margin:0;font:600 clamp(2.4rem,4.4vw,3.6rem)/1.2 "Songti SC","STSong","Noto Serif CJK SC",serif;letter-spacing:-.03em}
+.bug1024-head h1::before{content:"";position:absolute;left:-14px;top:calc(.5lh - 2px);width:4px;height:4px;border-radius:50%;background:var(--brand-red);pointer-events:none}
+.bug1024-lede{margin:18px 0 0;font-size:1rem;line-height:1.9;color:var(--brand-copy)}
+.bug1024-stage{margin:64px 0 0;padding:0}
+.bug1024-stage canvas{display:block;width:100%;height:auto}
+.bug1024-stage noscript img{display:block;width:100%;height:auto}
+.bug1024-controls{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;margin:44px 0 0}
+.bug1024-controls button{padding:8px 16px;border:1px solid var(--brand-line);border-radius:2px;background:transparent;color:var(--brand-ink);font:inherit;font-size:.875rem;cursor:pointer;transition:border-color 120ms ease}
+.bug1024-controls button:hover{border-color:var(--brand-ink)}
+.bug1024-controls button:focus-visible{outline:2px solid var(--brand-steel);outline-offset:4px}
+.bug1024-controls .bug1024-play{border-color:var(--brand-ink)}
+.bug1024-controls .bug1024-mute{border-color:transparent;padding-left:0;padding-right:0;color:var(--brand-copy)}
+.bug1024-controls .bug1024-mute:hover{border-color:transparent;text-decoration:underline;text-underline-offset:.3em}
+.bug1024-clock{margin-left:auto;font:12px/1.5 "SFMono-Regular","SF Mono",Menlo,Consolas,monospace;font-variant-numeric:tabular-nums;color:var(--brand-slate)}
+.bug1024-ending{display:flex;gap:20px;margin:28px 0 0;font:13px/1.6 "SFMono-Regular","SF Mono",Menlo,Consolas,monospace;font-variant-numeric:tabular-nums;color:var(--brand-slate)}
+.bug1024-ending[hidden]{display:none}
+.bug1024-ending sup{font-size:.7em}
+.bug1024-work~.footer,.bug1024-work~#back-to-top{display:none}
+@media(min-width:721px){.bug1024-ending{animation:bug1024-in 600ms ease both}}
+@keyframes bug1024-in{from{opacity:0}to{opacity:1}}
+@media(max-width:720px){
+.bug1024-work{padding:72px 16px 64px!important}
+.bug1024-stage{margin-top:48px}
+.bug1024-controls{margin-top:32px}
+.bug1024-clock{width:100%;margin-left:0}
+}
+@media(prefers-reduced-motion:reduce){.bug1024-ending{animation:none}.bug1024-controls button{transition:none}}

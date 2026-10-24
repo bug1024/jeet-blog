@@ -1,0 +1,30 @@
+{{ define "main" }}
+{{ $piece := .Site.Data.works.bug1024 }}
+{{ $scriptVersion := md5 (readFile "static/js/bug1024.js") }}
+{{ $styleVersion := md5 (readFile "static/works/bug1024/bug1024.css") }}
+<link rel="stylesheet" href="{{ "/works/bug1024/bug1024.css" | relURL }}?v={{ $styleVersion }}">
+<main class="main bug1024-work" id="main" data-bug1024>
+    <div class="bug1024-shell">
+        <header class="bug1024-head">
+            <p class="bug1024-meta"><span>{{ .Params.workNumber }}</span><span>{{ .Params.workType }}</span><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006.01.02" }}</time></p>
+            <h1>{{ .Title }}</h1>
+            <p class="bug1024-lede">一段 10.24 秒的动画，有声音。</p>
+        </header>
+
+        <figure class="bug1024-stage">
+            <canvas role="img" aria-label="动画：二进制的 1 每半小节左移一位，左侧拼出 B、U 和一个 C；最后一枚钢蓝方块落进 C 的开口，C 变成 G，十一位二进制收拢成 1024，组成 BUG1024。"></canvas>
+            <noscript><img src="{{ .Params.cover | relURL }}" alt="{{ .Params.coverAlt }}"></noscript>
+        </figure>
+
+        <div class="bug1024-controls">
+            <button type="button" class="bug1024-play" data-bug1024-play>▶ 播放（有声音）</button>
+            <button type="button" class="bug1024-mute" data-bug1024-mute>静音播放</button>
+            <span class="bug1024-clock" data-bug1024-clock aria-hidden="true">00.00 / 10.24</span>
+        </div>
+
+        <p class="bug1024-ending" data-bug1024-ending aria-live="polite" hidden><span>2<sup>10</sup> = 1024</span><span>2026.10.24</span></p>
+    </div>
+    <script type="application/json" id="bug1024-data">{{ $piece | jsonify | safeJS }}</script>
+    <script src="{{ "/js/bug1024.js" | relURL }}?v={{ $scriptVersion }}" defer></script>
+</main>
+{{ end }}
