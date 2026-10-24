@@ -7,7 +7,7 @@ const source = fs.readFileSync(path.join(__dirname, "../static/js/bug1024.js"), 
 const data = JSON.parse(fs.readFileSync(path.join(__dirname, "../data/works/bug1024.json"), "utf8"));
 const window = { document: { querySelector: () => null } };
 vm.runInNewContext(source, { window, globalThis: window });
-const { buildScene, binaryLayout, binaryText, zerosAt, score, timing } = window.Bug1024;
+const { buildScene, binaryLayout, binaryText, zerosAt, timing } = window.Bug1024;
 
 // Everything is cut from the wordmark's 1023 cells; the steel module makes 1024.
 const scene = buildScene(data);
@@ -46,17 +46,10 @@ assert.ok(timing.LAND < timing.G_AT && timing.G_AT < timing.U_AT && timing.U_AT 
 [timing.G_AT, timing.U_AT, timing.B_AT, timing.FOLD].forEach(t => assert.equal(Math.round(t * 1000) % 256, 0, "changes land on beats"));
 assert.equal(Math.round((timing.END - timing.FOLD) * 1000), 2 ** 10);
 
-// Every note sits inside the piece, and the last one starts exactly on 10.24 s.
-const notes = score();
-assert.ok(notes.every(n => n.t >= 0 && n.t <= timing.END));
-assert.equal(Math.max(...notes.map(n => n.t)), timing.END);
-assert.equal(notes.filter(n => n.t === timing.END).length >= 1, true);
-// Every pitched note is a real note in a playable range; the arpeggios never run off their ladder.
-const pitched = notes.filter(n => !["kick", "noise", "riser"].includes(n.voice));
-assert.ok(pitched.every(n => Number.isFinite(n.note) && n.note >= 28 && n.note <= 100));
-// The piece starts in A minor and ends on A major: the last chord holds a C sharp.
-const last = notes.filter(n => n.t === timing.END && !["kick", "noise", "riser"].includes(n.voice)).map(n => n.note % 12);
-assert.ok(last.includes(1) && last.includes(9) && !last.includes(0));
+// The music is the author's own track, cut to the piece and served next to it.
+const template = fs.readFileSync(path.join(__dirname, "../layouts/works/bug1024.html"), "utf8");
+assert.ok(template.includes("data-bug1024-music"));
+assert.ok(fs.statSync(path.join(__dirname, "../static/works/bug1024/music.m4a")).size > 10000);
 
 vm.runInNewContext(source, { window: { document: { querySelector: () => null } } });
-console.log("Bug1024: 1023 + 1 cells, 2^8/2^10 timing, ten shifts to 1024, fits, last note on 10.24 s passed.");
+console.log("Bug1024: 1023 + 1 cells, 2^8/2^10 timing, ten shifts to 1024, fits, music in place passed.");

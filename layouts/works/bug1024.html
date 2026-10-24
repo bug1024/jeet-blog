@@ -3,7 +3,7 @@
 {{ $scriptVersion := md5 (readFile "static/js/bug1024.js") }}
 {{ $styleVersion := md5 (readFile "static/works/bug1024/bug1024.css") }}
 <link rel="stylesheet" href="{{ "/works/bug1024/bug1024.css" | relURL }}?v={{ $styleVersion }}">
-<main class="main bug1024-work" id="main" data-bug1024>
+<main class="main bug1024-work" id="main" data-bug1024 data-bug1024-music="{{ "/works/bug1024/music.m4a" | relURL }}">
     <div class="bug1024-shell">
         <header class="bug1024-head">
             <p class="bug1024-meta"><span>{{ .Params.workNumber }}</span><span>{{ .Params.workType }}</span><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006.01.02" }}</time></p>

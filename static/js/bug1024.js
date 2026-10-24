@@ -71,79 +71,7 @@
     function binaryText(n) {return '1' + '0'.repeat(n);}
     function zerosAt(t) {return t < SHIFT_START ? 0 : Math.min(SHIFTS, Math.floor((t - SHIFT_START) / SHIFT_EVERY) + 1);}
 
-    // ---------- score: 8-bit voices on the same 2^n grid ----------
-    function midi(n) {return 440 * Math.pow(2, (n - 69) / 12);}
-    function score() {
-        var notes = [];
-        // `from`, when given, is the pitch a note slides up from.
-        var add = (t, voice, note, dur, vol, from) => notes.push({t: t, voice: voice, note: note, dur: dur, vol: vol, from: from});
-        var SIX = .064;
-        // The whole piece is one original Contra-style run: a galloping triangle bass, a kick on every beat, snare on
-        // 2 and 4, power-chord stabs and a syncopated 25% lead. Only the way it moves is borrowed, never a tune.
-        var gallop = (t0, root, vol) => [root, root, root + 12, root].forEach((n, i) => add(t0 + i * SIX, 'triangle', n, .058, vol));
-        var stab = (t0, notes, vol) => notes.forEach(n => {add(t0, 'square', n, .09, vol);add(t0 + 2 * SIX, 'square', n, .05, vol * .6);});
-        var line = (t0, phrase, vol) => phrase.forEach(m => add(t0 + m[0] * SIX, 'lead', m[1], m[2] * SIX - .008, vol));
-        // Bar 0: stage start. Two stabs with the cursor's blinks, then a snare roll into bar 1.
-        stab(0, [57, 64, 69], .18);stab(.512, [57, 64, 69], .18);
-        add(0, 'kick', 0, .14, .5);add(.512, 'kick', 0, .14, .5);
-        for (var r0 = 0; r0 < 4; r0++) add(3 * BEAT + r0 * SIX, 'noise', 1800, .05, .14 + r0 * .07);
-        // Bars 1-6: Am | Am-G | F | G | E | E. Drums on every beat; hats join in bar 3.
-        var bass = [45, 45, 45, 45, 45, 45, 43, 43, 41, 41, 41, 41, 43, 43, 43, 43, 40, 40, 40, 40, 40, 40, 40, 40];
-        bass.forEach((root, b) => {
-            var t0 = BAR + b * BEAT;
-            gallop(t0, root, .55);
-            add(t0, 'kick', 0, .14, .5);
-            if (b % 2) add(t0, 'noise', 1800, .13, .38);
-            if (b >= 8) [1, 3].forEach(i => add(t0 + i * SIX, 'noise', 9000, .025, .06));
-        });
-        // The hook over Am, answered over F and G; then a climbing run over E.
-        line(BAR, [[0, 69, 3], [3, 72, 1], [4, 76, 2], [6, 74, 2], [8, 72, 2], [10, 69, 2], [12, 67, 2], [14, 69, 2],
-            [16, 69, 3], [19, 72, 1], [20, 76, 2], [22, 79, 2], [24, 81, 4], [28, 79, 2], [30, 76, 2]], .17);
-        line(3 * BAR, [[0, 77, 3], [3, 76, 1], [4, 72, 2], [6, 69, 2], [8, 72, 2], [10, 77, 2], [12, 76, 4],
-            [16, 79, 3], [19, 77, 1], [20, 74, 2], [22, 71, 2], [24, 74, 2], [26, 79, 2], [28, 77, 2], [30, 74, 2]], .17);
-        line(5 * BAR, [[0, 76, 2], [2, 80, 2], [4, 83, 2], [6, 88, 2], [8, 86, 2], [10, 83, 2], [12, 80, 2], [14, 76, 2]], .17);
-        // Bar 6: the lead drops out; syncopated E stabs and a snare fill wind up for the break.
-        [0, 2, 3, 6, 8, 10, 11].forEach(i => stab(6 * BAR + i * SIX, [52, 59, 64], .17));
-        for (var f = 0; f < 4; f++) add(6 * BAR + 3 * BEAT + f * SIX, 'noise', 1800, .05, .2 + f * .06);
-        // Every doubling of the binary number still gets its own tick, one step higher each time.
-        [69, 71, 72, 74, 76, 79, 81, 83, 84, 86].forEach((n, k) => add(SHIFT_START + k * SHIFT_EVERY, 'pulse', n + 12, .05, .08));
-        // Bar 7: the break. Everything stops for a beat; then a low drone, a little noise and the bug, out of tune.
-        add(BUG_ENTER, 'triangle', 40, LAND - BUG_ENTER - .02, .32);
-        [0, 3, 6].forEach(i => add(BUG_ENTER + i * SIX, 'noise', 0, .05, .12));
-        [84, 79, 91, 73, 88, 77, 95, 70, 86].forEach((n, i) => add(BUG_ENTER + i * SIX, 'pulse', n + (i % 3 === 1 ? .4 : 0), .05, .13));
-        add(BUG_ENTER + 9 * SIX, 'bend', 90, .2, .12);
-        // The last beat of bar 7 rises into the drop: a noise sweep and a pulse sliding up two octaves.
-        add(LAND - BEAT, 'riser', 0, BEAT, .24);
-        add(LAND - BEAT, 'pulse', 81, BEAT - .01, .12, 57);
-
-        // Bars 8-9: the drop. Same band, harder: bass louder, hats throughout, a stab on every letter that clicks into place.
-        var drive = [45, 45, 41, 43, 41, 43, 40, 40];
-        drive.forEach((root, b) => {
-            var t0 = LAND + b * BEAT;
-            gallop(t0, root, .62);
-            add(t0, 'kick', 0, .14, .6);
-            if (b % 2) add(t0, 'noise', 1800, .14, .45);
-            [1, 3].forEach(i => add(t0 + i * SIX, 'noise', 9000, .025, .07));
-        });
-        add(LAND, 'noise', 6000, .5, .3);
-        [[LAND, [57, 64, 69]], [G_AT, [64, 69, 76]], [U_AT, [65, 72, 77]], [B_AT, [67, 74, 79]]].forEach(hit => stab(hit[0], hit[1], .2));
-        // The hook: answered in bar 9 a step higher, ending on the leading tone that pulls toward A.
-        [[0, 69, 2], [2, 69, 1], [3, 72, 2], [5, 69, 1], [6, 74, 2], [8, 76, 3], [11, 79, 1], [12, 76, 2], [14, 74, 1], [15, 72, 1],
-            [16, 77, 2], [18, 76, 1], [19, 74, 2], [21, 76, 1], [22, 79, 2], [24, 80, 4], [28, 81, 2], [30, 83, 1], [31, 85, 1]].forEach(m => {
-            var t0 = LAND + m[0] * SIX;
-            add(t0, 'lead', m[1], m[2] * SIX - .008, .2);
-            if (m[0] >= 16) add(t0, 'pulse', m[1] - 4, m[2] * SIX - .008, .08);
-        });
-        for (var r = 0; r < 4; r++) add(FOLD + 3 * BEAT + r * SIX, 'noise', 1800, .05, .2 + r * .06);
-        // 10.24 s: the minor key turns major. The lead slides up onto E, the chord is A major, the last note on time.
-        add(END, 'lead', 88, 1.6, .2, 85);
-        add(END, 'square', 81, 1.6, .14);
-        [69, 73, 76].forEach(n => add(END, 'pulse', n, 1.6, .14));
-        add(END, 'triangle', 45, 1.6, .55);add(END, 'kick', 0, .16, .55);add(END, 'noise', 6000, .9, .22);
-        return notes.sort((a, b) => a.t - b.t);
-    }
-
-    global.Bug1024 = {buildScene: buildScene, binaryLayout: binaryLayout, binaryText: binaryText, zerosAt: zerosAt, score: score,
+    global.Bug1024 = {buildScene: buildScene, binaryLayout: binaryLayout, binaryText: binaryText, zerosAt: zerosAt,
         timing: {BEAT: BEAT, BAR: BAR, END: END, SHIFT_START: SHIFT_START, SHIFT_EVERY: SHIFT_EVERY, SHIFTS: SHIFTS,
             LAND: LAND, G_AT: G_AT, U_AT: U_AT, B_AT: B_AT, FOLD: FOLD}};
 
@@ -165,7 +93,7 @@
     var PAD = {x: 8, y: 6};
     var W = 0, H = 0, scale = 1, colors = {};
     var audio = null, master = null, soundOn = true, startedAt = 0, playing = false, finished = false, blinkTimer = 0;
-    var VOLUME = .16;
+    var VOLUME = 1, starting = false;
 
     // Where every binary cell goes when the eleven digits fold into 1024: proportional by position.
     var finalBinary = binaryLayout(scene, data, SHIFTS).cells;
@@ -266,70 +194,20 @@
     }
 
     // ---------- sound ----------
-    // NES pulse waves: 12.5% duty for the thin arpeggios, 25% for the lead.
-    var pulseWaves = {};
-    function pulse(ac, d) {
-        if (pulseWaves[d]) return pulseWaves[d];
-        var n = 64, real = new Float32Array(n), imag = new Float32Array(n);
-        for (var i = 1; i < n; i++) {
-            var a = 2 / (i * Math.PI) * Math.sin(i * Math.PI * d);
-            real[i] = a * Math.cos(i * Math.PI * d);imag[i] = a * Math.sin(i * Math.PI * d);
-        }
-        pulseWaves[d] = ac.createPeriodicWave(real, imag);
-        return pulseWaves[d];
+    // The author's own 8-bit track, cut so that its drop lands on the frame where the module lands (8.192 s)
+    // and a beat falls on 10.24 s. Fetched early; decoded when playback starts.
+    var musicUrl = root.dataset.bug1024Music, musicBytes = null, musicBuffer = null;
+    function fetchMusic() {
+        if (!musicBytes) musicBytes = musicUrl && global.fetch
+            ? global.fetch(musicUrl).then(r => r.ok ? r.arrayBuffer() : null).catch(() => null) : Promise.resolve(null);
+        return musicBytes;
     }
-    var noiseBuffer = null;
-    function noise(ac) {
-        if (noiseBuffer) return noiseBuffer;
-        noiseBuffer = ac.createBuffer(1, Math.round(ac.sampleRate * .2), ac.sampleRate);
-        var d = noiseBuffer.getChannelData(0), seed = 1024;
-        for (var i = 0; i < d.length; i++) {seed = (seed * 1664525 + 1013904223) >>> 0;d[i] = seed / 2147483648 - 1;}
-        return noiseBuffer;
+    function decodeMusic(ac) {
+        if (musicBuffer) return Promise.resolve(musicBuffer);
+        return fetchMusic().then(bytes => bytes ? ac.decodeAudioData(bytes.slice(0)) : null)
+            .then(buffer => (musicBuffer = buffer)).catch(() => null);
     }
-    function voice(ac, out, note) {
-        var t = startedAt + note.t, gain = ac.createGain();
-        gain.connect(out);
-        gain.gain.setValueAtTime(.0001, t);
-        gain.gain.exponentialRampToValueAtTime(note.vol, t + .006);
-        gain.gain.exponentialRampToValueAtTime(.0001, t + note.dur);
-        if (note.voice === 'noise' || note.voice === 'riser') {
-            var src = ac.createBufferSource(), filter = ac.createBiquadFilter();
-            src.buffer = noise(ac);src.loop = true;filter.type = 'bandpass';
-            if (note.voice === 'riser') {
-                // Swells instead of decaying, and the filter opens as it goes.
-                filter.frequency.setValueAtTime(600, t);filter.frequency.exponentialRampToValueAtTime(8000, t + note.dur);
-                gain.gain.cancelScheduledValues(t);
-                gain.gain.setValueAtTime(.0001, t);gain.gain.exponentialRampToValueAtTime(note.vol, t + note.dur - .01);
-                gain.gain.exponentialRampToValueAtTime(.0001, t + note.dur + .02);
-            } else {
-                filter.frequency.value = note.note || 2400;
-            }
-            src.connect(filter);filter.connect(gain);src.start(t);src.stop(t + note.dur + .03);
-            return;
-        }
-        var osc = ac.createOscillator();
-        if (note.voice === 'kick') {
-            osc.type = 'triangle';
-            osc.frequency.setValueAtTime(120, t);osc.frequency.exponentialRampToValueAtTime(38, t + note.dur);
-        } else {
-            if (note.voice === 'triangle' || note.voice === 'square') osc.type = note.voice;
-            else osc.setPeriodicWave(pulse(ac, note.voice === 'lead' ? .25 : .125));
-            if (note.from) {
-                osc.frequency.setValueAtTime(midi(note.from), t);osc.frequency.exponentialRampToValueAtTime(midi(note.note), t + Math.min(.06, note.dur));
-            } else {
-                osc.frequency.setValueAtTime(midi(note.note), t);
-            }
-            // Held lead notes get the delayed vibrato NES composers wrote by hand.
-            if (note.voice === 'lead' && note.dur > .15) {
-                var lfo = ac.createOscillator(), depth = ac.createGain();
-                lfo.frequency.value = 6;
-                depth.gain.setValueAtTime(0, t + .08);depth.gain.linearRampToValueAtTime(midi(note.note) * .007, t + .2);
-                lfo.connect(depth);depth.connect(osc.frequency);lfo.start(t);lfo.stop(t + note.dur + .05);
-            }
-            if (note.voice === 'bend') osc.frequency.exponentialRampToValueAtTime(midi(note.note - 24), t + note.dur);
-        }
-        osc.connect(gain);osc.start(t);osc.stop(t + note.dur + .05);
-    }
+    fetchMusic();
 
     // ---------- playback ----------
     function now() {return audio ? audio.currentTime : performance.now() / 1000;}
@@ -346,28 +224,33 @@
         blinkTimer = global.setInterval(() => {on = !on;draw(on ? 0 : .3);}, 512);
     }
     function play() {
+        if (starting) return;
         global.clearInterval(blinkTimer);
-        finished = false;
-        if (audio) {audio.close();audio = null;}
+        finished = false;playing = false;
+        if (audio) {audio.close();audio = null;master = null;}
         var Context = global.AudioContext || global.webkitAudioContext;
-        if (Context) {
-            audio = new Context();
-            master = audio.createGain();
-            master.gain.value = soundOn ? VOLUME : 0;
-            // A dotted-eighth echo keeps each note in the air a little longer.
-            var delay = audio.createDelay(1), feedback = audio.createGain(), wet = audio.createGain();
-            delay.delayTime.value = .384;feedback.gain.value = .32;wet.gain.value = .28;
-            master.connect(audio.destination);master.connect(delay);
-            delay.connect(feedback);feedback.connect(delay);delay.connect(wet);wet.connect(audio.destination);
-            startedAt = audio.currentTime + .08;
-            score().forEach(note => voice(audio, master, note));
-        } else {
-            startedAt = now() + .08;
-        }
-        playing = true;
-        root.classList.add('is-playing');
-        stage.setAttribute('aria-label', '从头播放 10.24 秒的动画');
-        global.requestAnimationFrame(frame);
+        // The context is created inside the click so browsers allow it to play.
+        if (Context) audio = new Context();
+        starting = true;
+        (audio ? decodeMusic(audio) : Promise.resolve(null)).then(buffer => {
+            starting = false;
+            if (audio && buffer) {
+                master = audio.createGain();
+                master.gain.value = soundOn ? VOLUME : 0;
+                master.connect(audio.destination);
+                var source = audio.createBufferSource();
+                source.buffer = buffer;source.connect(master);
+                startedAt = audio.currentTime + .05;
+                source.start(startedAt);
+            } else {
+                if (audio) {audio.close();audio = null;}
+                startedAt = now() + .05;
+            }
+            playing = true;
+            root.classList.add('is-playing');
+            stage.setAttribute('aria-label', '从头播放 10.24 秒的动画');
+            global.requestAnimationFrame(frame);
+        });
     }
     function frame() {
         if (!playing) return;
