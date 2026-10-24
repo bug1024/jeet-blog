@@ -100,19 +100,31 @@
         [0, 3, 6].forEach(i => add(BUG_ENTER + i * SIX, 'noise', 0, .05, .12));
         [84, 79, 91, 73, 88, 77, 95, 70, 86].forEach((n, i) => add(BUG_ENTER + i * SIX, 'pulse', n + (i % 3 === 1 ? .4 : 0), .05, .13));
         add(BUG_ENTER + 9 * SIX, 'bend', 90, .2, .12);
-        // Bar 8: it lands. Each letter clicks into place with a short rising discovery sting, each one higher.
-        add(LAND, 'kick', 0, .16, .4);
-        add(LAND, 'triangle', 41, B_AT - LAND - .02, .45);add(B_AT, 'triangle', 43, FOLD - B_AT - .02, .45);
-        [[G_AT, [64, 69, 72, 76]], [U_AT, [69, 72, 77, 81]], [B_AT, [71, 74, 79, 83]]].forEach(sting => {
-            sting[1].forEach((n, i) => add(sting[0] + i * .04, 'square', n, i === 3 ? .3 : .05, .16));
+        // Bars 8-9, Contra-style: a driving triangle bass on eighths, snare on 2 and 4, square power-chord stabs
+        // and a short heroic line. The melody is original; only the way it moves is borrowed.
+        var EIGHTH = .128;
+        [45, 45, 57, 45, 45, 45, 57, 45, 41, 41, 53, 41, 43, 43, 40, 52].forEach((n, i) => add(LAND + i * EIGHTH, 'triangle', n, .11, .55));
+        [LAND, FOLD].forEach(bar => {
+            add(bar, 'kick', 0, .14, .5);add(bar + 2 * BEAT, 'kick', 0, .14, .45);
+            add(bar + BEAT, 'noise', 1800, .1, .3);add(bar + 3 * BEAT, 'noise', 1800, .1, .3);
         });
-        // Bar 9: the number folds into 1024 over E major, the dominant, climbing and getting louder.
-        add(FOLD, 'kick', 0, .14, .35);add(FOLD, 'triangle', 40, BAR - .02, .5);
-        [52, 56, 59, 64, 68, 71, 76, 80, 52, 56, 59, 64, 68, 71, 76, 80].forEach((n, i) => add(FOLD + i * SIX, 'pulse', n + (i >= 8 ? 12 : 0), .07, .1 + i * .008));
+        // The module lands on a crash and a low stab; each letter that clicks into place gets a higher stab.
+        add(LAND, 'noise', 6000, .45, .2);
+        [[LAND, [57, 64]], [G_AT, [69, 76]], [U_AT, [72, 79]], [B_AT, [74, 81]]].forEach(stab => {
+            stab[1].forEach(n => {add(stab[0], 'square', n, .1, .17);add(stab[0] + SIX, 'square', n, .06, .1);});
+        });
+        // Under the stabs, a quiet sixteenth-note ostinato keeps the engine running.
+        for (var o = 0; o < 16; o++) add(LAND + o * SIX, 'pulse', [69, 69, 76, 69][o % 4], .05, .07);
+        // Bar 9: the number folds into 1024 on a climbing line that ends on the leading tone.
+        [[0, 69, 2], [2, 72, 1], [3, 76, 1], [4, 81, 2], [6, 79, 2], [8, 77, 1], [9, 76, 1], [10, 74, 1], [11, 76, 1], [12, 80, 4]].forEach(m => {
+            add(FOLD + m[0] * SIX, 'square', m[1], m[2] * SIX - .01, .17);
+            add(FOLD + m[0] * SIX, 'pulse', m[1] - 12, m[2] * SIX - .01, .08);
+        });
+        for (var r = 0; r < 4; r++) add(FOLD + 3 * BEAT + r * SIX, 'noise', 1800, .05, .14 + r * .05);
         // 10.24 s: the minor key turns major. A major, the last note exactly on time.
         add(END, 'square', 81, 1.6, .16);
         [69, 73, 76].forEach(n => add(END, 'pulse', n, 1.6, .14));
-        add(END, 'triangle', 45, 1.6, .5);add(END, 'kick', 0, .16, .4);
+        add(END, 'triangle', 45, 1.6, .5);add(END, 'kick', 0, .16, .45);add(END, 'noise', 6000, .8, .16);
         return notes.sort((a, b) => a.t - b.t);
     }
 
@@ -267,7 +279,7 @@
         gain.gain.exponentialRampToValueAtTime(.0001, t + note.dur);
         if (note.voice === 'noise') {
             var src = ac.createBufferSource(), filter = ac.createBiquadFilter();
-            src.buffer = noise(ac);filter.type = 'bandpass';filter.frequency.value = 2400;
+            src.buffer = noise(ac);filter.type = 'bandpass';filter.frequency.value = note.note || 2400;
             src.connect(filter);filter.connect(gain);src.start(t);src.stop(t + note.dur + .02);
             return;
         }
