@@ -76,39 +76,26 @@
     function score() {
         var notes = [];
         var add = (t, voice, note, dur, vol) => notes.push({t: t, voice: voice, note: note, dur: dur, vol: vol});
-        // Bar 0: the cursor.
-        add(0, 'square', 72, .06, .5);add(.512, 'square', 72, .06, .5);
-        // One step up for every doubling, with an echo half a beat later.
-        [60, 62, 64, 67, 69, 72, 74, 76, 79, 81].forEach((n, k) => {
-            var t = SHIFT_START + k * SHIFT_EVERY;
-            add(t, 'square', n, .18, .5);add(t + .128, 'square', n + 12, .08, .22);
-        });
-        // Bass: octave bounce on eighths, bars 1-6.
-        [45, 41, 48, 43, 45, 41].forEach((root, b) => {
-            for (var e = 0; e < 8; e++) add((b + 1) * BAR + e * .128, 'triangle', root + (e % 2 ? 12 : 0), .11, .55);
-        });
-        // Drums, bars 2-6: kick on 1 and 3, hats off the beat, snare joins in bar 4.
-        for (var b = 2; b <= 6; b++) {
-            var t0 = b * BAR;
-            add(t0, 'kick', 0, .12, .7);add(t0 + .512, 'kick', 0, .12, .7);
-            for (var h = 0; h < 4; h++) add(t0 + .128 + h * BEAT, 'hat', 0, .03, .25);
-            if (b >= 4) {add(t0 + BEAT, 'snare', 0, .1, .35);add(t0 + 3 * BEAT, 'snare', 0, .1, .35);}
-        }
+        // Bar 0: the cursor, two quiet blips.
+        add(0, 'pulse', 69, .08, .25);add(.512, 'pulse', 69, .08, .25);
+        // One step up an A-minor pentatonic for every doubling; the echo carries each note into the next.
+        [57, 60, 62, 64, 67, 69, 72, 74, 76, 79].forEach((n, k) => add(SHIFT_START + k * SHIFT_EVERY, 'pulse', n, .4, .3));
+        // Bass: long notes, two bars each, A - F - C, stopping for the silent beat.
+        [[BAR, 33], [3 * BAR, 29], [5 * BAR, 36]].forEach(b => add(b[0], 'triangle', b[1], 2 * BAR - .05, .5));
+        // A soft kick at the start of bars 4 to 6, and no other drums.
+        for (var b = 4; b <= 6; b++) add(b * BAR, 'kick', 0, .14, .35);
         // Bar 7: one beat of silence, then the bug arrives slightly out of tune.
-        [84, 79, 91, 73, 88, 77, 95, 70, 86].forEach((n, i) => add(BUG_ENTER + i * .064, 'square', n + (i % 3 === 1 ? .4 : 0), .05, .3));
-        add(BUG_ENTER + 9 * .064, 'bend', 90, .2, .3);
-        // Bar 8: it lands; then C, 0 and 8 turn into G, U and B, one note each.
-        add(LAND, 'kick', 0, .12, .7);
-        add(LAND, 'triangle', 43, 2, .45);
-        [[G_AT, 72], [U_AT, 76], [B_AT, 79]].forEach(hit => {
-            add(hit[0], 'square', hit[1], .2, .45);add(hit[0] + .128, 'square', hit[1] + 12, .08, .2);add(hit[0], 'kick', 0, .1, .5);
-        });
-        // Bar 9: the number folds into 1024 on a rising run of sixteenths, with a snare roll into the last beat.
-        [60, 62, 64, 65, 67, 69, 71, 72, 74, 76, 77, 79, 81, 83, 84].forEach((n, i) => add(FOLD + i * .064, 'square', n, .05, .22));
-        for (var r = 0; r < 4; r++) add(FOLD + 3 * BEAT + r * .064, 'snare', 0, .05, .2 + r * .06);
-        // The last note lands exactly on 10.24 s.
-        [72, 76, 79].forEach(n => add(END, 'square', n, .7, .2));
-        add(END, 'square', 84, .5, .3);add(END, 'triangle', 36, .7, .6);add(END, 'kick', 0, .14, .8);
+        [84, 79, 91, 73, 88, 77, 95, 70, 86].forEach((n, i) => add(BUG_ENTER + i * .064, 'pulse', n + (i % 3 === 1 ? .4 : 0), .05, .16));
+        add(BUG_ENTER + 9 * .064, 'bend', 90, .2, .14);
+        // Bar 8: it lands; C, 0 and 8 turn into G, U and B on one falling note each.
+        add(LAND, 'kick', 0, .14, .4);add(LAND, 'triangle', 29, BAR - .05, .5);
+        [[G_AT, 76], [U_AT, 72], [B_AT, 69]].forEach(hit => add(hit[0], 'pulse', hit[1], .45, .3));
+        // Bar 9: the number folds into 1024 on a slow climb over a G.
+        add(FOLD, 'triangle', 31, BAR - .05, .5);
+        [60, 64, 67, 71, 72, 76, 79, 83].forEach((n, i) => add(FOLD + i * .128, 'pulse', n, .2, .18));
+        // The last chord lands exactly on 10.24 s: C major seventh, quiet rather than triumphant.
+        [60, 64, 67, 71].forEach(n => add(END, 'pulse', n, 1.8, .14));
+        add(END, 'triangle', 36, 1.8, .5);add(END, 'kick', 0, .16, .4);
         return notes.sort((a, b) => a.t - b.t);
     }
 
@@ -123,17 +110,18 @@
     var canvas = root.querySelector('canvas');
     var ctx = canvas.getContext('2d');
     if (!ctx) return;
-    var playButton = root.querySelector('[data-bug1024-play]');
-    var muteButton = root.querySelector('[data-bug1024-mute]');
+    var stage = root.querySelector('[data-bug1024-stage]');
+    var soundButton = root.querySelector('[data-bug1024-sound]');
     var clockText = root.querySelector('[data-bug1024-clock]');
-    var ending = root.querySelector('[data-bug1024-ending]');
+    var progress = root.querySelector('[data-bug1024-progress]');
     var reduced = global.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     var scene = buildScene(data);
     var module = data.module;
     var PAD = {x: 8, y: 6};
     var W = 0, H = 0, scale = 1, colors = {};
-    var audio = null, startedAt = 0, playing = false, finished = false;
+    var audio = null, master = null, soundOn = true, startedAt = 0, playing = false, finished = false, blinkTimer = 0;
+    var VOLUME = .16;
 
     // Where every binary cell goes when the eleven digits fold into 1024: proportional by position.
     var finalBinary = binaryLayout(scene, data, SHIFTS).cells;
@@ -200,18 +188,22 @@
         // Right: the binary number, then 1024.
         if (t < FOLD) {
             var n = zerosAt(t);
-            var blinkOff = t < SHIFT_START && (t % .512) >= .256 && t > 0;
-            if (!blinkOff) {
-                // The number shrinks over a sixteenth after each new digit instead of jumping.
-                var target = binaryLayout(scene, data, n), previous = binaryLayout(scene, data, Math.max(0, n - 1));
-                var since = n ? t - (SHIFT_START + (n - 1) * SHIFT_EVERY) : 1;
-                var s = previous.scale + (target.scale - previous.scale) * ease(since / .064);
-                binaryLayout(scene, data, n, s).cells.forEach(c => {
-                    var size = c.size * scale - Math.min(gap, c.size * scale * .3);
-                    var q = toPx(c.x, c.y);
-                    ctx.fillRect(q[0], q[1], size, size);
-                });
+            // Until the first shift a pixel cursor blinks after the 1, as if waiting for input.
+            if (t < SHIFT_START && (t % .512) < .256) {
+                var baseline = data.grid.map((row, gy) => row.includes('#') ? gy : 0).reduce((a, b) => Math.max(a, b));
+                for (var cxi = 0; cxi < 4; cxi++) {
+                    for (var cyi = 0; cyi < 2; cyi++) square((data.glyphs.one[1] + 3 + cxi) * data.cell, (baseline - 1 + cyi) * data.cell, data.cell, gap);
+                }
             }
+            // The number shrinks over a sixteenth after each new digit instead of jumping.
+            var target = binaryLayout(scene, data, n), previous = binaryLayout(scene, data, Math.max(0, n - 1));
+            var since = n ? t - (SHIFT_START + (n - 1) * SHIFT_EVERY) : 1;
+            var s = previous.scale + (target.scale - previous.scale) * ease(since / .064);
+            binaryLayout(scene, data, n, s).cells.forEach(c => {
+                var size = c.size * scale - Math.min(gap, c.size * scale * .3);
+                var q = toPx(c.x, c.y);
+                ctx.fillRect(q[0], q[1], size, size);
+            });
         } else {
             fold.forEach((pair, i) => {
                 var p = ease((t - FOLD - i / fold.length * .45) / .5);
@@ -230,50 +222,63 @@
     }
 
     // ---------- sound ----------
+    // A thin 12.5% pulse, the narrowest of the NES duty cycles.
+    var pulseWave = null;
+    function pulse(ac) {
+        if (pulseWave) return pulseWave;
+        var n = 64, real = new Float32Array(n), imag = new Float32Array(n), d = .125;
+        for (var i = 1; i < n; i++) {
+            var a = 2 / (i * Math.PI) * Math.sin(i * Math.PI * d);
+            real[i] = a * Math.cos(i * Math.PI * d);imag[i] = a * Math.sin(i * Math.PI * d);
+        }
+        pulseWave = ac.createPeriodicWave(real, imag);
+        return pulseWave;
+    }
     function voice(ac, out, note) {
-        var t = startedAt + note.t, gain = ac.createGain();
+        var t = startedAt + note.t, gain = ac.createGain(), osc = ac.createOscillator();
         gain.connect(out);
-        if (note.voice === 'square' || note.voice === 'triangle' || note.voice === 'bend') {
-            var osc = ac.createOscillator();
-            osc.type = note.voice === 'triangle' ? 'triangle' : 'square';
+        if (note.voice === 'kick') {
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(120, t);osc.frequency.exponentialRampToValueAtTime(38, t + note.dur);
+        } else {
+            if (note.voice === 'triangle') osc.type = 'triangle';else osc.setPeriodicWave(pulse(ac));
             osc.frequency.setValueAtTime(midi(note.note), t);
             if (note.voice === 'bend') osc.frequency.exponentialRampToValueAtTime(midi(note.note - 24), t + note.dur);
-            gain.gain.setValueAtTime(note.vol, t);
-            gain.gain.exponentialRampToValueAtTime(.001, t + note.dur);
-            osc.connect(gain);osc.start(t);osc.stop(t + note.dur + .02);
-        } else if (note.voice === 'kick') {
-            var k = ac.createOscillator();
-            k.type = 'triangle';
-            k.frequency.setValueAtTime(150, t);k.frequency.exponentialRampToValueAtTime(40, t + note.dur);
-            gain.gain.setValueAtTime(note.vol, t);gain.gain.exponentialRampToValueAtTime(.001, t + note.dur);
-            k.connect(gain);k.start(t);k.stop(t + note.dur + .02);
-        } else {
-            var src = ac.createBufferSource(), filter = ac.createBiquadFilter();
-            src.buffer = noise(ac);
-            filter.type = note.voice === 'hat' ? 'highpass' : 'bandpass';
-            filter.frequency.value = note.voice === 'hat' ? 7000 : 1800;
-            gain.gain.setValueAtTime(note.vol, t);gain.gain.exponentialRampToValueAtTime(.001, t + note.dur);
-            src.connect(filter);filter.connect(gain);src.start(t);src.stop(t + note.dur + .02);
         }
-    }
-    var noiseBuffer = null;
-    function noise(ac) {
-        if (noiseBuffer) return noiseBuffer;
-        noiseBuffer = ac.createBuffer(1, ac.sampleRate * .2, ac.sampleRate);
-        var d = noiseBuffer.getChannelData(0), seed = 1024;
-        for (var i = 0; i < d.length; i++) {seed = (seed * 1664525 + 1013904223) >>> 0;d[i] = seed / 2147483648 - 1;}
-        return noiseBuffer;
+        gain.gain.setValueAtTime(.0001, t);
+        gain.gain.exponentialRampToValueAtTime(note.vol, t + .006);
+        gain.gain.exponentialRampToValueAtTime(.0001, t + note.dur);
+        osc.connect(gain);osc.start(t);osc.stop(t + note.dur + .05);
     }
 
     // ---------- playback ----------
     function now() {return audio ? audio.currentTime : performance.now() / 1000;}
-    function play(withSound) {
-        ending.hidden = true;finished = false;
+    function setClock(t, cue) {
+        clockText.textContent = cue + ' ' + Math.min(END, Math.max(0, t)).toFixed(2).padStart(5, '0') + ' / 10.24';
+        progress.style.transform = 'scaleX(' + Math.min(1, Math.max(0, t / END)) + ')';
+    }
+    // Before playing, the 1 waits like a cursor. It is the play button.
+    function idle() {
+        global.clearInterval(blinkTimer);
+        if (finished || reduced) {draw(END);return;}
+        var on = true;
+        draw(0);
+        blinkTimer = global.setInterval(() => {on = !on;draw(on ? 0 : .3);}, 512);
+    }
+    function play() {
+        global.clearInterval(blinkTimer);
+        finished = false;
         if (audio) {audio.close();audio = null;}
-        if (withSound && (global.AudioContext || global.webkitAudioContext)) {
-            audio = new (global.AudioContext || global.webkitAudioContext)();
-            var master = audio.createGain();
-            master.gain.value = .14;master.connect(audio.destination);
+        var Context = global.AudioContext || global.webkitAudioContext;
+        if (Context) {
+            audio = new Context();
+            master = audio.createGain();
+            master.gain.value = soundOn ? VOLUME : 0;
+            // A dotted-eighth echo keeps each note in the air a little longer.
+            var delay = audio.createDelay(1), feedback = audio.createGain(), wet = audio.createGain();
+            delay.delayTime.value = .384;feedback.gain.value = .32;wet.gain.value = .28;
+            master.connect(audio.destination);master.connect(delay);
+            delay.connect(feedback);feedback.connect(delay);delay.connect(wet);wet.connect(audio.destination);
             startedAt = audio.currentTime + .08;
             score().forEach(note => voice(audio, master, note));
         } else {
@@ -281,21 +286,27 @@
         }
         playing = true;
         root.classList.add('is-playing');
+        stage.setAttribute('aria-label', '从头播放 10.24 秒的动画');
         global.requestAnimationFrame(frame);
     }
     function frame() {
         if (!playing) return;
         var t = now() - startedAt;
         draw(Math.max(0, t));
-        clockText.textContent = Math.min(END, Math.max(0, t)).toFixed(2).padStart(5, '0') + ' / 10.24';
+        setClock(t, '■');
         if (t >= END + .5) {
             playing = false;finished = true;
             root.classList.remove('is-playing');
-            ending.hidden = false;
-            playButton.textContent = '▶ 再播放一次';
+            setClock(END, '↻');
             return;
         }
         global.requestAnimationFrame(frame);
+    }
+    function toggleSound() {
+        soundOn = !soundOn;
+        soundButton.setAttribute('aria-pressed', String(soundOn));
+        soundButton.textContent = soundOn ? '声音 开' : '声音 关';
+        if (master) master.gain.setTargetAtTime(soundOn ? VOLUME : 0, audio.currentTime, .02);
     }
     function resize() {
         var bounds = canvas.getBoundingClientRect();
@@ -306,15 +317,16 @@
         var dpr = Math.min(global.devicePixelRatio || 1, 2);
         canvas.width = Math.round(W * dpr);canvas.height = Math.round(H * dpr);
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        if (!playing) draw(finished || reduced ? END : 0);
+        if (!playing) idle();
     }
 
-    playButton.addEventListener('click', () => play(true));
-    muteButton.addEventListener('click', () => play(false));
-    new MutationObserver(() => {readColors();if (!playing) draw(finished || reduced ? END : 0);})
+    stage.addEventListener('click', play);
+    soundButton.addEventListener('click', toggleSound);
+    new MutationObserver(() => {readColors();if (!playing) idle();})
         .observe(doc.documentElement, {attributes: true, attributeFilter: ['data-theme']});
     var resizeTimer;
     global.addEventListener('resize', () => {clearTimeout(resizeTimer);resizeTimer = setTimeout(resize, 100);});
     readColors();
+    setClock(reduced ? END : 0, '▶');
     resize();
 })(typeof window !== 'undefined' ? window : globalThis);
