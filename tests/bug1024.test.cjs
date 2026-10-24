@@ -15,6 +15,11 @@ const total = scene.B.length + scene.U.length + scene.C.length + scene.completio
 assert.equal(total, 1023);
 assert.ok(scene.completion.length > 0 && scene.C.length > 0, "G splits into a C and the cells that complete it");
 assert.ok(scene.one.length > 0 && scene.zero.length > 0);
+// Before the bug: 8 and 0 share cells with B and U but are different shapes.
+assert.ok(scene.eight.length > 0 && scene.zeroLetter.length > 0);
+const keys = list => new Set(list.map(c => c.gx + "," + c.gy));
+assert.notDeepEqual(keys(scene.eight), keys(scene.B));
+assert.notDeepEqual(keys(scene.zeroLetter), keys(scene.U));
 
 // A beat is 2^8 ms, a bar 2^10 ms, the piece ten bars.
 assert.equal(timing.BEAT * 1000, 2 ** 8);
@@ -35,6 +40,11 @@ const right = Math.max(...full.cells.map(c => c.x + c.size));
 assert.ok(right <= (data.glyphs.four[1] + 1) * data.cell + 1e-6);
 assert.ok(full.scale < 1);
 assert.equal(binaryLayout(scene, data, 0).scale, 1);
+
+// After landing, G, U and B change one beat apart, then the number folds over the last bar.
+assert.ok(timing.LAND < timing.G_AT && timing.G_AT < timing.U_AT && timing.U_AT < timing.B_AT && timing.B_AT < timing.FOLD);
+[timing.G_AT, timing.U_AT, timing.B_AT, timing.FOLD].forEach(t => assert.equal(Math.round(t * 1000) % 256, 0, "changes land on beats"));
+assert.equal(Math.round((timing.END - timing.FOLD) * 1000), 2 ** 10);
 
 // Every note sits inside the piece, and the last one starts exactly on 10.24 s.
 const notes = score();

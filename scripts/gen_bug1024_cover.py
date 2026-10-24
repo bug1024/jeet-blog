@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the W-007 cover: the frame at 7.17 s, BUC and 10000000000, just before the steel module arrives.
+"""Generate the W-007 cover: the frame at 7.17 s, 80C and 10000000000, just before the steel module arrives.
 
 Uses the same cell grid and binary layout as static/js/bug1024.js.
 Usage: python3 scripts/gen_bug1024_cover.py
@@ -24,14 +24,28 @@ def inside(gx, name):
     return GLYPHS[name][0] <= gx <= GLYPHS[name][1]
 
 
+def has(gx, gy):
+    return 0 <= gy < len(DATA["grid"]) and DATA["grid"][gy][gx] == "#"
+
+
+# Same rules as buildScene(): 8 mirrors B's right half, 0 mirrors U's bottom curve, C is G without its crossbar.
+rows = [gy for gy, row in enumerate(DATA["grid"]) if "#" in row]
+top, bottom = rows[0], rows[-1]
+b0, b1 = GLYPHS["B"]
+b_mid = -(-(b0 + b1) // 2)
 letters, one, zero = [], [], []
+for gy in range(len(DATA["grid"])):
+    for gx in range(b0, b1 + 1):
+        if has(gx, gy) if gx >= b_mid else has(b0 + b1 - gx, gy):
+            letters.append((gx, gy))
+    for gx in range(GLYPHS["U"][0], GLYPHS["U"][1] + 1):
+        if has(gx, top + bottom - gy) if gy < (top + bottom) / 2 else has(gx, gy):
+            letters.append((gx, gy))
 for gy, row in enumerate(DATA["grid"]):
     for gx, mark in enumerate(row):
         if mark != "#":
             continue
-        if inside(gx, "B") or inside(gx, "U"):
-            letters.append((gx, gy))
-        elif inside(gx, "G"):
+        if inside(gx, "G"):
             if not (gx >= DONE["cols"][0] and DONE["rows"][0] <= gy <= DONE["rows"][1]):
                 letters.append((gx, gy))
         elif inside(gx, "one"):
@@ -62,7 +76,7 @@ for x, y in binary:
     squares.append(f"M{px:.1f} {py:.1f}h{small:.1f}v{small:.1f}h-{small:.1f}z")
 
 svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">'
-       '<title>10.24 秒：方块拼成的 BUC 和二进制 10000000000</title>'
+       '<title>10.24 秒：方块拼成的 80C 和二进制 10000000000</title>'
        f'<rect width="{W}" height="{H}" fill="{MIST}"/>'
        f'<path d="{"".join(squares)}" fill="{INK}"/></svg>')
 OUT.write_text(svg, encoding="utf-8")
