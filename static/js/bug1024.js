@@ -92,8 +92,8 @@
     var module = data.module;
     var PAD = {x: 8, y: 6};
     var W = 0, H = 0, scale = 1, colors = {};
-    var audio = null, master = null, soundOn = true, startedAt = 0, playing = false, finished = false, blinkTimer = 0;
-    var VOLUME = 1, starting = false, endAt = END + .5;
+    var soundOn = true, startedAt = 0, playing = false, finished = false, blinkTimer = 0;
+    var endAt = END + .5;
 
     // Where every binary cell goes when the eleven digits fold into 1024: proportional by position.
     var finalBinary = binaryLayout(scene, data, SHIFTS).cells;
@@ -195,22 +195,24 @@
 
     // ---------- sound ----------
     // The author's own 8-bit track, cut so that its drop lands on the frame where the module lands (8.192 s)
-    // and a beat falls on 10.24 s. Fetched early; decoded when playback starts.
-    var musicUrl = root.dataset.bug1024Music, musicBytes = null, musicBuffer = null;
-    function fetchMusic() {
-        if (!musicBytes) musicBytes = musicUrl && global.fetch
-            ? global.fetch(musicUrl).then(r => r.ok ? r.arrayBuffer() : null).catch(() => null) : Promise.resolve(null);
-        return musicBytes;
-    }
-    function decodeMusic(ac) {
-        if (musicBuffer) return Promise.resolve(musicBuffer);
-        return fetchMusic().then(bytes => bytes ? ac.decodeAudioData(bytes.slice(0)) : null)
-            .then(buffer => (musicBuffer = buffer)).catch(() => null);
-    }
-    fetchMusic();
+    // and a beat falls on 10.24 s. It plays through an <audio> element rather than Web Audio: on iPhones Web Audio
+    // is silenced by the ring/silent switch, media playback is not.
+    var music = root.dataset.bug1024Music && global.Audio ? new global.Audio() : null;
+    if (music) {music.preload = 'auto';music.src = root.dataset.bug1024Music;}
+    if (global.navigator && global.navigator.audioSession) global.navigator.audioSession.type = 'playback';
+    var withMusic = false, anchor = {music: 0, wall: 0}, waitUntil = 0;
 
     // ---------- playback ----------
-    function now() {return audio ? audio.currentTime : performance.now() / 1000;}
+    function wall() {return performance.now() / 1000;}
+    // With music, the picture follows the track's position, smoothed between the element's coarse updates.
+    // Until the track has actually started, the picture holds its first frame.
+    function now() {
+        if (!withMusic) return wall();
+        if (music.currentTime !== anchor.music) anchor = {music: music.currentTime, wall: wall()};
+        if (music.currentTime === 0 && wall() < waitUntil) return startedAt;
+        if (music.currentTime === 0) {withMusic = false;startedAt = wall();return wall();}
+        return startedAt + anchor.music + (music.paused ? 0 : wall() - anchor.wall);
+    }
     function setClock(t, cue) {
         clockText.textContent = cue + ' ' + Math.min(END, Math.max(0, t)).toFixed(2).padStart(5, '0') + ' / 10.24';
         progress.style.transform = 'scaleX(' + Math.min(1, Math.max(0, t / END)) + ')';
@@ -230,40 +232,35 @@
         blinkTimer = global.setInterval(() => {on = !on;draw(on ? 0 : .3);}, 512);
     }
     function play() {
-        if (starting) return;
         global.clearInterval(blinkTimer);
-        finished = false;playing = false;
-        if (audio) {audio.close();audio = null;master = null;}
-        var Context = global.AudioContext || global.webkitAudioContext;
-        // The context is created inside the click so browsers allow it to play.
-        if (Context) audio = new Context();
-        starting = true;
-        (audio ? decodeMusic(audio) : Promise.resolve(null)).then(buffer => {
-            starting = false;
-            if (audio && buffer) {
-                master = audio.createGain();
-                master.gain.value = soundOn ? VOLUME : 0;
-                master.connect(audio.destination);
-                var source = audio.createBufferSource();
-                source.buffer = buffer;source.connect(master);
-                startedAt = audio.currentTime + .05;
-                source.start(startedAt);
-                // The picture is complete at 10.24 s; the replay cue waits until the last hit has rung out.
-                endAt = buffer.duration;
-            } else {
-                if (audio) {audio.close();audio = null;}
-                startedAt = now() + .05;
-                endAt = END + .5;
-            }
+        finished = false;
+        startedAt = wall();
+        endAt = END + .5;
+        withMusic = false;
+        if (music) {
+            // play() has to be called inside the tap itself for phones to allow sound.
+            music.pause();
+            music.currentTime = 0;
+            music.muted = !soundOn;
+            anchor = {music: 0, wall: startedAt};
+            waitUntil = startedAt + 4;
+            withMusic = true;
+            var started = music.play();
+            if (started && started.catch) started.catch(() => {withMusic = false;startedAt = wall();});
+            // The picture is complete at 10.24 s; the replay cue waits until the last hit has rung out.
+            if (music.duration) endAt = music.duration;
+        }
+        if (!playing) {
             playing = true;
             root.classList.add('is-playing');
             stage.setAttribute('aria-label', '从头播放 10.24 秒的动画');
             global.requestAnimationFrame(frame);
-        });
+        }
     }
     function frame() {
         if (!playing) return;
         var t = now() - startedAt;
+        if (withMusic && music.duration) endAt = music.duration;
         draw(Math.max(0, t));
         setClock(t, '■');
         if (t >= endAt) {
@@ -278,7 +275,7 @@
         soundOn = !soundOn;
         soundButton.setAttribute('aria-pressed', String(soundOn));
         soundButton.textContent = soundOn ? '声音 开' : '声音 关';
-        if (master) master.gain.setTargetAtTime(soundOn ? VOLUME : 0, audio.currentTime, .02);
+        if (music) music.muted = !soundOn;
     }
     function resize() {
         var bounds = canvas.getBoundingClientRect();
