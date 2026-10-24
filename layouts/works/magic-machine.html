@@ -1,0 +1,31 @@
+{{ define "main" }}
+{{ $version := md5 (readFile "static/works/magic-machine/app/index.html") }}
+<main class="main magic-machine-work" id="main" aria-label="75 的魔法抽奖机互动作品">
+    <iframe
+        class="magic-machine-work-frame"
+        src="{{ "/works/magic-machine/app/" | relURL }}?v={{ $version }}"
+        title="75 的魔法抽奖机：按下空格送出宝物、会慢慢成长的魔法花园"
+        allow="fullscreen; autoplay"
+    ></iframe>
+</main>
+<style>
+    .magic-machine-work {
+        width: 100%;
+        max-width: none;
+        margin: 0 !important;
+        padding: 58px 0 0 !important;
+    }
+    .magic-machine-work-frame {
+        display: block;
+        width: 100%;
+        height: calc(100svh - 58px);
+        min-height: 620px;
+        border: 0;
+        background: #dbeceb;
+    }
+    .magic-machine-work ~ .footer,
+    .magic-machine-work ~ #back-to-top {
+        display: none;
+    }
+</style>
+{{ end }}
