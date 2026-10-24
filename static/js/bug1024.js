@@ -78,25 +78,36 @@
         // `from`, when given, is the pitch a note slides up from.
         var add = (t, voice, note, dur, vol, from) => notes.push({t: t, voice: voice, note: note, dur: dur, vol: vol, from: from});
         var SIX = .064;
-        // Bar 0: a boot chime, twice, like a machine waking up.
-        [[0, [81, 88]], [.512, [84, 93]]].forEach(c => c[1].forEach(n => add(c[0], 'pulse', n, .3, .14)));
-        // Bars 1-6: Prelude-style arpeggios over a slow Am - F - G - Em - F - G. The run starts an octave low and
-        // every doubling starts it one chord tone higher, and the line slowly gets louder; bar 6 pulls back to the bass alone.
-        var chords = [[57, 60, 64], [53, 57, 60], [55, 59, 62], [52, 55, 59], [53, 57, 60], [55, 59, 62]];
-        var roots = [45, 41, 43, 40, 41, 43];
-        var tones = chord => {var out = [];for (var o = -12; o <= 36; o += 12) chord.forEach(n => out.push(n + o));return out.sort((a, b) => a - b);};
-        for (var k = 0; k < SHIFTS; k++) {
-            var t0 = SHIFT_START + k * SHIFT_EVERY, bar = Math.floor(t0 / BAR + 1e-9) - 1, ladder = tones(chords[bar]);
-            var start = ladder.indexOf(chords[bar][0] - 12) + k;
-            [0, 1, 2, 3, 2, 1, 2, 3].forEach((step, i) => add(t0 + i * SIX, 'pulse', ladder[start + step], .09, .09 + k * .011));
-            add(t0, 'square', ladder[start + 4], .22, .1 + k * .008);
-        }
-        roots.forEach((root, b) => {
-            var t0 = (b + 1) * BAR;
-            add(t0, 'triangle', root, .48, .5);add(t0 + 2 * BEAT, 'triangle', b === 5 ? root : root + 12, .48, .42);
+        // The whole piece is one original Contra-style run: a galloping triangle bass, a kick on every beat, snare on
+        // 2 and 4, power-chord stabs and a syncopated 25% lead. Only the way it moves is borrowed, never a tune.
+        var gallop = (t0, root, vol) => [root, root, root + 12, root].forEach((n, i) => add(t0 + i * SIX, 'triangle', n, .058, vol));
+        var stab = (t0, notes, vol) => notes.forEach(n => {add(t0, 'square', n, .09, vol);add(t0 + 2 * SIX, 'square', n, .05, vol * .6);});
+        var line = (t0, phrase, vol) => phrase.forEach(m => add(t0 + m[0] * SIX, 'lead', m[1], m[2] * SIX - .008, vol));
+        // Bar 0: stage start. Two stabs with the cursor's blinks, then a snare roll into bar 1.
+        stab(0, [57, 64, 69], .18);stab(.512, [57, 64, 69], .18);
+        add(0, 'kick', 0, .14, .5);add(.512, 'kick', 0, .14, .5);
+        for (var r0 = 0; r0 < 4; r0++) add(3 * BEAT + r0 * SIX, 'noise', 1800, .05, .14 + r0 * .07);
+        // Bars 1-6: Am | Am-G | F | G | E | E. Drums on every beat; hats join in bar 3.
+        var bass = [45, 45, 45, 45, 45, 45, 43, 43, 41, 41, 41, 41, 43, 43, 43, 43, 40, 40, 40, 40, 40, 40, 40, 40];
+        bass.forEach((root, b) => {
+            var t0 = BAR + b * BEAT;
+            gallop(t0, root, .55);
+            add(t0, 'kick', 0, .14, .5);
+            if (b % 2) add(t0, 'noise', 1800, .13, .38);
+            if (b >= 8) [1, 3].forEach(i => add(t0 + i * SIX, 'noise', 9000, .025, .06));
         });
-        for (var kb = 3; kb <= 5; kb++) add(kb * BAR, 'kick', 0, .14, .3);
-        // Bar 7: Metroid-style emptiness. One silent beat, then a low drone, a little noise and the bug, out of tune.
+        // The hook over Am, answered over F and G; then a climbing run over E.
+        line(BAR, [[0, 69, 3], [3, 72, 1], [4, 76, 2], [6, 74, 2], [8, 72, 2], [10, 69, 2], [12, 67, 2], [14, 69, 2],
+            [16, 69, 3], [19, 72, 1], [20, 76, 2], [22, 79, 2], [24, 81, 4], [28, 79, 2], [30, 76, 2]], .17);
+        line(3 * BAR, [[0, 77, 3], [3, 76, 1], [4, 72, 2], [6, 69, 2], [8, 72, 2], [10, 77, 2], [12, 76, 4],
+            [16, 79, 3], [19, 77, 1], [20, 74, 2], [22, 71, 2], [24, 74, 2], [26, 79, 2], [28, 77, 2], [30, 74, 2]], .17);
+        line(5 * BAR, [[0, 76, 2], [2, 80, 2], [4, 83, 2], [6, 88, 2], [8, 86, 2], [10, 83, 2], [12, 80, 2], [14, 76, 2]], .17);
+        // Bar 6: the lead drops out; syncopated E stabs and a snare fill wind up for the break.
+        [0, 2, 3, 6, 8, 10, 11].forEach(i => stab(6 * BAR + i * SIX, [52, 59, 64], .17));
+        for (var f = 0; f < 4; f++) add(6 * BAR + 3 * BEAT + f * SIX, 'noise', 1800, .05, .2 + f * .06);
+        // Every doubling of the binary number still gets its own tick, one step higher each time.
+        [69, 71, 72, 74, 76, 79, 81, 83, 84, 86].forEach((n, k) => add(SHIFT_START + k * SHIFT_EVERY, 'pulse', n + 12, .05, .08));
+        // Bar 7: the break. Everything stops for a beat; then a low drone, a little noise and the bug, out of tune.
         add(BUG_ENTER, 'triangle', 40, LAND - BUG_ENTER - .02, .32);
         [0, 3, 6].forEach(i => add(BUG_ENTER + i * SIX, 'noise', 0, .05, .12));
         [84, 79, 91, 73, 88, 77, 95, 70, 86].forEach((n, i) => add(BUG_ENTER + i * SIX, 'pulse', n + (i % 3 === 1 ? .4 : 0), .05, .13));
@@ -105,20 +116,17 @@
         add(LAND - BEAT, 'riser', 0, BEAT, .24);
         add(LAND - BEAT, 'pulse', 81, BEAT - .01, .12, 57);
 
-        // Bars 8-9, Contra-style and original: a galloping triangle bass, a kick on every beat, a hard snare on
-        // 2 and 4, hats on the off-sixteenths, power-chord stabs on each letter and a syncopated lead hook.
+        // Bars 8-9: the drop. Same band, harder: bass louder, hats throughout, a stab on every letter that clicks into place.
         var drive = [45, 45, 41, 43, 41, 43, 40, 40];
         drive.forEach((root, b) => {
             var t0 = LAND + b * BEAT;
-            [root, root, root + 12, root].forEach((n, i) => add(t0 + i * SIX, 'triangle', n, .058, .62));
+            gallop(t0, root, .62);
             add(t0, 'kick', 0, .14, .6);
             if (b % 2) add(t0, 'noise', 1800, .14, .45);
             [1, 3].forEach(i => add(t0 + i * SIX, 'noise', 9000, .025, .07));
         });
         add(LAND, 'noise', 6000, .5, .3);
-        [[LAND, [57, 64, 69]], [G_AT, [64, 69, 76]], [U_AT, [65, 72, 77]], [B_AT, [67, 74, 79]]].forEach(stab => {
-            stab[1].forEach(n => {add(stab[0], 'square', n, .09, .2);add(stab[0] + SIX + SIX, 'square', n, .05, .12);});
-        });
+        [[LAND, [57, 64, 69]], [G_AT, [64, 69, 76]], [U_AT, [65, 72, 77]], [B_AT, [67, 74, 79]]].forEach(hit => stab(hit[0], hit[1], .2));
         // The hook: answered in bar 9 a step higher, ending on the leading tone that pulls toward A.
         [[0, 69, 2], [2, 69, 1], [3, 72, 2], [5, 69, 1], [6, 74, 2], [8, 76, 3], [11, 79, 1], [12, 76, 2], [14, 74, 1], [15, 72, 1],
             [16, 77, 2], [18, 76, 1], [19, 74, 2], [21, 76, 1], [22, 79, 2], [24, 80, 4], [28, 81, 2], [30, 83, 1], [31, 85, 1]].forEach(m => {
