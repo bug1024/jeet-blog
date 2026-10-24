@@ -17,6 +17,11 @@
 .bug1024-status{display:grid;grid-template-columns:1fr auto;align-items:center;gap:14px 24px;margin:56px 0 0;font:12px/1.5 "SFMono-Regular","SF Mono",Menlo,Consolas,monospace;font-variant-numeric:tabular-nums;color:var(--brand-slate)}
 .bug1024-track{grid-column:1/-1;position:relative;display:block;height:1px;background:var(--brand-line)}
 .bug1024-track i{position:absolute;inset:0;background:var(--brand-ink);transform:scaleX(0);transform-origin:left}
+.bug1024-cue{justify-self:start;padding:0;border:0;background:none;color:var(--brand-ink);font:inherit;cursor:pointer}
+.bug1024-cue:hover{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.35em}
+.bug1024-cue:focus-visible{outline:2px solid var(--brand-steel);outline-offset:4px}
+.is-playing .bug1024-cue{color:var(--brand-slate);cursor:default}
+.is-playing .bug1024-cue:hover{text-decoration:none}
 .bug1024-sound{padding:0;border:0;background:none;color:var(--brand-slate);font:inherit;cursor:pointer}
 .bug1024-sound:hover{color:var(--brand-ink)}
 .bug1024-sound[aria-pressed="false"]{text-decoration:line-through;text-decoration-thickness:1px}

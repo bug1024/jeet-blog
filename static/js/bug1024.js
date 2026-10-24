@@ -215,6 +215,12 @@
         clockText.textContent = cue + ' ' + Math.min(END, Math.max(0, t)).toFixed(2).padStart(5, '0') + ' / 10.24';
         progress.style.transform = 'scaleX(' + Math.min(1, Math.max(0, t / END)) + ')';
     }
+    // Before and after playing, the readout says what a click does; while playing it is the clock.
+    var touch = global.matchMedia('(pointer: coarse)').matches;
+    function setCue(text, t) {
+        clockText.textContent = text;
+        progress.style.transform = 'scaleX(' + t / END + ')';
+    }
     // Before playing, the 1 waits like a cursor. It is the play button.
     function idle() {
         global.clearInterval(blinkTimer);
@@ -263,7 +269,7 @@
         if (t >= endAt) {
             playing = false;finished = true;
             root.classList.remove('is-playing');
-            setClock(END, '↻');
+            setCue('↻ 再看一次', END);
             return;
         }
         global.requestAnimationFrame(frame);
@@ -287,12 +293,13 @@
     }
 
     stage.addEventListener('click', play);
+    clockText.addEventListener('click', play);
     soundButton.addEventListener('click', toggleSound);
     new MutationObserver(() => {readColors();if (!playing) idle();})
         .observe(doc.documentElement, {attributes: true, attributeFilter: ['data-theme']});
     var resizeTimer;
     global.addEventListener('resize', () => {clearTimeout(resizeTimer);resizeTimer = setTimeout(resize, 100);});
     readColors();
-    setClock(reduced ? END : 0, '▶');
+    setCue(touch ? '▶ 轻点开始' : '▶ 点击开始', reduced ? END : 0);
     resize();
 })(typeof window !== 'undefined' ? window : globalThis);
