@@ -1,12 +1,12 @@
 {{ define "main" }}
 {{ $appPath := "static/works/75-fishing/app/" }}
-{{ $version := md5 (printf "%s%s%s%s%s" (readFile (printf "%sindex.html" $appPath)) (readFile (printf "%smain.js" $appPath)) (readFile (printf "%sstyle.css" $appPath)) (readFile (printf "%scharacter.js" $appPath)) (readFile (printf "%senvironment.js" $appPath))) }}
+{{ $version := md5 (printf "%s%s%s%s%s%s%s" (readFile (printf "%sindex.html" $appPath)) (readFile (printf "%smain.js" $appPath)) (readFile (printf "%sstyle.css" $appPath)) (readFile (printf "%scharacter.js" $appPath)) (readFile (printf "%senvironment.js" $appPath)) (readFile (printf "%sweather.js" $appPath)) (readFile (printf "%ssound.js" $appPath))) }}
 <main class="main fishing-work" id="main" aria-label="75捞鱼互动作品">
     <iframe
         class="fishing-work-frame"
         src="{{ "/works/75-fishing/app/" | relURL }}?v={{ $version }}"
         title="75捞鱼：可以旋转观察与捞鱼的三维溪流"
-        allow="fullscreen"
+        allow="fullscreen; autoplay"
     ></iframe>
 </main>
 <style>

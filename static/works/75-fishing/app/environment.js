@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 
 export const WATER_LEVEL = .135;
+// Wind blows from the far-left bank toward the near-right one.
+export const WIND_DIRECTION = new THREE.Vector2(.94, .34).normalize();
 export const riverX = z => Math.sin(z * .65) * .75;
 const widthAt = z => 1.66 + Math.sin(z * 1.12 + .7) * .15;
 const smooth = THREE.MathUtils.smoothstep;
@@ -20,6 +22,12 @@ export function createEnvironment(scene, renderer) {
   const range = (a, b) => a + (b - a) * random();
   const inside = (x, z, margin = 1) => (x / (6.3 * margin)) ** 2 + (z / (4.8 * margin)) ** 2 < 1;
   const animatedMaterials = [];
+  // One set of weather uniforms shared by every material that reacts to rain or wind.
+  const weather = {
+    uWet: {value: 0}, uWind: {value: 0}, uFlutter: {value: 0},
+    uWindDir: {value: new THREE.Vector2(WIND_DIRECTION.x, WIND_DIRECTION.y)},
+  };
+  const captureHidden = [];
   const surfaceVertex = `varying vec3 vNaturePosition;`;
   const noiseGLSL = `
     float natureHash(vec3 p){return fract(sin(dot(p,vec3(127.1,311.7,74.7)))*43758.5453);}
@@ -40,7 +48,7 @@ export function createEnvironment(scene, renderer) {
     const m = new THREE.MeshStandardMaterial({color, roughness: type === 'soil' ? 1 : .87});
     m.customProgramCacheKey = () => 'creek-surface-' + type;
     m.onBeforeCompile = shader => {
-      shader.uniforms.uNatureTime = {value: 0};
+      shader.uniforms.uNatureTime = {value: 0};shader.uniforms.uWet = weather.uWet;
       shader.vertexShader = surfaceVertex + '\n' + shader.vertexShader;
       shader.vertexShader = shader.vertexShader.replace('#include <project_vertex>', `
         #include <project_vertex>
@@ -49,7 +57,7 @@ export function createEnvironment(scene, renderer) {
           naturePoint=instanceMatrix*naturePoint;
         #endif
         vNaturePosition=(modelMatrix*naturePoint).xyz;`);
-      shader.fragmentShader = `varying vec3 vNaturePosition;uniform float uNatureTime;${noiseGLSL}\n` + shader.fragmentShader;
+      shader.fragmentShader = `varying vec3 vNaturePosition;uniform float uNatureTime,uWet;${noiseGLSL}\n` + shader.fragmentShader;
       shader.fragmentShader = shader.fragmentShader.replace('#include <color_fragment>', `
         #include <color_fragment>
         float grain=natureNoise(vNaturePosition*${type === 'bark' ? 'vec3(32.0,2.5,32.0)' : '9.0'});
@@ -59,11 +67,13 @@ export function createEnvironment(scene, renderer) {
           float wet=1.0-smoothstep(.12,.33,vNaturePosition.y);
           diffuseColor.rgb*=mix(1.0,.72,wet);
           float submerged=1.0-smoothstep(.10,.14,vNaturePosition.y);
-          diffuseColor.rgb+=vec3(.16,.20,.10)*creekCaustic(vNaturePosition.xz,uNatureTime)*submerged;
-        `}`);
+          diffuseColor.rgb+=vec3(.16,.20,.10)*creekCaustic(vNaturePosition.xz,uNatureTime)*submerged*(1.0-uWet*.6);
+        `}
+        diffuseColor.rgb*=mix(1.0,${type === 'soil' ? '.80' : type === 'stone' ? '.74' : '.84'},uWet*(.75+.25*fineGrain));`);
       shader.fragmentShader = shader.fragmentShader.replace('#include <roughnessmap_fragment>', `
         #include <roughnessmap_fragment>
-        ${type === 'stone' ? 'roughnessFactor=mix(.29,.88,smoothstep(.10,.29,vNaturePosition.y));' : ''}`);
+        ${type === 'stone' ? 'roughnessFactor=mix(.29,.88,smoothstep(.10,.29,vNaturePosition.y));' : ''}
+        roughnessFactor=mix(roughnessFactor,${type === 'soil' ? '.62' : '.22'},uWet*${type === 'soil' ? '.55' : '.85'});`);
       m.userData.shader = shader;
     };
     animatedMaterials.push(m); return m;
@@ -176,11 +186,25 @@ export function createEnvironment(scene, renderer) {
   }
   const blade = new THREE.BufferGeometry();blade.setAttribute('position', new THREE.Float32BufferAttribute(bladeVertices, 3));
   blade.setAttribute('color', new THREE.Float32BufferAttribute(bladeColors, 3));blade.setIndex(bladeIndices);blade.computeVertexNormals();
+  const windVertex = `
+      vec4 mvPosition=vec4(transformed,1.0);
+      #ifdef USE_INSTANCING
+        mvPosition=instanceMatrix*mvPosition;
+      #endif
+      vec3 rootWorld=(modelMatrix*instanceMatrix[3]).xyz;
+      float tip=position.y*position.y;
+      float sway=sin(uWindTime*(1.3+uWind*1.6)+rootWorld.x*1.7+rootWorld.z)*(.10+uWind*.16)
+        +sin(uWindTime*5.3+rootWorld.z*3.1)*uFlutter*.05;
+      float lean=uWind*(.20+.12*sin(rootWorld.x*.8-uWindTime*1.9));
+      mvPosition.xz+=uWindDir*(sway+lean)*tip*LEAN_SCALE;
+      mvPosition.y-=abs(lean)*tip*LEAN_SCALE*.35;
+      mvPosition=modelViewMatrix*mvPosition;
+      gl_Position=projectionMatrix*mvPosition;`;
   const grassMaterial = new THREE.MeshStandardMaterial({color: '#ffffff', vertexColors: true, side: THREE.DoubleSide, roughness: .95});
   grassMaterial.onBeforeCompile = shader => {
-    shader.uniforms.uWindTime = {value: 0};shader.vertexShader = 'uniform float uWindTime;\n' + shader.vertexShader;
-    shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>', `#include <begin_vertex>
-      transformed.x+=sin(uWindTime*1.5+instanceMatrix[3].x*1.7+instanceMatrix[3].z)*position.y*position.y*.18;`);
+    Object.assign(shader.uniforms, {uWindTime: {value: 0}}, weather);
+    shader.vertexShader = 'uniform float uWindTime,uWind,uFlutter;uniform vec2 uWindDir;\n' + shader.vertexShader;
+    shader.vertexShader = shader.vertexShader.replace('#include <project_vertex>', windVertex.replaceAll('LEAN_SCALE', '1.0'));
     grassMaterial.userData.shader = shader;
   };
   const grass = new THREE.InstancedMesh(blade, grassMaterial, 3300);let grassCount = 0;
@@ -211,6 +235,7 @@ export function createEnvironment(scene, renderer) {
     flower.rotation.x = -Math.PI / 2;flower.castShadow = false;
   }
 
+  const leafMaterials = [];
   function tree(x, z, height, phase) {
     const group = new THREE.Group();group.position.set(x, groundHeight(x, z), z);scene.add(group);
     const fork = [[0, 0, 0], [.08, height * .6, 0], [-.12, height, .05]];
@@ -226,6 +251,23 @@ export function createEnvironment(scene, renderer) {
     leafGeometry.setIndex([0,1,2,0,2,3,0,3,4,0,4,5,0,5,6,0,6,7,0,7,8,0,8,1]);
     leafGeometry.computeVertexNormals();
     const leafMat = new THREE.MeshStandardMaterial({color: '#ffffff', roughness: .97, side: THREE.DoubleSide});
+    leafMat.onBeforeCompile = shader => {
+      Object.assign(shader.uniforms, {uWindTime: {value: 0}}, weather);
+      shader.vertexShader = 'uniform float uWindTime,uWind,uFlutter;uniform vec2 uWindDir;\n' + shader.vertexShader;
+      shader.vertexShader = shader.vertexShader.replace('#include <project_vertex>', `
+        vec4 mvPosition=vec4(transformed,1.0);
+        mvPosition=instanceMatrix*mvPosition;
+        vec3 leafWorld=instanceMatrix[3].xyz;
+        float crown=smoothstep(.6,2.6,leafWorld.y);
+        float flutter=sin(uWindTime*(6.0+uWind*5.0)+leafWorld.x*9.0+leafWorld.z*7.0)*(.012+uFlutter*.035);
+        float lean=uWind*(.07+.05*sin(uWindTime*1.1+leafWorld.y*2.0))*crown;
+        mvPosition.xz+=uWindDir*(lean+flutter);
+        mvPosition.y+=flutter*.6;
+        mvPosition=modelViewMatrix*mvPosition;
+        gl_Position=projectionMatrix*mvPosition;`);
+      leafMat.userData.shader = shader;
+    };
+    leafMaterials.push(leafMat);
     const leaves = new THREE.InstancedMesh(leafGeometry, leafMat, 800);
     for (let i = 0; i < 800; i++) {
       const c = centers[i % 3];let px, py, pz;
@@ -269,7 +311,7 @@ export function createEnvironment(scene, renderer) {
     uObstacleCount: {value: obstacles.length},
     uObstacles: {value: [...obstacles, ...Array.from({length: 16 - obstacles.length}, () => new THREE.Vector4())]},
     uShallow: {value: new THREE.Color('#75b8a5')}, uDeep: {value: new THREE.Color('#236d66')},
-    uSky: {value: new THREE.Color('#b3d6d3')},
+    uSky: {value: new THREE.Color('#b3d6d3')}, uRain: {value: 0}, uWind: weather.uWind, uWindDir: weather.uWindDir,
   };
   const waterMaterial = new THREE.ShaderMaterial({uniforms: waterUniforms, side: THREE.DoubleSide,
     vertexShader: `varying vec3 vWaterWorld;varying float vWaterViewDepth;
@@ -279,13 +321,28 @@ export function createEnvironment(scene, renderer) {
       #include <packing>
       uniform sampler2D uScene,uDepth;uniform float uTime,uFlow,uNear,uFar,uSunStrength;
       uniform vec2 uResolution;uniform mat4 uView;uniform vec3 uSunDirection,uShallow,uDeep,uSky;
-      uniform int uObstacleCount;uniform vec4 uObstacles[16];
+      uniform int uObstacleCount;uniform vec4 uObstacles[16];uniform float uRain,uWind;uniform vec2 uWindDir;
       varying vec3 vWaterWorld;varying float vWaterViewDepth;
       float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
       float wave(vec2 p){
         float t=uTime*(.35+uFlow*1.3);
         return sin(p.x*9.0+p.y*4.0-t*1.7)*.004
           +sin(p.x*15.0-p.y*7.0+t*1.1)*.0025+sin(p.y*22.0-t*2.4)*.0012;
+      }
+      // Raindrop rings: each cell of a jittered grid drops at its own random moment and rings outward.
+      vec3 rainRings(vec2 p,float scale,float speed,float seed){
+        vec2 g=p/scale,cell=floor(g);vec2 slope=vec2(0.0);float bright=0.0;
+        for(int j=-1;j<=1;j++)for(int i=-1;i<=1;i++){
+          vec2 c=cell+vec2(float(i),float(j));
+          float offset=hash(c+seed),cycle=uTime*speed+offset,life=fract(cycle),turn=floor(cycle);
+          if(hash(c*1.37+turn*.73+seed)>uRain)continue;
+          vec2 drop=c+vec2(hash(c+turn+3.1),hash(c+turn+7.7))*.8+.1;
+          vec2 delta=g-drop;float d=length(delta),r=life*.95,x=d-r;
+          float envelope=(1.0-life)*(1.0-life)*exp(-x*x*90.0);
+          float ring=sin(x*42.0)*envelope;
+          slope+=delta/max(d,.001)*ring;bright+=max(0.0,ring);
+        }
+        return vec3(slope,bright);
       }
       float thickness(vec2 uv){return max(0.0,-perspectiveDepthToViewZ(texture2D(uDepth,uv).x,uNear,uFar)-vWaterViewDepth);}
       void main(){
@@ -303,6 +360,16 @@ export function createEnvironment(scene, renderer) {
         float e=.025;
         vec3 normal=normalize(vec3((wave(p-vec2(e,0))-wave(p+vec2(e,0)))/(2.0*e),1.0,
           (wave(p-vec2(0,e))-wave(p+vec2(0,e)))/(2.0*e)));
+        // Wind ruffles the surface in moving patches; rain adds rings on top.
+        vec2 gustP=p*1.6-uWindDir*uTime*(.8+uWind*1.4);
+        float windPatch=smoothstep(.35,.85,sin(gustP.x*1.3+sin(gustP.y*1.7))*.5+.5);
+        float ruffle=uWind*windPatch;
+        // Ripples finer than a pixel only shimmer, so they fade out when seen from far away.
+        float footprint=length(fwidth(p));
+        float detail=1.0-smoothstep(.012,.035,footprint);
+        normal.xz+=vec2(sin(dot(p,uWindDir)*70.0-uTime*9.0),sin(p.x*53.0-p.y*61.0+uTime*7.0))*ruffle*.035*detail;
+        vec3 rings=(rainRings(p,.30,.85,1.0)+rainRings(p+7.3,.19,1.15,9.0)*.7)*detail;
+        normal.xz+=rings.xy*.09;
         float wake=0.0;
         for(int i=0;i<16;i++){
           if(i>=uObstacleCount)break;
@@ -331,6 +398,8 @@ export function createEnvironment(scene, renderer) {
         vec3 result=mix(transmitted,reflected,clamp(fresnel,.025,.52));
         result+=vec3(1.0,.88,.60)*(glint*.65+micro*.045)*uSunStrength;
         result=mix(result,vec3(.67,.79,.69),clamp(wake*.28,0.0,.26));
+        // Rings catch a thin line of sky; heavy rain also dulls the surface a little.
+        result+=uSky*min(rings.z,1.2)*.075+uSky*ruffle*.03*detail;
         gl_FragColor=vec4(result,1.0);
         #include <tonemapping_fragment>
         #include <colorspace_fragment>
@@ -347,10 +416,24 @@ export function createEnvironment(scene, renderer) {
       waterUniforms.uTime.value = time;waterUniforms.uFlow.value = flow;
       animatedMaterials.forEach(m => {if (m.userData.shader) m.userData.shader.uniforms.uNatureTime.value = time;});
       if (grassMaterial.userData.shader) grassMaterial.userData.shader.uniforms.uWindTime.value = time;
-      trees.forEach(t => {t.group.rotation.z = Math.sin(time * .55 + t.phase) * .005;});
+      leafMaterials.forEach(m => {if (m.userData.shader) m.userData.shader.uniforms.uWindTime.value = time;});
+      const wind = weather.uWind.value;
+      trees.forEach(t => {
+        t.group.rotation.z = Math.sin(time * .55 + t.phase) * (.005 + wind * .008) - WIND_DIRECTION.x * wind * .018;
+        t.group.rotation.x = WIND_DIRECTION.y * wind * .018;
+      });
       falls.forEach((o, i) => {o.scale.y = .90 + Math.sin(time * 5 + i) * .10;});
     },
     setSun(strength) {waterUniforms.uSunStrength.value = .45 + strength * .65;},
+    setSky(color) {waterUniforms.uSky.value.copy(color);},
+    // rain, wetness and wind are 0..1; flutter is the short gust component of the wind.
+    setWeather({rain, wet, wind, flutter}) {
+      waterUniforms.uRain.value = rain;weather.uWet.value = wet;weather.uWind.value = wind;weather.uFlutter.value = flutter;
+      // Wet grass and leaves go a little deeper in colour.
+      grassMaterial.color.setRGB(1 - .2 * wet, 1 - .16 * wet, 1 - .2 * wet);
+      leafMaterials.forEach(m => m.color.setRGB(1 - .2 * wet, 1 - .15 * wet, 1 - .18 * wet));
+    },
+    hideInCapture(object) {captureHidden.push(object);},
     render(camera) {
       renderer.getDrawingBufferSize(size);
       const scale = innerWidth < 760 ? .65 : .85;
@@ -359,12 +442,12 @@ export function createEnvironment(scene, renderer) {
       waterUniforms.uResolution.value.copy(size);waterUniforms.uView.value.copy(camera.matrixWorldInverse);
       waterUniforms.uNear.value = camera.near;waterUniforms.uFar.value = camera.far;
       const target = renderer.getRenderTarget(), shadowAuto = renderer.shadowMap.autoUpdate;
-      water.visible = false;
+      water.visible = false;captureHidden.forEach(o => {o.userData.wasVisible = o.visible;o.visible = false;});
       try {
         renderer.setRenderTarget(capture);renderer.render(scene, camera);
         // Shadow maps from the scene capture are reused for the visible pass.
         renderer.shadowMap.autoUpdate = false;
-        renderer.setRenderTarget(target);water.visible = true;renderer.render(scene, camera);
+        renderer.setRenderTarget(target);water.visible = true;captureHidden.forEach(o => {o.visible = o.userData.wasVisible;});renderer.render(scene, camera);
       } finally {water.visible = true;renderer.setRenderTarget(target);renderer.shadowMap.autoUpdate = shadowAuto;}
     },
   };

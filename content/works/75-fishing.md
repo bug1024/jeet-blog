@@ -1,6 +1,6 @@
 ---
 title: "75捞鱼"
-description: "从一套像素表情包出发，用 Three.js 做了一条可以旋转观察、伸网捞鱼的小溪。"
+description: "从一套像素表情包出发，用 Three.js 做了一条可以旋转观察、伸网捞鱼的小溪。下着小雨，听得见风声和雨声。"
 date: 2026-09-14
 slug: "75-fishing"
 layout: "fishing"

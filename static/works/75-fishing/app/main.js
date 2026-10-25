@@ -1,7 +1,9 @@
 import * as THREE from 'three';
 const { create75 } = await import('./character.js?v=' + encodeURIComponent(new URL(import.meta.url).searchParams.get('v') || 'local'));
 
-const { createEnvironment, groundHeight, riverX } = await import('./environment.js?v=' + encodeURIComponent(new URL(import.meta.url).searchParams.get('v') || 'local'));
+const { createEnvironment, groundHeight, riverX, WATER_LEVEL, WIND_DIRECTION } = await import('./environment.js?v=' + encodeURIComponent(new URL(import.meta.url).searchParams.get('v') || 'local'));
+const { createRain, gust } = await import('./weather.js?v=' + encodeURIComponent(new URL(import.meta.url).searchParams.get('v') || 'local'));
+const { CreekSound } = await import('./sound.js?v=' + encodeURIComponent(new URL(import.meta.url).searchParams.get('v') || 'local'));
 
 import { OrbitControls } from 'three/addons/OrbitControls.js';
 const $=s=>document.querySelector(s), canvas=$('#world');
@@ -21,6 +23,9 @@ function rod(a,b,r,c,parent=scene,r2=r,segments=8){const v1=new THREE.Vector3(..
 let seed=75;const rand=()=>{seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;};const between=(a,b)=>a+(b-a)*rand();
 const environment=createEnvironment(scene,renderer);
 const water=environment.water;
+// A light rain drifts over the creek; streaks and splashes stay out of the water's refraction pass.
+const rain=createRain(scene,{groundHeight,isWater:environment.isWater,waterLevel:WATER_LEVEL,windDirection:WIND_DIRECTION,mobile:innerWidth<760});rain.objects.forEach(o=>environment.hideInCapture(o));
+const sound=new CreekSound();
 // 75's model is kept separate from the creek and fish behavior.
 const {girl,head,rightArm,netGroup,netCenter,updateCharacter}=create75(scene);
 // Open bucket with an actual interior and arching handle.
@@ -32,12 +37,26 @@ const rippleMaterial=new THREE.MeshBasicMaterial({color:'#e9ffef',transparent:tr
 const motes=[];for(let i=0;i<23;i++){const o=ellipsoid([between(-5,5),between(.7,3.8),between(-3,3)],[.018,.018,.018],new THREE.MeshBasicMaterial({color:'#fff5c6'}),scene,5);o.castShadow=false;motes.push({o,p:o.position.clone(),phase:rand()*6});}
 // Dragonfly hovering over the far bank.
 const dragonfly=new THREE.Group();scene.add(dragonfly);rod([-.11,0,0],[.12,0,0],.016,'#2e8780',dragonfly);const wings=[];for(const side of [-1,1])for(const x of [-.035,.045]){const w=ellipsoid([x,.012,side*.09],[.055,.008,.11],new THREE.MeshStandardMaterial({color:'#deefe0',transparent:true,opacity:.65}),dragonfly,6);wings.push(w);}
+let rainLevel=.4,windLevel=.35,sunLevel=.7,wet=.55;
+const clear=new THREE.Color('#dce7df'),overcast=new THREE.Color('#c4cecb'),sky=new THREE.Color(),tint=new THREE.Color();
+const rainLabel=v=>v<.08?'放晴':v<.35?'毛毛雨':v<.65?'小雨':v<.88?'中雨':'大雨',windLabel=v=>v<.1?'无风':v<.4?'微风':v<.7?'阵风':'大风';
+// Sun and rain share the light: the more it rains, the flatter, cooler and greyer the afternoon gets.
+function applyLight(){const r=rainLevel,v=sunLevel;sun.intensity=(1.35+v*2.4)*(1-.75*r);sun.shadow.intensity=1-.6*Math.min(1,r*1.3);sun.color.set(v<.35?'#ffc486':'#fff2cf').lerp(tint.set('#dfe7ea'),r);hemi.intensity=(.85+v*.65)*(1+.12*r);hemi.color.set('#d7e8eb').lerp(tint.set('#cfd8da'),r);fill.intensity=.6+r*.3;environment.setSun(v*(1-.85*r));
+sky.copy(clear).lerp(overcast,r);scene.background.copy(sky);scene.fog.color.copy(sky);renderer.toneMappingExposure=1.04-.07*r;environment.setSky(tint.set('#b3d6d3').lerp(new THREE.Color('#a7b6b5'),r));
+document.body.style.background='#'+sky.getHexString();$('#weather-status').textContent=r<.08?'溪边，营业中':`${rainLabel(r)}，营业中`;}
 let running=!matchMedia('(prefers-reduced-motion: reduce)').matches,time=0,last=performance.now(),flow=.4,scoopTime=-1,caught=0,scoopCandidate=null,bubbleUntil=4;let message='我看看…';
 function say(text,duration=3){message=text;$('#bubble').textContent=text;bubbleUntil=time+duration;}
 function pauseUI(){$('#pause').textContent=running?'Ⅱ':'▷';$('#pause').setAttribute('aria-label',running?'暂停动画':'继续动画');$('#pause').setAttribute('aria-pressed',String(!running));}pauseUI();
 function scoop(){if(scoopTime>=0)return;if(!running){running=true;pauseUI();}scoopTime=0;$('#scoop').disabled=true;say('看我的！',2);scoopCandidate=null;}
 $('#scoop').addEventListener('click',scoop);$('#pause').addEventListener('click',()=>{running=!running;pauseUI();});$('#reset').addEventListener('click',resetCamera);
-$('#flow').addEventListener('input',e=>{flow=e.target.value/100;$('#flow-value').textContent=flow<.3?'慢悠悠':flow<.7?'轻轻的':'哗啦啦';});$('#sun').addEventListener('input',e=>{const v=e.target.value/100;sun.intensity=1.35+v*2.4;sun.color.set(v<.35?'#ffc486':'#fff2cf');hemi.intensity=.85+v*.65;environment.setSun(v);$('#sun-value').textContent=v<.35?'傍晚':v<.8?'午后':'晴天';});
+$('#flow').addEventListener('input',e=>{flow=e.target.value/100;$('#flow-value').textContent=flow<.3?'慢悠悠':flow<.7?'轻轻的':'哗啦啦';});$('#sun').addEventListener('input',e=>{sunLevel=e.target.value/100;applyLight();$('#sun-value').textContent=sunLevel<.35?'傍晚':sunLevel<.8?'午后':'晴天';});
+$('#rain').addEventListener('input',e=>{const was=rainLevel;rainLevel=e.target.value/100;applyLight();$('#rain-value').textContent=rainLabel(rainLevel);if(was<.08&&rainLevel>=.08)say('下雨啦。',2.4);if(was>=.08&&rainLevel<.08)say('雨停了。',2.4);});
+$('#wind').addEventListener('input',e=>{windLevel=e.target.value/100;$('#wind-value').textContent=windLabel(windLevel);});applyLight();
+// Sound starts with the first tap or key press anywhere, unless the visitor has turned it off.
+let soundChosen=false;function soundUI(){$('#sound').setAttribute('aria-pressed',String(sound.on));$('#sound').setAttribute('aria-label',sound.on?'关闭风声和雨声':'打开风声和雨声');$('#sound').classList.toggle('is-on',sound.on);}soundUI();
+$('#sound').addEventListener('click',()=>{soundChosen=true;sound.on?sound.stop():sound.start();soundUI();});
+function firstGesture(e){if(e.target.closest?.('#sound'))return;removeEventListener('pointerdown',firstGesture,true);removeEventListener('keydown',firstGesture,true);if(!soundChosen){sound.start();soundUI();}}
+addEventListener('pointerdown',firstGesture,true);addEventListener('keydown',firstGesture,true);
 $('#photo').addEventListener('click',()=>{environment.render(camera);canvas.toBlob(blob=>{if(!blob){say('暂时无法保存，请再试一次');return;}const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='75-fishing.png';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);say('把这一刻留下来。');},'image/png');});
 const ray=new THREE.Raycaster(),pointer=new THREE.Vector2();let down=null;
 canvas.addEventListener('pointerdown',e=>{down={x:e.clientX,y:e.clientY};});canvas.addEventListener('pointerup',e=>{if(!down||Math.hypot(e.clientX-down.x,e.clientY-down.y)>6){down=null;return;}down=null;pointer.set(e.clientX/innerWidth*2-1,-e.clientY/innerHeight*2+1);ray.setFromCamera(pointer,camera);if(ray.intersectObject(girl,true).length){scoop();return;}const hit=ray.intersectObject(water)[0];if(hit&&environment.isWater(hit.point.x,hit.point.z)){if(!running){running=true;pauseUI();}ripple(hit.point.x,hit.point.z);fishes.forEach(f=>{if(f.g.position.distanceTo(hit.point)<2)f.panic=1;});}});
@@ -46,6 +65,12 @@ function resize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMa
 let lastNetPos=new THREE.Vector3();
 function animate(now){requestAnimationFrame(animate);const dt=Math.min((now-last)/1000,.04);last=now;if(running)time+=dt;const step=running?dt:0;controls.update();
 environment.update(time,flow);
+// Ground soaks up quickly in rain and dries slowly after it stops.
+const air=gust(time,windLevel),wetTarget=Math.min(1,rainLevel*1.5);wet+=(wetTarget-wet)*Math.min(1,step*(wetTarget>wet?.35:.06));
+// Mist thickens with the rain but is measured from the camera, so a phone's wider shot isn't washed out.
+const viewDistance=camera.position.distanceTo(controls.target);scene.fog.near=viewDistance*(1.1-.35*rainLevel);scene.fog.far=viewDistance*(3-1.1*rainLevel);
+environment.setWeather({rain:rainLevel,wet,wind:air.wind,flutter:air.flutter});rain.update(step,rainLevel,air.wind,renderer.getPixelRatio());
+sound.update({rain:rainLevel,wind:air.wind,flutter:air.flutter,flow},running);
 if(scoopTime>=0){scoopTime+=step;const u=scoopTime;rightArm.rotation.z=u<.5?-.22*Math.sin(u/.5*Math.PI/2):u<1.1?-.22+.95*Math.sin((u-.5)/.6*Math.PI/2):u<2?.73:.73*(1-THREE.MathUtils.smoothstep(u,2,3));girl.rotation.z=-rightArm.rotation.z*.07;netGroup.getWorldPosition(lastNetPos);
 if(u>.6&&u-step<=.6){const p=netGroup.localToWorld(netCenter.clone());ripple(p.x,p.z);let nearest=null,distance=1.2;fishes.forEach(f=>{const d=Math.hypot(f.g.position.x-p.x,f.g.position.z-p.z);if(d<distance){distance=d;nearest=f;}f.panic=.7;});scoopCandidate=nearest;}
 if(u>1.3&&u-step<=1.3){if(scoopCandidate){caught++;$('#count').textContent=caught;say('捞到啦！',2.8);scoopCandidate.g.visible=true;}else say('咦？又跑掉了…',2.8);}
@@ -53,6 +78,7 @@ if(u>3){scoopTime=-1;rightArm.rotation.z=0;girl.rotation.z=0;$('#scoop').disable
 updateCharacter(time,scoopTime,scoopTime>1.3&&!!scoopCandidate);
 for(const f of fishes){f.phase+=step*f.speed*(.5+flow*1.5)*(1+f.panic*3);f.panic=Math.max(0,f.panic-step*.6);const z=Math.sin(f.phase)*3.55,x=riverX(z)+f.offset+Math.sin(f.phase*2.7+f.z)*.2;const nextZ=Math.sin(f.phase+.01)*3.55,nextX=riverX(nextZ)+f.offset+Math.sin((f.phase+.01)*2.7+f.z)*.2;f.g.position.set(x,Math.max(groundHeight(x,z)+.10,-.07+Math.sin(time*2+f.z)*.02),z);if(f===scoopCandidate&&scoopTime>1.3){f.g.position.copy(netGroup.localToWorld(netCenter.clone().add(new THREE.Vector3(0,-.25,0))));}f.g.rotation.y=-Math.atan2(nextZ-z,nextX-x);f.tail.rotation.y=Math.sin(time*(9+f.panic*9)+f.z)*.45;}
 for(let i=ripples.length-1;i>=0;i--){const r=ripples[i];r.age+=step;r.o.visible=r.age>=0;const s=Math.max(.01,r.age*.8);r.o.scale.setScalar(s);r.o.material.opacity=Math.max(0,.55-r.age*.3);if(r.age>1.85){scene.remove(r.o);r.o.geometry.dispose();r.o.material.dispose();ripples.splice(i,1);}}
+for(const m of motes)m.o.visible=rainLevel<.15;dragonfly.visible=rainLevel<.5;
 for(const m of motes){m.o.position.set(m.p.x+Math.sin(time*.4+m.phase)*.3,m.p.y+Math.sin(time*.7+m.phase)*.18,m.p.z+Math.cos(time*.3+m.phase)*.2);}
 dragonfly.position.set(1.7+Math.sin(time*.7)*.5,1.2+Math.sin(time*1.1)*.12,-1.2+Math.cos(time*.7)*.4);dragonfly.rotation.y=-time*.7;wings.forEach((w,i)=>w.rotation.x=Math.sin(time*70+i)*.5);
 const anchor=girl.localToWorld(new THREE.Vector3(.3,3.4,.15)).project(camera);$('#bubble').style.left=`${(anchor.x*.5+.5)*innerWidth}px`;$('#bubble').style.top=`${(-anchor.y*.5+.5)*innerHeight}px`;$('#bubble').style.opacity=time<bubbleUntil&&anchor.z<1?1:0;
