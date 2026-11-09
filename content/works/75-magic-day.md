@@ -4,7 +4,7 @@ description: "An illustrated adventure about 75 and her favorite toy, Zhizhi, th
 date: 2026-11-09
 slug: "75-magic-day"
 layout: "magic-day"
-draft: true
+draft: false
 workNumber: "W-009"
 workType: "Picture book"
 workYear: "2026"

@@ -1,42 +1,4 @@
-<!doctype html>
-<html lang="en"{{ if and .Site.Params.enableDarkMode .Site.Params.overrideSystemPreferences }} data-theme="{{ .Site.Params.defaultTheme | default "light" }}"{{ end }}>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="light dark">
-    <meta name="theme-color" content="{{ .Site.Params.themeColor | default "#f8faf9" }}">
-    <meta name="description" content="{{ .Description }}">
-    <title>{{ .Title }} | {{ .Site.Title }}</title>
-    <link rel="canonical" href="{{ .Permalink }}">
-    <link rel="icon" href="{{ "icons/favicon.svg" | relURL }}" type="image/svg+xml">
-    <meta property="og:title" content="{{ .Title }}">
-    <meta property="og:description" content="{{ .Description }}">
-    <meta property="og:image" content="{{ .Params.cover | absURL }}">
-    <meta property="og:locale" content="en_US">
-    {{ partial "style.html" . }}
-    {{ partial "script.html" . }}
-</head>
-<body>
-    <div class="container">
-        <header class="header">
-            <div class="header-wrapper">
-                <div class="header-inner single">
-                    <div class="site-brand"><a href="{{ "/" | relURL }}" class="brand">{{ .Site.Title }}</a></div>
-                    <nav class="nav" aria-label="Site navigation">
-                        <ul class="menu" id="menu">
-                            <li class="menu-item"><a href="{{ "/posts/" | relURL }}"><span class="menu-item-name">Posts</span></a></li>
-                            <li class="menu-item"><a href="{{ "/topics/" | relURL }}"><span class="menu-item-name">Topics</span></a></li>
-                            <li class="menu-item"><a href="{{ "/works/" | relURL }}"><span class="menu-item-name">Works</span></a></li>
-                            <li class="menu-item"><a href="{{ "/about/" | relURL }}"><span class="menu-item-name">About</span></a></li>
-                            {{ with partial "components/dark-mode.html" . }}
-                            <li class="menu-item">{{ replace . (i18n "themeSwitcher") "Switch color theme" | safeHTML }}</li>
-                            {{ end }}
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-            {{ partial "components/nav-toggle.html" . }}
-        </header>
+{{ define "main" }}
 {{ $book := .Site.Data.works.magic_day }}
 {{ $chapters := $book.chapters }}
 {{ $first := index $chapters 0 }}
@@ -47,7 +9,7 @@
 {{ $style := "static/works/75-magic-day/book.css" }}
 {{ $script := "static/works/75-magic-day/book.js" }}
 <link rel="stylesheet" href="{{ "/works/75-magic-day/book.css" | relURL }}?v={{ md5 (readFile $style) }}">
-<main id="main" class="main magic-day">
+<main id="main" class="main magic-day" lang="en">
     <header class="magic-cover" id="magic-cover">
         <div class="magic-cover-copy">
             <a class="magic-back" href="{{ "/works/" | relURL }}">← Works</a>
@@ -92,7 +54,17 @@
         <article class="magic-page" id="{{ $chapter.id }}-page-{{ $pageNumber }}" data-magic-page aria-label="Page {{ $globalPage }} of {{ $totalPages }}" tabindex="-1">
             <div class="magic-spread" data-magic-spread>
                 <figure class="magic-scene">
-                    <img src="{{ $page.image | relURL }}" alt="{{ $page.alt }}" width="1440" height="1080" loading="lazy" decoding="async">
+                    <div class="magic-artwork">
+                        <img src="{{ $page.image | relURL }}" alt="{{ $page.alt }}" width="1440" height="1080" loading="lazy" decoding="async">
+                        {{ with $page.effect }}
+                        {{ partial "works/magic-effect.html" .name }}
+                        {{ if eq .name "door" }}
+                        <button class="magic-effect-button magic-wand-button" type="button" data-magic-effect="{{ .announcement }}" hidden>
+                            <span>{{ .label }}</span>
+                        </button>
+                        {{ end }}
+                        {{ end }}
+                    </div>
                 </figure>
                 <div class="magic-reading">
                     <div class="magic-lines">
@@ -108,6 +80,12 @@
                         </p>
                         {{ end }}
                     </div>
+                    {{ with $page.effect }}
+                    {{ if ne .name "door" }}
+                    <button class="magic-effect-button magic-reading-effect" type="button" data-magic-effect="{{ .announcement }}" hidden>{{ .label }}</button>
+                    {{ end }}
+                    <span class="magic-effect-status" data-magic-effect-status role="status"></span>
+                    {{ end }}
                     <p class="magic-speech-status" data-magic-speech-status role="status" hidden></p>
                 </div>
             </div>
@@ -145,9 +123,4 @@
     </section>
 </main>
 <script src="{{ "/works/75-magic-day/book.js" | relURL }}?v={{ md5 (readFile $script) }}" defer></script>
-        {{ partial "footer.html" . }}
-    </div>
-    {{ partial "components/service-worker.html" . }}
-    {{ partial "third-party/script.html" . }}
-</body>
-</html>
+{{ end }}

@@ -53,6 +53,33 @@
     showPage();
     window.addEventListener("hashchange", showPage);
 
+    let effectTimer;
+    let effectSpread;
+
+    function clearEffect() {
+        if (!effectSpread) return;
+        window.clearTimeout(effectTimer);
+        effectSpread.removeAttribute("data-magic-effect-active");
+        effectSpread.querySelector("[data-magic-effect-status]").textContent = "";
+        effectSpread = null;
+    }
+
+    book.querySelectorAll("[data-magic-effect]").forEach((button) => {
+        button.hidden = false;
+        button.addEventListener("click", () => {
+            const spread = button.closest("[data-magic-spread]");
+            if (effectSpread === spread) return;
+            clearEffect();
+            effectSpread = spread;
+            spread.setAttribute("data-magic-effect-active", "");
+            spread.querySelector("[data-magic-effect-status]").textContent = button.dataset.magicEffect;
+            effectTimer = window.setTimeout(clearEffect, 1200);
+        });
+    });
+
+    window.addEventListener("hashchange", clearEffect);
+    window.addEventListener("pagehide", clearEffect);
+
     if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) return;
 
     const speech = window.speechSynthesis;

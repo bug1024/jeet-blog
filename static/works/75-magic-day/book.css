@@ -84,6 +84,80 @@
     overflow: hidden;
 }
 .magic-scene { display: flex; align-items: center; }
+.magic-artwork { position: relative; width: 100%; }
+.magic-art-effect {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+.magic-art-effect > * { opacity: 0; }
+.magic-door-glow { filter: drop-shadow(0 0 8px #ffd269); }
+[data-magic-effect-active] .magic-fx-mark,
+[data-magic-effect-active] .magic-door-glow { animation: magic-ink-glimmer 1100ms ease-out both; }
+[data-magic-effect-active] .magic-dance-beat { animation: magic-ink-glimmer 640ms ease-out both; }
+[data-magic-effect-active] .magic-dance-beat--second { animation-delay: 380ms; }
+@keyframes magic-ink-glimmer {
+    0%, 100% { opacity: 0; }
+    18%, 44% { opacity: 1; }
+}
+.magic-effect-button {
+    min-height: 44px;
+    cursor: pointer;
+    font: 600 13px/1.2 var(--font-sans, sans-serif);
+    transition: scale 140ms ease-out;
+}
+.magic-effect-button:active { scale: .96; }
+.magic-reading-effect {
+    margin-top: 16px;
+    padding: 0 14px;
+    border: 1px solid var(--book-rule);
+    border-radius: 4px;
+    color: var(--book-plum);
+    background: transparent;
+}
+.magic-reading-effect:hover, [data-magic-effect-active] .magic-reading-effect { background: #ffebbc; }
+.magic-wand-button {
+    position: absolute;
+    top: 21%;
+    left: 61%;
+    transform: translate(-50%, -50%);
+    width: clamp(44px, 9%, 65px);
+    aspect-ratio: 1;
+    padding: 0;
+    background: transparent;
+    border: 2px dashed #fff3ba;
+    border-radius: 50%;
+    color: #fff3ba;
+    box-shadow: 0 0 0 1px #5f361960;
+}
+.magic-wand-button:hover, [data-magic-effect-active] .magic-wand-button { border-style: solid; }
+.magic-wand-button span {
+    position: absolute;
+    top: -6px;
+    left: calc(100% - 3px);
+    padding: 4px 7px;
+    border-radius: 3px;
+    color: #fff5de;
+    background: var(--book-plum);
+    font-size: 11px;
+    white-space: nowrap;
+}
+.magic-effect-status {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+@media (prefers-reduced-motion: reduce) {
+    .magic-effect-button { transition: none; }
+    .magic-effect-button:active { scale: 1; }
+    [data-magic-effect-active] .magic-art-effect > * { animation: none; opacity: 1; }
+}
 .magic-reading { align-self: center; padding: clamp(25px, 4vw, 54px); }
 .magic-lines { display: grid; gap: 12px; }
 .magic-line { display: flex; align-items: center; justify-content: space-between; gap: 7px; font: bold clamp(26px, 2.8vw, 38px)/1.18 var(--book-serif); letter-spacing: -.028em; }

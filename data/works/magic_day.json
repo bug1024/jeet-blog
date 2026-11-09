@@ -43,14 +43,24 @@
           "speakers": [
             "Zhizhi",
             "75"
-          ]
+          ],
+          "effect": {
+            "name": "hello",
+            "label": "Say hello to Zhizhi",
+            "announcement": "Little greeting lines appear beside Zhizhi."
+          }
         },
         {
           "image": "/works/75-magic-day/a-magic-door.webp",
           "alt": "75 raises her star wand toward a glowing arched door in the bedroom wall.",
           "lines": [
             "Look! A magic door!"
-          ]
+          ],
+          "effect": {
+            "name": "door",
+            "label": "Tap the wand",
+            "announcement": "The magic door glows."
+          }
         },
         {
           "image": "/works/75-magic-day/lets-go.webp",
@@ -102,7 +112,12 @@
           "alt": "75 dances, Rabbit hops with the carrot, and Zhizhi flaps its wings.",
           "lines": [
             "Let’s dance!"
-          ]
+          ],
+          "effect": {
+            "name": "dance",
+            "label": "Dance along",
+            "announcement": "Two beats ripple around the dancers."
+          }
         },
         {
           "image": "/works/75-magic-day/bye-rabbit.webp",
@@ -121,7 +136,12 @@
           "alt": "At bedtime, 75 tucks Zhizhi under the floral quilt. Her hat and wand rest beside them.",
           "lines": [
             "Good night, Zhizhi."
-          ]
+          ],
+          "effect": {
+            "name": "stars",
+            "label": "Twinkle, stars",
+            "announcement": "Stars shine outside the bedroom window."
+          }
         }
       ]
     }

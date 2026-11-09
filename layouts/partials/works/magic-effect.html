@@ -1,0 +1,29 @@
+<svg class="magic-art-effect magic-art-effect--{{ . }}" viewBox="0 0 1448 1086" aria-hidden="true" focusable="false">
+    {{ if eq . "hello" }}
+    <g class="magic-fx-mark" fill="none" stroke="#674285" stroke-width="15" stroke-linecap="round">
+        <path d="M1054 645q33-10 49-35"/>
+        <path d="M1075 677q49-13 75-50"/>
+        <path d="M1101 710q62-14 96-63"/>
+    </g>
+    {{ else if eq . "door" }}
+    <path class="magic-door-glow" d="M956 860V263C956 140 1056 31 1177 31c123 0 220 109 220 232v653Z" fill="none" stroke="#fff4b8" stroke-width="16" stroke-linejoin="round"/>
+    <g class="magic-fx-mark" fill="#fff4b8" stroke="#a76421" stroke-width="4">
+        <path d="M918 279q4 21 25 25-21 4-25 25-4-21-25-25 21-4 25-25Z"/>
+        <path d="M968 128q3 17 20 20-17 3-20 20-3-17-20-20 17-3 20-20Z"/>
+        <path d="M1033 99q3 12 15 15-12 3-15 15-3-12-15-15 12-3 15-15Z"/>
+    </g>
+    {{ else if eq . "dance" }}
+    <g class="magic-dance-beat" fill="none" stroke="#684083" stroke-width="14" stroke-linecap="round">
+        <path d="M494 777q-29 7-48 32M502 812q-28 14-36 39M761 895q40-1 66-23"/>
+    </g>
+    <g class="magic-dance-beat magic-dance-beat--second" fill="none" stroke="#684083" stroke-width="14" stroke-linecap="round">
+        <path d="M979 781q35 22 68 18M1152 792q46 4 75-22M306 923q36-8 62-32"/>
+    </g>
+    {{ else if eq . "stars" }}
+    <g class="magic-fx-mark" fill="#fff3ba">
+        <path d="M1359 115q4 20 24 24-20 4-24 24-4-20-24-24 20-4 24-24Z"/>
+        <path d="M1296 203q3 14 17 17-14 3-17 17-3-14-17-17 14-3 17-17Z"/>
+        <path d="M1402 306q3 16 19 19-16 3-19 19-3-16-19-19 16-3 19-19Z"/>
+    </g>
+    {{ end }}
+</svg>
