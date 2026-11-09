@@ -39,11 +39,11 @@
 
         if (finished) {
             saveProgress(null);
-            ending.scrollIntoView({ behavior: "instant" });
+            if (!immersive()) ending.scrollIntoView({ behavior: "instant" });
             ending.focus({ preventScroll: true });
         } else if (target) {
             saveProgress(active.id);
-            activeChapter.scrollIntoView({ behavior: "instant" });
+            if (!immersive()) activeChapter.scrollIntoView({ behavior: "instant" });
             active.focus({ preventScroll: true });
             const nextImage = pages[pages.indexOf(active) + 1]?.querySelector("img");
             if (nextImage) nextImage.loading = "eager";
@@ -63,9 +63,42 @@
         return chapter ? pages.indexOf(chapter.querySelector("[data-magic-page]")) : -1;
     }
 
+    // Full-screen reading: native fullscreen where the browser allows it, and a full-window book everywhere
+    // (iPhone Safari only lets video go truly full screen).
+    const exitButton = book.querySelector("[data-magic-fullscreen-exit]");
+    const fullscreenButtons = book.querySelectorAll("[data-magic-fullscreen]");
+    const immersive = () => book.hasAttribute("data-magic-immersive");
+
+    function setImmersive(on) {
+        if (on === immersive()) return;
+        book.toggleAttribute("data-magic-immersive", on);
+        document.documentElement.classList.toggle("magic-immersive", on);
+        exitButton.hidden = !on;
+        if (on) {
+            if (position(location.hash.slice(1)) < 0) location.hash = active.id;
+            book.requestFullscreen?.({ navigationUI: "hide" }).catch(() => {});
+            (ending.hidden ? active : ending).focus({ preventScroll: true });
+        } else {
+            if (document.fullscreenElement === book) document.exitFullscreen().catch(() => {});
+            (ending.hidden ? active.closest(".magic-chapter") : ending).scrollIntoView({ behavior: "instant" });
+        }
+    }
+
+    fullscreenButtons.forEach((button) => {
+        button.hidden = false;
+        button.addEventListener("click", () => setImmersive(true));
+    });
+    exitButton.addEventListener("click", () => setImmersive(false));
+    // Leaving native fullscreen with the browser's own Esc also leaves the reading mode.
+    document.addEventListener("fullscreenchange", () => {
+        if (!document.fullscreenElement && immersive()) setImmersive(false);
+    });
+
     let shownAt = position(location.hash.slice(1));
     function turnPage() {
         const next = position(location.hash.slice(1));
+        // Links that leave the pages, such as "Back to cover", also leave full screen.
+        if (next < 0 && immersive()) setImmersive(false);
         const turning = shownAt >= 0 && next >= 0 && next !== shownAt;
         document.documentElement.dataset.magicTurn = next < shownAt ? "back" : "forward";
         shownAt = next;
@@ -87,8 +120,16 @@
 
     document.addEventListener("keydown", (event) => {
         if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
-        if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
         if (event.target.closest("input, textarea, select, [contenteditable]")) return;
+        if (event.key === "Escape" && immersive()) {
+            setImmersive(false);
+            return;
+        }
+        if ((event.key === "f" || event.key === "F") && position(location.hash.slice(1)) >= 0) {
+            setImmersive(!immersive());
+            return;
+        }
+        if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
         if (position(location.hash.slice(1)) < 0) return;
         const [previous, next] = pageLinks();
         follow(event.key === "ArrowLeft" ? previous : next);

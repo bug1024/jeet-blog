@@ -96,7 +96,12 @@
                 {{ else }}
                 <a class="magic-plain" href="#magic-contents">← Contents</a>
                 {{ end }}
-                <span>{{ $globalPage }} / {{ $totalPages }}</span>
+                <span class="magic-page-count">
+                    <span>{{ $globalPage }} / {{ $totalPages }}</span>
+                    <button class="magic-fullscreen" type="button" data-magic-fullscreen aria-label="Read full screen" hidden>
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+                    </button>
+                </span>
                 {{ if lt $pageNumber $pageCount }}
                 <a class="magic-next" href="#{{ $chapter.id }}-page-{{ add $pageNumber 1 }}">Next page →</a>
                 {{ else if lt (add $i 1) (len $chapters) }}
@@ -110,6 +115,11 @@
         {{ end }}
     </section>
     {{ end }}
+
+    <button class="magic-exit" type="button" data-magic-fullscreen-exit hidden>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>
+        <span>Exit full screen</span>
+    </button>
 
     <section class="magic-ending" id="magic-end" aria-labelledby="magic-end-title" tabindex="-1">
         <h2 id="magic-end-title" lang="en">The End</h2>
