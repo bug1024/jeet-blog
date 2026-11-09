@@ -57,12 +57,9 @@
                     <div class="magic-artwork">
                         <img src="{{ $page.image | relURL }}" alt="{{ $page.alt }}" width="1440" height="1080" loading="lazy" decoding="async">
                         {{ with $page.effect }}
-                        {{ partial "works/magic-effect.html" .name }}
-                        {{ if eq .name "door" }}
-                        <button class="magic-effect-button magic-wand-button" type="button" data-magic-effect="{{ .announcement }}" hidden>
-                            <span>{{ .label }}</span>
+                        <button class="magic-spot{{ if gt (index .spot 0) 75 }} magic-spot--end{{ end }}" type="button" data-magic-effect="{{ .name }}" style="--x: {{ index .spot 0 }}%; --y: {{ index .spot 1 }}%" aria-label="{{ .label }}" hidden>
+                            <span class="magic-spot-label" aria-hidden="true">{{ .label }}</span>
                         </button>
-                        {{ end }}
                         {{ end }}
                     </div>
                 </figure>
@@ -81,10 +78,11 @@
                         {{ end }}
                     </div>
                     {{ with $page.effect }}
-                    {{ if ne .name "door" }}
-                    <button class="magic-effect-button magic-reading-effect" type="button" data-magic-effect="{{ .announcement }}" hidden>{{ .label }}</button>
-                    {{ end }}
-                    <span class="magic-effect-status" data-magic-effect-status role="status"></span>
+                    <button class="magic-reading-effect" type="button" data-magic-effect="{{ .name }}" hidden>
+                        <svg viewBox="-12 -12 24 24" width="14" height="14" aria-hidden="true"><path d="M0-11Q2-2 11 0 2 2 0 11-2 2-11 0-2-2 0-11Z" fill="currentColor"/></svg>
+                        {{ .label }}
+                    </button>
+                    <span class="magic-effect-status" data-magic-effect-status data-announcement="{{ .announcement }}" role="status"></span>
                     {{ end }}
                     <p class="magic-speech-status" data-magic-speech-status role="status" hidden></p>
                 </div>

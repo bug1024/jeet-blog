@@ -65,7 +65,7 @@
 .magic-cover-art img { object-fit: cover; height: 100%; }
 .magic-contents, .magic-chapter, .magic-ending { margin-top: clamp(48px, 7vw, 94px); }
 .magic-section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px 24px; flex-wrap: wrap; margin-bottom: 16px; }
-.magic-section-head h2 { font-size: clamp(25px, 3vw, 35px); line-height: 1.3; }
+.magic-section-head h2 { font: bold clamp(25px, 3vw, 35px)/1.3 var(--book-serif); letter-spacing: -.02em; }
 .magic-section-head p { font-size: 13px; }
 .magic-contents ol { padding: 0; list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(24px, 5vw, 70px); }
 .magic-contents li { border-bottom: 1px dashed var(--book-rule); }
@@ -85,65 +85,121 @@
 }
 .magic-scene { display: flex; align-items: center; }
 .magic-artwork { position: relative; width: 100%; }
-.magic-art-effect {
+.magic-fx, .magic-fx-defs {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
+    overflow: visible;
     pointer-events: none;
 }
-.magic-art-effect > * { opacity: 0; }
-.magic-door-glow { filter: drop-shadow(0 0 8px #ffd269); }
-[data-magic-effect-active] .magic-fx-mark,
-[data-magic-effect-active] .magic-door-glow { animation: magic-ink-glimmer 1100ms ease-out both; }
-[data-magic-effect-active] .magic-dance-beat { animation: magic-ink-glimmer 640ms ease-out both; }
-[data-magic-effect-active] .magic-dance-beat--second { animation-delay: 380ms; }
-@keyframes magic-ink-glimmer {
-    0%, 100% { opacity: 0; }
-    18%, 44% { opacity: 1; }
-}
-.magic-effect-button {
-    min-height: 44px;
-    cursor: pointer;
-    font: 600 13px/1.2 var(--font-sans, sans-serif);
-    transition: scale 140ms ease-out;
-}
-.magic-effect-button:active { scale: .96; }
-.magic-reading-effect {
-    margin-top: 16px;
-    padding: 0 14px;
-    border: 1px solid var(--book-rule);
-    border-radius: 4px;
-    color: var(--book-plum);
-    background: transparent;
-}
-.magic-reading-effect:hover, [data-magic-effect-active] .magic-reading-effect { background: #ffebbc; }
-.magic-wand-button {
+.magic-fx-defs { width: 0; height: 0; }
+.magic-fx-glow { filter: drop-shadow(0 0 6px #ffd56f); }
+.magic-door-lit { mix-blend-mode: screen; }
+/* A soft-edged copy of part of the painting, so a character can hop above itself. */
+.magic-puppet {
     position: absolute;
-    top: 21%;
-    left: 61%;
-    transform: translate(-50%, -50%);
-    width: clamp(44px, 9%, 65px);
+    overflow: hidden;
+    pointer-events: none;
+    -webkit-mask-image: radial-gradient(closest-side, #000 74%, transparent 100%);
+    mask-image: radial-gradient(closest-side, #000 74%, transparent 100%);
+}
+.magic-puppet img { position: absolute; max-width: none; height: auto; }
+.magic-bubble {
+    position: absolute;
+    padding: .2em .55em .28em;
+    border: 3px solid #674285;
+    border-radius: 999px 999px 999px 8px;
+    background: #fffaf0;
+    color: #4a2c63;
+    font: bold clamp(17px, 2.6vw, 34px)/1 var(--book-serif);
+    box-shadow: 0 4px 0 #67428533;
+    pointer-events: none;
+    transform-origin: 0 100%;
+}
+/* Tap targets on the painting: a slow pulse says "touch here" until the effect has played once. */
+.magic-spot {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: clamp(44px, 8%, 68px);
     aspect-ratio: 1;
     padding: 0;
-    background: transparent;
-    border: 2px dashed #fff3ba;
+    border: 0;
     border-radius: 50%;
-    color: #fff3ba;
-    box-shadow: 0 0 0 1px #5f361960;
+    background: transparent;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
 }
-.magic-wand-button:hover, [data-magic-effect-active] .magic-wand-button { border-style: solid; }
-.magic-wand-button span {
+.magic-spot::before, .magic-spot::after {
+    content: "";
     position: absolute;
-    top: -6px;
-    left: calc(100% - 3px);
-    padding: 4px 7px;
-    border-radius: 3px;
-    color: #fff5de;
-    background: var(--book-plum);
-    font-size: 11px;
-    white-space: nowrap;
+    border-radius: 50%;
 }
+.magic-spot::before {
+    inset: 0;
+    border: 2px solid #fff3ba;
+    box-shadow: 0 0 0 1px #5f361940, inset 0 0 0 1px #5f361930;
+    animation: magic-spot-ring 2.4s cubic-bezier(.2,.7,.3,1) infinite;
+}
+.magic-spot::after {
+    inset: 38%;
+    background: #fff3ba;
+    box-shadow: 0 0 10px 3px #ffd56fb0;
+    animation: magic-spot-dot 2.4s ease-in-out infinite;
+}
+[data-magic-played] .magic-spot::before { animation: none; opacity: 0; }
+[data-magic-played] .magic-spot::after { animation: none; opacity: .45; }
+.magic-spot:hover::before, .magic-spot:focus-visible::before { animation: none; opacity: 1; transform: scale(1.05); }
+.magic-spot:active::after { transform: scale(.7); }
+@keyframes magic-spot-ring {
+    0% { transform: scale(.55); opacity: 0; }
+    25% { opacity: .95; }
+    70%, 100% { transform: scale(1.25); opacity: 0; }
+}
+@keyframes magic-spot-dot {
+    0%, 100% { transform: scale(.75); opacity: .75; }
+    35% { transform: scale(1.1); opacity: 1; }
+}
+.magic-spot-label {
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    padding: 4px 8px;
+    border-radius: 3px;
+    background: var(--book-plum);
+    color: #fff5de;
+    font: 600 11px/1.3 var(--font-sans, sans-serif);
+    white-space: nowrap;
+    opacity: 0;
+    transform: translate(-50%, 4px);
+    transition: opacity 160ms ease-out, transform 160ms ease-out;
+    pointer-events: none;
+}
+.magic-spot:hover .magic-spot-label, .magic-spot:focus-visible .magic-spot-label { opacity: 1; transform: translate(-50%, 0); }
+.magic-spot--end .magic-spot-label { left: auto; right: 0; transform: translateY(4px); }
+.magic-spot--end:hover .magic-spot-label, .magic-spot--end:focus-visible .magic-spot-label { transform: none; }
+.magic-reading-effect {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    margin-top: 18px;
+    padding: 0 15px;
+    border: 1px solid var(--book-rule);
+    border-radius: 999px;
+    color: var(--book-plum);
+    background: transparent;
+    cursor: pointer;
+    font: 600 13px/1.2 var(--font-sans, sans-serif);
+    transition: background-color 160ms ease-out, scale 140ms ease-out;
+}
+.magic-reading-effect svg { color: #d39a2a; transition: transform 400ms cubic-bezier(.3,1.6,.5,1); }
+.magic-reading-effect:hover { background: #ffefc6; }
+.magic-reading-effect:hover svg, [data-magic-effect-active] .magic-reading-effect svg { transform: rotate(90deg) scale(1.2); }
+.magic-reading-effect:active { scale: .96; }
+[data-magic-effect-active] .magic-reading-effect { background: #ffebbc; }
 .magic-effect-status {
     position: absolute;
     width: 1px;
@@ -153,10 +209,28 @@
     clip-path: inset(50%);
     white-space: nowrap;
 }
+/* Turning a page slides it along the reading direction; the lines settle in just after. */
+.magic-page:focus { outline: none; }
+::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+::view-transition-group(magic-page) { animation-duration: 380ms; }
+::view-transition-old(magic-page) { animation: magic-turn-out 240ms cubic-bezier(.4,0,1,1) both; }
+::view-transition-new(magic-page) { animation: magic-turn-in 380ms cubic-bezier(.15,.8,.25,1) both; }
+html[data-magic-turn="back"]::view-transition-old(magic-page) { animation-name: magic-turn-out-back; }
+html[data-magic-turn="back"]::view-transition-new(magic-page) { animation-name: magic-turn-in-back; }
+@keyframes magic-turn-out { to { opacity: 0; transform: translateX(-28px); } }
+@keyframes magic-turn-in { from { opacity: 0; transform: translateX(36px); } }
+@keyframes magic-turn-out-back { to { opacity: 0; transform: translateX(28px); } }
+@keyframes magic-turn-in-back { from { opacity: 0; transform: translateX(-36px); } }
+.magic-page:not([hidden]) .magic-line { animation: magic-line-in 420ms cubic-bezier(.2,.8,.3,1) both; }
+.magic-page:not([hidden]) .magic-line:nth-child(2) { animation-delay: 110ms; }
+.magic-page:not([hidden]) .magic-reading-effect { animation: magic-line-in 420ms 200ms cubic-bezier(.2,.8,.3,1) both; }
+@keyframes magic-line-in { from { opacity: 0; transform: translateY(8px); } }
 @media (prefers-reduced-motion: reduce) {
-    .magic-effect-button { transition: none; }
-    .magic-effect-button:active { scale: 1; }
-    [data-magic-effect-active] .magic-art-effect > * { animation: none; opacity: 1; }
+    .magic-spot::before, .magic-spot::after { animation: none; }
+    .magic-spot::before { opacity: .9; }
+    .magic-reading-effect, .magic-reading-effect svg, .magic-spot-label { transition: none; }
+    .magic-reading-effect:active { scale: 1; }
+    .magic-page:not([hidden]) .magic-line, .magic-page:not([hidden]) .magic-reading-effect { animation: none; }
 }
 .magic-reading { align-self: center; padding: clamp(25px, 4vw, 54px); }
 .magic-lines { display: grid; gap: 12px; }

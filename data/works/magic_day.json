@@ -47,7 +47,11 @@
           "effect": {
             "name": "hello",
             "label": "Say hello to Zhizhi",
-            "announcement": "Little greeting lines appear beside Zhizhi."
+            "announcement": "Little greeting lines appear beside Zhizhi.",
+            "spot": [
+              61.5,
+              52
+            ]
           }
         },
         {
@@ -59,7 +63,11 @@
           "effect": {
             "name": "door",
             "label": "Tap the wand",
-            "announcement": "The magic door glows."
+            "announcement": "The magic door glows.",
+            "spot": [
+              60.4,
+              19.4
+            ]
           }
         },
         {
@@ -116,7 +124,11 @@
           "effect": {
             "name": "dance",
             "label": "Dance along",
-            "announcement": "Two beats ripple around the dancers."
+            "announcement": "Two beats ripple around the dancers.",
+            "spot": [
+              78,
+              40
+            ]
           }
         },
         {
@@ -140,7 +152,11 @@
           "effect": {
             "name": "stars",
             "label": "Twinkle, stars",
-            "announcement": "Stars shine outside the bedroom window."
+            "announcement": "Stars shine outside the bedroom window.",
+            "spot": [
+              93.6,
+              81
+            ]
           }
         }
       ]
