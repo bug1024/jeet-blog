@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>慢一点长大</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="mv is-poster" id="mv">
+    <canvas id="screen" width="1280" height="720" role="img" aria-label="动画 MV《慢一点长大》：傍晚的操场上，75 跑在前面，回头等爸爸追上来"></canvas>
+    <button class="mv-big-play" id="big-play" type="button" aria-label="播放 MV"><span aria-hidden="true"></span></button>
+    <div class="mv-bar">
+        <button class="mv-toggle" id="toggle" type="button" aria-label="播放"></button>
+        <span class="mv-time" id="time">0:07</span>
+        <input class="mv-seek" id="seek" type="range" min="0" max="219.17" step="0.01" value="7" aria-label="播放进度">
+        <span class="mv-time">3:39</span>
+        <button class="mv-subs" id="subs" type="button" aria-pressed="true">字幕</button>
+        <button class="mv-full" id="full" type="button" aria-label="全屏"></button>
+    </div>
+    <audio id="song" src="song.m4a" preload="none" playsinline></audio>
+</div>
+<script type="module" src="mv.js"></script>
+</body>
+</html>

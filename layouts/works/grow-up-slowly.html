@@ -1,0 +1,58 @@
+{{ define "main" }}
+{{ $app := "static/works/grow-up-slowly/app/" }}
+{{ $version := md5 (printf "%s%s%s%s%s%s%s%s" (readFile (printf "%sindex.html" $app)) (readFile (printf "%smv.js" $app)) (readFile (printf "%sstyle.css" $app)) (readFile (printf "%spaint.js" $app)) (readFile (printf "%sfigures.js" $app)) (readFile (printf "%sprops.js" $app)) (readFile (printf "%ssets.js" $app)) (readFile (printf "%sshots.js" $app))) }}
+<main class="main grow-work" id="main" aria-label="动画 MV《慢一点长大》">
+    <iframe
+        class="grow-work-frame"
+        src="{{ "/works/grow-up-slowly/app/" | relURL }}?v={{ $version }}"
+        title="慢一点长大：给 75 的水粉风动画 MV"
+        allow="fullscreen; autoplay"
+        allowfullscreen
+    ></iframe>
+    <p class="grow-work-note">横过手机，或点播放条右侧的全屏按钮观看。</p>
+</main>
+<style>
+    .grow-work {
+        width: 100%;
+        max-width: none;
+        margin: 0 !important;
+        padding: 58px 0 0 !important;
+    }
+    .grow-work-frame {
+        display: block;
+        width: 100%;
+        /* Never taller than the 16:9 picture, so a phone held upright gets no black bands. */
+        height: min(calc(100svh - 58px), 56.25vw);
+        border: 0;
+        background: #1c1420;
+    }
+    /* iPhone has no element full screen: the frame covers the page instead. */
+    .grow-work-frame.is-immersive {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        height: 100svh;
+    }
+    .grow-work-note {
+        margin: 14px 16px 0;
+        color: var(--color-contrast-medium, #777);
+        font-size: 14px;
+        text-align: center;
+    }
+    @media (min-aspect-ratio: 4/3) {
+        .grow-work-note { display: none; }
+    }
+    .grow-work ~ .footer,
+    .grow-work ~ #back-to-top {
+        display: none;
+    }
+</style>
+<script>
+    addEventListener("message", (event) => {
+        const frame = document.querySelector(".grow-work-frame");
+        if (event.source !== frame.contentWindow || event.data?.type !== "grow-up-slowly:immersive") return;
+        frame.classList.toggle("is-immersive", !!event.data.on);
+        document.documentElement.style.overflow = event.data.on ? "hidden" : "";
+    });
+</script>
+{{ end }}
