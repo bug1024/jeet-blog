@@ -22,6 +22,7 @@
     outline-offset: 4px;
 }
 .magic-day [hidden] { display: none !important; }
+.magic-js .magic-day:not([data-magic-ready]) :is(.magic-chapter, .magic-ending) { display: none; }
 .magic-cover, .magic-contents, .magic-chapter, .magic-page, .magic-ending { scroll-margin-top: 76px; }
 .magic-cover {
     display: grid;

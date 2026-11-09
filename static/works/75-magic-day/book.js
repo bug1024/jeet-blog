@@ -159,6 +159,7 @@
     }
 
     showPage();
+    book.setAttribute("data-magic-ready", "");
     window.addEventListener("hashchange", turnPage);
 
     function follow(link) {

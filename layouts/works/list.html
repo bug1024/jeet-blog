@@ -22,8 +22,11 @@
                         </div>
                         {{ $coverAlt := .Params.coverAlt | default .Title }}
                         {{ with .Params.cover }}
+                        {{/* Covers show at 180 × 135 here; use the small WebP from scripts/make-work-thumbs.sh when there is one. */}}
+                        {{ $thumb := replaceRE `\.[A-Za-z]+$` "-thumb.webp" . }}
+                        {{ $src := cond (and (ne $thumb .) (fileExists (printf "static%s" $thumb))) $thumb . }}
                         <figure>
-                            <img src="{{ . | relURL }}" alt="{{ $coverAlt }}" loading="lazy" decoding="async">
+                            <img src="{{ $src | relURL }}" alt="{{ $coverAlt }}" loading="lazy" decoding="async">
                         </figure>
                         {{ end }}
                     </a>

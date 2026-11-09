@@ -1,15 +1,15 @@
 // Redraws the about-page laptop and diary in the home Yaya's ink style and keeps the kitten pixels as they are.
-// Writes <out>/yaya-mac-kitten.png (same 1536x1024 frame, so the blink coordinates stay valid) and <out>/about-diary.png.
+// Writes <out>/yaya-mac-kitten.webp (same 1536x1024 frame, so the blink coordinates stay valid) and <out>/about-diary.png.
 // Safe to re-run on its own output: only the kitten (above the lid and its light chin and whiskers) is carried over.
 //
 // Usage: PW=$(npm root -g)/playwright node scripts/gen_about_scene.mjs static/images/illustrations \
-//            static/images/illustrations/yaya-mac-kitten.png
+//            static/images/illustrations/yaya-mac-kitten.webp
 import { createRequire } from 'node:module';
 import { writeFileSync, readFileSync } from 'node:fs';
 const require = createRequire(import.meta.url);
 const { chromium } = require(process.env.PW);
 const out = process.argv[2];
-const oldKitten = 'data:image/png;base64,' + readFileSync(process.argv[3]).toString('base64');
+const oldKitten = `data:image/${process.argv[3].endsWith('.webp') ? 'webp' : 'png'};base64,` + readFileSync(process.argv[3]).toString('base64');
 
 const INK = '#18191a', PAPER = '#f6f2ea', SHELL = '#e3dfd7', SHELL_DARK = '#cfcac0', BEZEL = '#3b3e41', SCREEN = '#222528', SCREEN_LINE = '#4a4f53';
 const lerp = (a, b, t) => a + (b - a) * t;
@@ -118,9 +118,9 @@ const result = await page.evaluate(async ({ laptopSvg, diarySvg, oldKitten }) =>
   x.drawImage(oc, 0, 0);
   const dc = document.createElement('canvas'); dc.width = diarySvg.W; dc.height = diarySvg.H;
   dc.getContext('2d').drawImage(await toImage(diarySvg.svg, diarySvg.W, diarySvg.H), 0, 0);
-  return { kitten: c.toDataURL('image/png'), diary: dc.toDataURL('image/png') };
+  return { kitten: c.toDataURL('image/webp', .9), diary: dc.toDataURL('image/png') };
 }, { laptopSvg: laptop(), diarySvg: diary(), oldKitten });
-writeFileSync(`${out}/yaya-mac-kitten.png`, Buffer.from(result.kitten.split(',')[1], 'base64'));
+writeFileSync(`${out}/yaya-mac-kitten.webp`, Buffer.from(result.kitten.split(',')[1], 'base64'));
 writeFileSync(`${out}/about-diary.png`, Buffer.from(result.diary.split(',')[1], 'base64'));
 console.log('wrote', out);
 await browser.close();

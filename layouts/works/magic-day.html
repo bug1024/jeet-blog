@@ -11,6 +11,8 @@
 <link rel="stylesheet" href="{{ "/css/page-curl.css" | relURL }}?v={{ md5 (readFile "static/css/page-curl.css") }}">
 <link rel="stylesheet" href="{{ "/works/75-magic-day/book.css" | relURL }}?v={{ md5 (readFile $style) }}">
 <main id="main" class="main magic-day" lang="en">
+    {{/* Hide the chapters until book.js picks the page to show, so lazy images of other pages are not fetched first. */}}
+    <script>document.documentElement.classList.add("magic-js");</script>
     <header class="magic-cover" id="magic-cover">
         <div class="magic-cover-copy">
             <a class="magic-back" href="{{ "/works/" | relURL }}">← Works</a>
