@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en"{{ if and .Site.Params.enableDarkMode .Site.Params.overrideSystemPreferences }} data-theme="{{ .Site.Params.defaultTheme | default "light" }}"{{ end }}>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="{{ .Site.Params.themeColor | default "#f8faf9" }}">
+    <meta name="description" content="{{ .Description }}">
+    <title>{{ .Title }} | {{ .Site.Title }}</title>
+    <link rel="canonical" href="{{ .Permalink }}">
+    <link rel="icon" href="{{ "icons/favicon.svg" | relURL }}" type="image/svg+xml">
+    <meta property="og:title" content="{{ .Title }}">
+    <meta property="og:description" content="{{ .Description }}">
+    <meta property="og:image" content="{{ .Params.cover | absURL }}">
+    <meta property="og:locale" content="en_US">
+    {{ partial "style.html" . }}
+    {{ partial "script.html" . }}
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    <div class="site-brand"><a href="{{ "/" | relURL }}" class="brand">{{ .Site.Title }}</a></div>
+                    <nav class="nav" aria-label="Site navigation">
+                        <ul class="menu" id="menu">
+                            <li class="menu-item"><a href="{{ "/posts/" | relURL }}"><span class="menu-item-name">Posts</span></a></li>
+                            <li class="menu-item"><a href="{{ "/topics/" | relURL }}"><span class="menu-item-name">Topics</span></a></li>
+                            <li class="menu-item"><a href="{{ "/works/" | relURL }}"><span class="menu-item-name">Works</span></a></li>
+                            <li class="menu-item"><a href="{{ "/about/" | relURL }}"><span class="menu-item-name">About</span></a></li>
+                            {{ with partial "components/dark-mode.html" . }}
+                            <li class="menu-item">{{ replace . (i18n "themeSwitcher") "Switch color theme" | safeHTML }}</li>
+                            {{ end }}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            {{ partial "components/nav-toggle.html" . }}
+        </header>
+{{ $book := .Site.Data.works.magic_day }}
+{{ $chapters := $book.chapters }}
+{{ $first := index $chapters 0 }}
+{{ $last := index $chapters (sub (len $chapters) 1) }}
+{{ $totalPages := 0 }}
+{{ range $chapters }}{{ $totalPages = add $totalPages (len .pages) }}{{ end }}
+{{ $globalPage := 0 }}
+{{ $style := "static/works/75-magic-day/book.css" }}
+{{ $script := "static/works/75-magic-day/book.js" }}
+<link rel="stylesheet" href="{{ "/works/75-magic-day/book.css" | relURL }}?v={{ md5 (readFile $style) }}">
+<main id="main" class="main magic-day">
+    <header class="magic-cover" id="magic-cover">
+        <div class="magic-cover-copy">
+            <a class="magic-back" href="{{ "/works/" | relURL }}">← Works</a>
+            <h1 lang="en">75’s<br>Magic Day</h1>
+            <p class="magic-subtitle" lang="en">{{ $book.subtitle }}</p>
+            <div class="magic-cover-links">
+                <a class="magic-start" href="#{{ $first.id }}" lang="en">Start reading <span aria-hidden="true">→</span></a>
+                <a class="magic-plain" href="#magic-contents">Contents</a>
+                <a class="magic-plain" data-magic-resume lang="en" hidden>Continue reading</a>
+            </div>
+        </div>
+        <figure class="magic-cover-art">
+            <img src="{{ .Params.cover | relURL }}" alt="{{ .Params.coverAlt }}" width="1440" height="1080" fetchpriority="high">
+        </figure>
+    </header>
+
+    <nav class="magic-contents" id="magic-contents" aria-labelledby="magic-contents-title">
+        <div class="magic-section-head">
+            <h2 id="magic-contents-title">Contents</h2>
+            <p>{{ len $chapters }} chapters · {{ $totalPages }} pages</p>
+        </div>
+        <ol>
+            {{ range $i, $chapter := $chapters }}
+            <li>
+                {{ $num := printf "%02d" (add $i 1) }}
+                <a href="#{{ $chapter.id }}"><span class="magic-number">{{ $num }}</span><span lang="en">{{ $chapter.title }}</span><span class="magic-open" aria-hidden="true">→</span></a>
+            </li>
+            {{ end }}
+        </ol>
+    </nav>
+
+    {{ range $i, $chapter := $chapters }}
+    <section class="magic-chapter" id="{{ $chapter.id }}" aria-labelledby="{{ $chapter.id }}-title">
+        <div class="magic-section-head">
+            <h2 id="{{ $chapter.id }}-title">{{ $chapter.title }}</h2>
+            <p>Chapter {{ add $i 1 }} of {{ len $chapters }}</p>
+        </div>
+        {{ $pageCount := len $chapter.pages }}
+        {{ range $index, $page := $chapter.pages }}
+        {{ $pageNumber := add $index 1 }}
+        {{ $globalPage = add $globalPage 1 }}
+        <article class="magic-page" id="{{ $chapter.id }}-page-{{ $pageNumber }}" data-magic-page aria-label="Page {{ $globalPage }} of {{ $totalPages }}" tabindex="-1">
+            <div class="magic-spread" data-magic-spread>
+                <figure class="magic-scene">
+                    <img src="{{ $page.image | relURL }}" alt="{{ $page.alt }}" width="1440" height="1080" loading="lazy" decoding="async">
+                </figure>
+                <div class="magic-reading">
+                    <div class="magic-lines">
+                        {{ range $lineIndex, $line := $page.lines }}
+                        <p class="magic-line" lang="en">
+                            <span class="magic-line-copy">
+                                {{ with $page.speakers }}<small class="magic-speaker">{{ index . $lineIndex }}</small>{{ end }}
+                                {{ $line }}
+                            </span>
+                            <button type="button" data-magic-speak="{{ $line }}" hidden aria-label="Read aloud: {{ $line }}">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM16 9a4 4 0 0 1 0 6m3-8a7 7 0 0 1 0 10"/></svg>
+                            </button>
+                        </p>
+                        {{ end }}
+                    </div>
+                    <p class="magic-speech-status" data-magic-speech-status role="status" hidden></p>
+                </div>
+            </div>
+            <nav class="magic-page-nav" aria-label="Page {{ $globalPage }} navigation">
+                {{ if gt $index 0 }}
+                <a class="magic-plain" href="#{{ $chapter.id }}-page-{{ $index }}">← Previous page</a>
+                {{ else if gt $i 0 }}
+                {{ $previous := index $chapters (sub $i 1) }}
+                <a class="magic-plain" href="#{{ $previous.id }}-page-{{ len $previous.pages }}">← Previous page</a>
+                {{ else }}
+                <a class="magic-plain" href="#magic-contents">← Contents</a>
+                {{ end }}
+                <span>{{ $globalPage }} / {{ $totalPages }}</span>
+                {{ if lt $pageNumber $pageCount }}
+                <a class="magic-next" href="#{{ $chapter.id }}-page-{{ add $pageNumber 1 }}">Next page →</a>
+                {{ else if lt (add $i 1) (len $chapters) }}
+                {{ $next := index $chapters (add $i 1) }}
+                <a class="magic-next" href="#{{ $next.id }}-page-1">Next chapter →</a>
+                {{ else }}
+                <a class="magic-next" href="#magic-end">Finish →</a>
+                {{ end }}
+            </nav>
+        </article>
+        {{ end }}
+    </section>
+    {{ end }}
+
+    <section class="magic-ending" id="magic-end" aria-labelledby="magic-end-title" tabindex="-1">
+        <h2 id="magic-end-title" lang="en">The End</h2>
+        <div class="magic-ending-links">
+            <a class="magic-plain" href="#{{ $last.id }}-page-{{ len $last.pages }}">← Previous page</a>
+            <a class="magic-next" href="#{{ $first.id }}">Read again</a>
+            <a class="magic-plain" href="#magic-cover">Back to cover ↑</a>
+        </div>
+    </section>
+</main>
+<script src="{{ "/works/75-magic-day/book.js" | relURL }}?v={{ md5 (readFile $script) }}" defer></script>
+        {{ partial "footer.html" . }}
+    </div>
+    {{ partial "components/service-worker.html" . }}
+    {{ partial "third-party/script.html" . }}
+</body>
+</html>

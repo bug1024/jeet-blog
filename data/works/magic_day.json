@@ -1,0 +1,129 @@
+{
+  "subtitle": "A Little Girl’s Big Adventure",
+  "chapters": [
+    {
+      "id": "good-morning",
+      "title": "Good morning",
+      "pages": [
+        {
+          "image": "/works/75-magic-day/good-morning.webp",
+          "alt": "75 stretches in bed. Zhizhi sits beside her on the floral quilt.",
+          "lines": [
+            "Good morning!"
+          ]
+        },
+        {
+          "image": "/works/75-magic-day/where-are-you.webp",
+          "alt": "75 looks at the empty pillow. One of Zhizhi’s yellow feet peeks out from under the quilt.",
+          "lines": [
+            "Where are you?"
+          ]
+        },
+        {
+          "image": "/works/75-magic-day/there-you-are.webp",
+          "alt": "75 hugs Zhizhi, whose two yellow feet rest on the quilt.",
+          "lines": [
+            "There you are!",
+            "Good morning, Zhizhi!"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "magic-door",
+      "title": "The magic door",
+      "pages": [
+        {
+          "image": "/works/75-magic-day/you-can-talk.webp",
+          "alt": "75 looks down at Zhizhi, who is winking and opening its beak.",
+          "lines": [
+            "Good morning!",
+            "You can talk!"
+          ],
+          "speakers": [
+            "Zhizhi",
+            "75"
+          ]
+        },
+        {
+          "image": "/works/75-magic-day/a-magic-door.webp",
+          "alt": "75 raises her star wand toward a glowing arched door in the bedroom wall.",
+          "lines": [
+            "Look! A magic door!"
+          ]
+        },
+        {
+          "image": "/works/75-magic-day/lets-go.webp",
+          "alt": "75 carries Zhizhi through the door toward a garden path.",
+          "lines": [
+            "Let’s go!"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "where-is-my-carrot",
+      "title": "Where is my carrot?",
+      "pages": [
+        {
+          "image": "/works/75-magic-day/are-you-ok.webp",
+          "alt": "75 crouches beside a little white rabbit searching through the leaves.",
+          "lines": [
+            "Are you OK?",
+            "I can’t find my carrot."
+          ],
+          "speakers": [
+            "75",
+            "Rabbit"
+          ]
+        },
+        {
+          "image": "/works/75-magic-day/look.webp",
+          "alt": "75 shines her star wand under a leaf, where a carrot tip peeks out.",
+          "lines": [
+            "Look!"
+          ]
+        },
+        {
+          "image": "/works/75-magic-day/here-it-is.webp",
+          "alt": "75 hands the carrot to Rabbit while Zhizhi watches.",
+          "lines": [
+            "Here it is!"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "home",
+      "title": "Back home",
+      "pages": [
+        {
+          "image": "/works/75-magic-day/lets-dance.webp",
+          "alt": "75 dances, Rabbit hops with the carrot, and Zhizhi flaps its wings.",
+          "lines": [
+            "Let’s dance!"
+          ]
+        },
+        {
+          "image": "/works/75-magic-day/bye-rabbit.webp",
+          "alt": "75 carries Zhizhi through the door and waves goodbye to Rabbit.",
+          "lines": [
+            "Bye, Rabbit!",
+            "See you!"
+          ],
+          "speakers": [
+            "75",
+            "Rabbit"
+          ]
+        },
+        {
+          "image": "/works/75-magic-day/good-night.webp",
+          "alt": "At bedtime, 75 tucks Zhizhi under the floral quilt. Her hat and wand rest beside them.",
+          "lines": [
+            "Good night, Zhizhi."
+          ]
+        }
+      ]
+    }
+  ]
+}
