@@ -6,6 +6,7 @@
     --book-gold: #ffdb83;
     --book-rule: #d8cbbd;
     --book-serif: Georgia, "Times New Roman", serif;
+    position: relative;
     max-width: 1140px;
     width: min(100% - 56px, 1140px);
     margin-inline: auto;
@@ -84,6 +85,8 @@
     border-radius: 5px;
     overflow: hidden;
 }
+/* Vertical scrolling stays native; horizontal drags turn the page. */
+.magic-spread { touch-action: pan-y; }
 .magic-scene { display: flex; align-items: center; }
 .magic-artwork { position: relative; width: 100%; }
 .magic-fx, .magic-fx-defs {

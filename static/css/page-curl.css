@@ -1,0 +1,37 @@
+/* Page curl stage for picture books; see static/js/page-curl.js. */
+.page-curl {
+    position: absolute;
+    z-index: 20;
+    pointer-events: none;
+    /* The turning page disappears into the spine on the left, but may lift past the top and bottom edges. */
+    clip-path: inset(-60% -60% -60% 0);
+    contain: layout style;
+}
+.page-curl-under, .page-curl-front, .page-curl-flap-shadow, .page-curl-flap, .page-curl-back {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+}
+.page-curl-flap-shadow {
+    overflow: visible;
+    filter: drop-shadow(0 0 16px rgba(30, 20, 15, var(--page-curl-shadow, .2)));
+}
+.page-curl-flap { transform-origin: 0 0; }
+/* The reverse of the paper: plain paper with the print faintly showing through, mirrored. */
+.page-curl-back { background: var(--page-curl-paper, #faf4e6); }
+.page-curl-back > * { opacity: .1; filter: grayscale(.4); }
+.page-curl-bend, .page-curl-sheen, .page-curl-cast {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform-origin: 0 50%;
+    pointer-events: none;
+}
+/* The flat page darkens where it starts to bend up into the fold. */
+.page-curl-bend { background: linear-gradient(90deg, rgba(40, 28, 18, .26) 0, rgba(40, 28, 18, .1) 18px, rgba(40, 28, 18, .03) 70px, transparent 160px); }
+/* The lifted paper catches light just past the fold and shades towards its far edge. */
+.page-curl-sheen { background: linear-gradient(90deg, rgba(60, 40, 25, .22) 0, rgba(255, 255, 255, .5) 14px, rgba(255, 255, 255, .16) 70px, rgba(60, 40, 25, .06) 260px, rgba(60, 40, 25, .14) 520px); }
+/* Shadow the lifted page casts onto the page underneath. */
+.page-curl-cast { background: linear-gradient(90deg, rgba(25, 15, 10, .42) 0, rgba(25, 15, 10, .16) 26px, rgba(25, 15, 10, .05) 90px, transparent 180px); }
+.page-curl-dragging { user-select: none; -webkit-user-select: none; cursor: grabbing; }
+.page-curl-dragging img { -webkit-user-drag: none; }

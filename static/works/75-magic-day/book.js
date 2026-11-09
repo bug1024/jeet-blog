@@ -94,15 +94,67 @@
         if (!document.fullscreenElement && immersive()) setImmersive(false);
     });
 
+    // Turning between two pages curls the page like paper (static/js/page-curl.js); other jumps slide.
+    const curl = window.PageCurl;
+    let turn = null;
+    let dragged = false;
+
+    function cloneSpread(page) {
+        const copy = page.querySelector("[data-magic-spread]").cloneNode(true);
+        copy.querySelectorAll("[id]").forEach((item) => item.removeAttribute("id"));
+        copy.querySelectorAll("img").forEach((image) => { image.loading = "eager"; });
+        return copy;
+    }
+
+    // Set up a curl over the page that is showing now; for a backward turn the earlier page comes back over it.
+    function startCurl(from, to, direction, corner = "bottom") {
+        const spread = from.querySelector("[data-magic-spread]");
+        const box = spread.getBoundingClientRect(), host = book.getBoundingClientRect();
+        const forward = direction === "forward";
+        const controller = curl.start({
+            host: book,
+            rect: { left: box.left - host.left + book.scrollLeft, top: box.top - host.top + book.scrollTop, width: box.width, height: box.height },
+            turning: cloneSpread(forward ? from : to),
+            under: cloneSpread(forward ? to : from),
+            corner,
+            paper: getComputedStyle(book).getPropertyValue("--book-paper").trim() || undefined,
+        });
+        if (!forward) controller.progress(1);
+        return controller;
+    }
+
+    function finishTurn() {
+        if (!turn) return;
+        const { controller } = turn;
+        turn = null;
+        showPage();
+        controller.destroy();
+    }
+
     let shownAt = position(location.hash.slice(1));
     function turnPage() {
         const next = position(location.hash.slice(1));
         // Links that leave the pages, such as "Back to cover", also leave full screen.
         if (next < 0 && immersive()) setImmersive(false);
+        finishTurn();
+        const from = pages[shownAt], to = pages[next];
         const turning = shownAt >= 0 && next >= 0 && next !== shownAt;
-        document.documentElement.dataset.magicTurn = next < shownAt ? "back" : "forward";
+        const direction = next < shownAt ? "back" : "forward";
+        document.documentElement.dataset.magicTurn = direction;
         shownAt = next;
-        if (turning && document.startViewTransition && !reduced.matches) document.startViewTransition(showPage);
+        const animate = turning && !reduced.matches;
+        if (dragged) {
+            // A drag already played the curl; just show the page it landed on.
+            dragged = false;
+            showPage();
+        } else if (animate && curl && from && to && from === active && !from.hidden) {
+            const controller = startCurl(from, to, direction);
+            turn = { controller };
+            const done = turn;
+            controller.play(direction === "forward" ? 0 : 1, direction === "forward" ? 1 : 0, 880).then(() => {
+                if (turn === done) finishTurn();
+            });
+        } else if (animate && document.startViewTransition) document.startViewTransition(showPage);
         else showPage();
     }
 
@@ -136,20 +188,33 @@
         event.preventDefault();
     });
 
-    book.querySelectorAll("[data-magic-spread]").forEach((spread) => {
-        let start = null;
-        spread.addEventListener("touchstart", (event) => {
-            start = event.touches.length === 1 ? { x: event.touches[0].clientX, y: event.touches[0].clientY } : null;
-        }, { passive: true });
-        spread.addEventListener("touchend", (event) => {
-            if (!start) return;
-            const dx = event.changedTouches[0].clientX - start.x;
-            const dy = event.changedTouches[0].clientY - start.y;
-            start = null;
-            if (Math.abs(dx) < 56 || Math.abs(dx) < Math.abs(dy) * 1.6) return;
-            const [previous, next] = pageLinks();
-            follow(dx > 0 ? previous : next);
-        }, { passive: true });
+    // Pages can also be turned by hand: drag the outer edge to turn forward, the inner edge to turn back.
+    function neighbour(direction) {
+        const [previous, next] = pageLinks();
+        const link = direction === "forward" ? next : previous;
+        const id = link?.getAttribute("href").slice(1);
+        return pages.find((page) => page.id === id) || null;
+    }
+
+    if (curl) book.querySelectorAll("[data-magic-spread]").forEach((spread) => {
+        curl.drag(spread, {
+            start(direction, corner) {
+                if (reduced.matches || turn || spread.closest("[data-magic-page]") !== active) return null;
+                const target = neighbour(direction);
+                return target ? startCurl(active, target, direction, corner) : null;
+            },
+            end(direction, turned, controller) {
+                if (!turned) {
+                    controller.destroy();
+                    return;
+                }
+                // Swap pages in the same frame the stage goes away; the hashchange that follows only records it.
+                dragged = true;
+                location.hash = neighbour(direction).id;
+                showPage();
+                controller.destroy();
+            },
+        });
     });
 
     // Illustration effects. Coordinates are in the 1440 × 1080 artwork.

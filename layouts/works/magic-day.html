@@ -8,6 +8,7 @@
 {{ $globalPage := 0 }}
 {{ $style := "static/works/75-magic-day/book.css" }}
 {{ $script := "static/works/75-magic-day/book.js" }}
+<link rel="stylesheet" href="{{ "/css/page-curl.css" | relURL }}?v={{ md5 (readFile "static/css/page-curl.css") }}">
 <link rel="stylesheet" href="{{ "/works/75-magic-day/book.css" | relURL }}?v={{ md5 (readFile $style) }}">
 <main id="main" class="main magic-day" lang="en">
     <header class="magic-cover" id="magic-cover">
@@ -130,5 +131,6 @@
         </div>
     </section>
 </main>
+<script src="{{ "/js/page-curl.js" | relURL }}?v={{ md5 (readFile "static/js/page-curl.js") }}" defer></script>
 <script src="{{ "/works/75-magic-day/book.js" | relURL }}?v={{ md5 (readFile $script) }}" defer></script>
 {{ end }}
