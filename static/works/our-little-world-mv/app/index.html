@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>我们的小小世界</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="mv is-poster" id="mv">
+    <canvas id="screen" width="1280" height="720" role="img" aria-label="纸艺动画 MV《我们的小小世界》：黄昏的田野上，一座亮着窗的小房子，屋檐下站着一家人和一只猫，上方是片名"></canvas>
+    <button class="mv-big-play" id="big-play" type="button" aria-label="播放 MV"><span aria-hidden="true"></span></button>
+    <div class="mv-bar">
+        <button class="mv-toggle" id="toggle" type="button" aria-label="播放"></button>
+        <span class="mv-time" id="time">0:00</span>
+        <input class="mv-seek" id="seek" type="range" min="0" max="210.5" step="0.01" value="0" aria-label="播放进度">
+        <span class="mv-time">3:30</span>
+        <button class="mv-subs" id="subs" type="button" aria-pressed="true">字幕</button>
+        <button class="mv-full" id="full" type="button" aria-label="全屏"></button>
+    </div>
+    <audio id="song" src="song.m4a" preload="none" playsinline></audio>
+</div>
+<script type="module" src="src/film.js"></script>
+</body>
+</html>

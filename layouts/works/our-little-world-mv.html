@@ -1,0 +1,61 @@
+{{ define "main" }}
+{{ $app := "static/works/our-little-world-mv/app/" }}
+{{ $files := slice "index.html" "style.css" "lyrics.lrc" "src/film.js" "src/core.js" "src/design.js" "src/paper.js" "src/type.js" "src/motifs.js" "src/scenes.js" "src/scenes2.js" }}
+{{ $all := "" }}
+{{ range $files }}{{ $all = printf "%s%s" $all (readFile (printf "%s%s" $app .)) }}{{ end }}
+{{ $version := md5 $all }}
+<main class="main world-work" id="main" aria-label="纸艺动画 MV《我们的小小世界》">
+    <iframe
+        class="world-work-frame"
+        src="{{ "/works/our-little-world-mv/app/" | relURL }}?v={{ $version }}"
+        title="我们的小小世界：一家人的纸艺动画 MV"
+        allow="fullscreen; autoplay"
+        allowfullscreen
+    ></iframe>
+    <p class="world-work-note">横过手机，或点播放条右侧的全屏按钮观看。</p>
+</main>
+<style>
+    .world-work {
+        width: 100%;
+        max-width: none;
+        margin: 0 !important;
+        padding: 58px 0 0 !important;
+    }
+    .world-work-frame {
+        display: block;
+        width: 100%;
+        /* Never taller than the 16:9 picture, so a phone held upright gets no black bands. */
+        height: min(calc(100svh - 58px), 56.25vw);
+        border: 0;
+        background: #1b1a18;
+    }
+    /* iPhone has no element full screen: the frame covers the page instead. */
+    .world-work-frame.is-immersive {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        height: 100svh;
+    }
+    .world-work-note {
+        margin: 14px 16px 0;
+        color: var(--color-contrast-medium, #777);
+        font-size: 14px;
+        text-align: center;
+    }
+    @media (min-aspect-ratio: 4/3) {
+        .world-work-note { display: none; }
+    }
+    .world-work ~ .footer,
+    .world-work ~ #back-to-top {
+        display: none;
+    }
+</style>
+<script>
+    addEventListener("message", (event) => {
+        const frame = document.querySelector(".world-work-frame");
+        if (event.source !== frame.contentWindow || event.data?.type !== "our-little-world-mv:immersive") return;
+        frame.classList.toggle("is-immersive", !!event.data.on);
+        document.documentElement.style.overflow = event.data.on ? "hidden" : "";
+    });
+</script>
+{{ end }}
