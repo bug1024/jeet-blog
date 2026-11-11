@@ -203,7 +203,8 @@ export function render(T) {
 await fontsReady;
 if (capture) {
     root.classList.add('mv-capture');
-    setResolution(1920);
+    // ?capture&width=3840 renders 4K; everything is drawn from shapes, so it stays sharp at any size.
+    setResolution(Number(new URLSearchParams(location.search).get('width')) || 1920);
     window.mvCapture = {
         duration: DURATION,
         frame(T, lyrics = true) {
