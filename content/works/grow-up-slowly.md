@@ -9,5 +9,5 @@ workNumber: "W-010"
 workType: "动画 MV"
 workYear: "2026"
 cover: "/works/grow-up-slowly/cover.webp"
-coverAlt: "傍晚的操场上，75 站在跑道前方回头等爸爸，远处是落日和教学楼"
+coverAlt: "傍晚的操场上，75 站在跑道前方回头等爸爸，爸爸笑着追上来，远处是落日和教学楼，上方是片名“慢一点长大”"
 ---
