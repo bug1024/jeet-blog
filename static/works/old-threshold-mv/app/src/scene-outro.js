@@ -24,9 +24,9 @@ const meTop = stand(CAST.me, 88, CREST, ground(CREST), 1, { lean: 0.02, arms: [{
 meTop.legs.forEach((l) => { l.ankle[1] = ground(l.ankle[0]) - 0.04 * 88; });
 const meOn = walkPlan(CAST.me, 88, walkStartX(CAST.me, 88, meTop), 4400, 240.4, 62);
 function crestPeople(c, T) {
-    // Father and brother coming up the slope, slowly; the long grass hides their legs.
+    // Father, brother and sister coming up the slope, slowly; the long grass hides their legs.
     const fx = 3190 + 52 * (T - 233);
-    for (const [cast, h, x, seed] of [[CAST.brother, 98, fx + 60, 23], [CAST.fatherTeacher, 125, fx, 37]]) {
+    for (const [cast, h, x, seed] of [[CAST.brother, 98, fx + 60, 23], [CAST.fatherTeacher, 125, fx, 37], [CAST.sister, 108, fx - 64, 29]]) {
         const p = gait(cast, h, x, { x0: 0, f: 1, ground, look: -0.05, stride: 0.56 });
         drawFigure(c, cast, h, p, seed);
     }

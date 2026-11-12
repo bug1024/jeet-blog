@@ -55,13 +55,14 @@ const windowShot = makeShot({
     layers: interiorLayers({
         warm: 0.1,
         people: (c, T) => {
-            const fp = sitPose(CAST.fatherTeacher, 125, 1890, 0, -0.05, 0.08);
+            const fp = sitPose(CAST.fatherTeacher, 125, 1815, 0, -0.05, 0.08);
             const J = joints(CAST.fatherTeacher, 125, fp);
             const fan = Math.sin(T * 5) * 10;
             fp.arms[0] = { hand: [J.head[0] + 22, J.head[1] + 30 + fan], grip: 0.2 };
             drawFigure(c, CAST.fatherTeacher, 125, fp, 37);
-            drawFigure(c, CAST.brother, 98, sitPose(CAST.brother, 98, 2030, Math.sin(T * 2.1) * 6, 0.05), 23);
-            drawFigure(c, CAST.me, 88, sitPose(CAST.me, 88, 2105, Math.sin(T * 3.2 + 1) * 10, -0.1), 11);
+            drawFigure(c, CAST.sister, 108, sitPose(CAST.sister, 108, 1918, Math.sin(T * 1.7 + 2) * 4, 0.08), 29);
+            drawFigure(c, CAST.brother, 98, sitPose(CAST.brother, 98, 2055, Math.sin(T * 2.1) * 6, 0.05), 23);
+            drawFigure(c, CAST.me, 88, sitPose(CAST.me, 88, 2125, Math.sin(T * 3.2 + 1) * 10, -0.1), 11);
         },
     }),
 });
@@ -81,7 +82,7 @@ const farShot = makeShot({
 });
 
 // ---------- 2 ----------
-// 2b. A rainy day, from outside: the bridge in the rain, and three heads in its windows, waiting it out.
+// 2b. A rainy day, from outside: the bridge in the rain, and four heads in its windows, waiting it out.
 function rainAll(ctx, T) {
     ctx.strokeStyle = 'rgba(236,240,240,0.4)';
     ctx.lineWidth = 1.3;
@@ -97,9 +98,10 @@ const shelterShot = makeShot({
     layers: landLayers({
         warm: 0, glints: false,
         people: (c, T) => {
-            drawFigure(c, CAST.fatherTeacher, 125, sitPose(CAST.fatherTeacher, 125, 1900, 0, 0.0), 37);
-            drawFigure(c, CAST.brother, 98, sitPose(CAST.brother, 98, 1995, Math.sin(T * 1.3) * 3, 0.12), 23);
-            drawFigure(c, CAST.me, 88, sitPose(CAST.me, 88, 2075, Math.sin(T * 3.4) * 9, -0.05), 11);
+            drawFigure(c, CAST.fatherTeacher, 125, sitPose(CAST.fatherTeacher, 125, 1870, 0, 0.0), 37);
+            drawFigure(c, CAST.sister, 108, sitPose(CAST.sister, 108, 1975, Math.sin(T * 1.1 + 1) * 3, 0.1), 29);
+            drawFigure(c, CAST.brother, 98, sitPose(CAST.brother, 98, 2050, Math.sin(T * 1.3) * 3, 0.12), 23);
+            drawFigure(c, CAST.me, 88, sitPose(CAST.me, 88, 2120, Math.sin(T * 3.4) * 9, -0.05), 11);
         },
         front: [{ screen: true, live: true, draw: rainAll }],
     }),
@@ -118,7 +120,7 @@ function duskPeople(c, T) {
     else if (T < meOn.t0) mp = { ...meStand, headBack: E.inOut(range(T, 147.7, 148.2)) * (1 - E.inOut(range(T, 149.0, 149.4))) };
     else if (T < meOn.t0 + 0.35) mp = stepBlend(meStand, meOn.pose(T, ground), range(T, meOn.t0, meOn.t0 + 0.35), 88, 0);
     else mp = meOn.pose(T, ground);
-    for (const [cast, h, x, seed] of [[CAST.fatherTeacher, 125, fx, 37], [CAST.brother, 98, bx - 110, 23]]) {
+    for (const [cast, h, x, seed] of [[CAST.fatherTeacher, 125, fx, 37], [CAST.brother, 98, bx - 110, 23], [CAST.sister, 108, fx - 130, 29]]) {
         const p = gait(cast, h, x, { x0: 0, f: 1, ground, look: 0.06 });
         groundShadow(c, p, h, 0.18);
         drawFigure(c, cast, h, p, seed);

@@ -17,11 +17,12 @@ export function sheet(ctx) {
         ['fatherTeacher', 420, 1, '胸袋插一支笔'],
         ['fatherFuneral', 630, 1, '鬓角见白|深灰外套 黑纱'],
         ['fatherOld', 840, 1, '头发花白|开衫 背微驼'],
-        ['brother', 1060, 1, '浅蓝衬衫|卡其裤卷边'],
-        ['me', 1240, 1, '米白毛衣 藏青裤|帆布书包'],
-        ['meAdult', 1430, 1, '深蓝外套'],
+        ['brother', 1030, 1, '浅蓝衬衫|卡其裤'],
+        ['sister', 1175, 1, '中长发|旧红衬衫'],
+        ['me', 1320, 1, '米白毛衣|帆布书包'],
+        ['meAdult', 1470, 1, '深蓝外套'],
     ];
-    const heights = { brother: 0.8, me: 0.72, meAdult: 0.97, fatherOld: 0.98 };
+    const heights = { sister: 0.88, brother: 0.8, me: 0.72, meAdult: 0.97, fatherOld: 0.98 };
     line(ctx, [[96, gy + 2], [1560, gy + 2]], C.inkSoft, 1.5, { alpha: 0.35, amp: 0.5 });
     row.forEach(([key, x, f, note], i) => {
         const cast = CAST[key], h = H * (heights[key] || 1);

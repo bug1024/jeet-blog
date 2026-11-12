@@ -18,6 +18,7 @@ export const CAST = {
     fatherFuneral: { label: '父亲 · 送别', p: ADULT, build: 1.38, belly: 0.75, age: 50, hair: 'swept', grey: 0.35, top: { kind: 'jacket', color: '#5E6A72', sleeve: 'long', armband: true }, legs: { color: '#33383F', w: 1.05 }, shoe: { kind: 'shoe', color: '#3B342D' } },
     fatherOld: { label: '父亲 · 退休', p: ADULT, build: 1.32, belly: 0.75, age: 65, hair: 'swept', grey: 0.85, stoop: 0.07, top: { kind: 'cardigan', color: '#8E8A7C', under: WHITE_SHIRT, sleeve: 'long' }, legs: { color: '#3B4048', w: 1.05 }, shoe: { kind: 'shoe', color: '#2F2B27' } },
     brother: { label: '哥哥', p: CHILD, build: 1, hair: 'fringe', grey: 0, top: { kind: 'shirt', color: '#B6CCD3', sleeve: 'long', collar: true }, legs: { color: '#A3967A', w: 1, cuff: true }, shoe: { kind: 'sandal', color: '#B79A70', strap: '#B79A70' } },
+    sister: { label: '姐姐', p: CHILD, build: 0.96, hair: 'long', grey: 0, top: { kind: 'shirt', color: '#C9907A', sleeve: 'long', collar: true }, legs: { color: '#5C6C55', w: 0.95, cuff: true }, shoe: { kind: 'sandal', color: '#B79A70', strap: '#B79A70' } },
     me: { label: '我', p: CHILD, build: 1, hair: 'crop', grey: 0, top: { kind: 'sweater', color: '#EFE5CF', sleeve: 'long' }, legs: { color: '#3E5072', w: 1, cuff: true, seam: '#D08A3C' }, shoe: { kind: 'sandal', color: '#B79A70', strap: '#B79A70' }, bag: '#7A8358' },
     relA: { label: '亲戚', p: ADULT, build: 1.15, belly: 0.3, age: 45, hair: 'crop', grey: 0.2, top: { kind: 'jacket', color: '#6B6559', sleeve: 'long' }, legs: { color: '#3A3833', w: 1 }, shoe: { kind: 'shoe', color: '#2A2724' } },
     relB: { label: '亲戚', p: ADULT, build: 0.95, hair: 'bun', grey: 0, top: { kind: 'jacket', color: '#3F4E63', sleeve: 'long' }, legs: { color: '#2E3238', w: 1.05 }, shoe: { kind: 'shoe', color: '#2A2724' } },
@@ -292,6 +293,8 @@ const HAIR = {
     swept: [[0.58, -0.62], [0.64, -0.82], [0.42, -1.04], [-0.1, -1.07], [-0.62, -0.93], [-0.92, -0.5], [-0.93, -0.05], [-0.78, 0.28], [-0.52, 0.12], [-0.32, -0.2], [-0.02, -0.3], [0.06, -0.05], [0.16, -0.08], [0.2, -0.42], [0.42, -0.56]],
     fringe: [[0.7, -0.38], [0.76, -0.7], [0.46, -1.1], [-0.15, -1.16], [-0.72, -0.96], [-1.0, -0.45], [-0.97, 0.05], [-0.76, 0.33], [-0.5, 0.18], [-0.32, -0.2], [0.02, -0.3], [0.08, -0.1], [0.2, -0.12], [0.3, -0.38], [0.5, -0.34]],
     bun: [[0.55, -0.6], [0.62, -0.85], [0.35, -1.08], [-0.2, -1.1], [-0.7, -0.9], [-0.95, -0.5], [-1.22, -0.42], [-1.28, -0.1], [-1.0, 0.06], [-0.82, 0.26], [-0.5, 0.12], [-0.3, -0.2], [0.0, -0.3], [0.1, -0.12], [0.2, -0.14], [0.28, -0.44], [0.45, -0.5]],
+    // Medium-long, to the shoulders: a soft fringe in front, the back falling past the neck.
+    long: [[0.7, -0.4], [0.76, -0.72], [0.46, -1.1], [-0.15, -1.17], [-0.76, -0.98], [-1.05, -0.45], [-1.08, 0.3], [-1.0, 0.95], [-0.84, 1.38], [-0.5, 1.42], [-0.3, 1.05], [-0.28, 0.5], [-0.36, 0.12], [-0.3, -0.2], [0.02, -0.3], [0.08, -0.1], [0.2, -0.12], [0.3, -0.38], [0.5, -0.34]],
     crop: [[0.62, -0.52], [0.66, -0.8], [0.36, -1.08], [-0.2, -1.11], [-0.72, -0.9], [-0.97, -0.4], [-0.92, 0.05], [-0.72, 0.26], [-0.5, 0.12], [-0.3, -0.2], [0.0, -0.3], [0.1, -0.12], [0.2, -0.14], [0.28, -0.44], [0.46, -0.48]],
 };
 

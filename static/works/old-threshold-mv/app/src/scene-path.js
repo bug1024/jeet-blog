@@ -1,23 +1,25 @@
 // 周五放了学: the whole way home, mostly from far away. The land is still and the people are small;
-// in the bridge only their heads pass the windows. I am always in front.
+// in the bridge only their heads pass the windows. I am always in front; my sister, the tallest of us children,
+// just behind me, then my brother, then him.
 import { lerp, range, E } from './core.js';
 import { CAST, drawFigure, gait, groundShadow } from './figure.js';
 import { landLayers, ground, BRIDGE } from './land.js';
 import { makeShot, drawShot } from './shot.js';
 import { paint, block, rectPts, shadow } from './gouache.js';
 
-const SIZE = { me: 88, brother: 98, father: 125 };
-const CASTS = { me: CAST.me, brother: CAST.brother, father: CAST.fatherTeacher };
+export const SIZE = { me: 88, brother: 98, sister: 108, father: 125 };
+const CASTS = { me: CAST.me, brother: CAST.brother, sister: CAST.sister, father: CAST.fatherTeacher };
+const SEED = { me: 11, sister: 29, brother: 23, father: 37 };
 
-// The three of us from a lead position x (mine) and seconds walked dt: the others fall a little further behind.
+// The four of us from a lead position x (mine) and seconds walked dt: the others fall a little further behind.
 export function walkers(x, dt, grow = 0) {
-    const list = [['father', x - 125 - 4 * dt], ['brother', x - 72 - 3 * dt], ['me', x]];
+    const list = [['father', x - 178 - 4 * dt], ['brother', x - 120 - 3 * dt], ['sister', x - 62 - 2 * dt], ['me', x]];
     return (ctx) => {
         for (const [who, xx] of list) {
             const h = SIZE[who] * (who === 'father' ? 1 : 1 + grow);
             const pose = gait(CASTS[who], h, xx, { x0: 0, f: 1, ground, look: who === 'me' ? 0.02 : 0.08 });
             if (xx < BRIDGE.x0 - 20 || xx > BRIDGE.x1 + 20) groundShadow(ctx, pose, h, 0.16);
-            drawFigure(ctx, CASTS[who], h, pose, who === 'me' ? 11 : who === 'brother' ? 23 : 37);
+            drawFigure(ctx, CASTS[who], h, pose, SEED[who]);
         }
     };
 }
