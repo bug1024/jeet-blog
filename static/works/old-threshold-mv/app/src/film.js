@@ -2,6 +2,7 @@
 //   ?sheet            the character sheet
 //   ?t=<s>            (project preview) start at this time; click / space to play
 //   ?capture          expose window.mvCapture for tools/render.cjs and tools/still.cjs
+//   &width=3840       (with ?capture) render at 4K; everything is drawn from shapes, so it stays sharp
 // On the blog page (an <audio id="song"> is present) the full player runs instead of the preview.
 import { W, H, clamp, resetT, view } from './core.js';
 import { DURATION, FPS, AUDIO_OFFSET } from './design.js';
@@ -29,7 +30,7 @@ function setResolution(w) {
     view.s = w / W;
     return true;
 }
-setResolution(W);
+setResolution(capture ? Number(params.get('width')) || W : W);
 
 let showLyrics = true;
 export function frame(T) {

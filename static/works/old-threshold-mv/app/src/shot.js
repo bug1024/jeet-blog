@@ -50,7 +50,8 @@ function build(spec, i) {
     }
     const r = extent(spec, L.p ?? 1);
     let k = r.z * view.s;
-    k = Math.min(k, MAX_SIDE / r.w, MAX_SIDE / r.h, Math.sqrt((MAX_PIXELS * view.s * view.s) / (r.w * r.h)));
+    const side = Math.min(16384, MAX_SIDE * Math.max(1, view.s));
+    k = Math.min(k, side / r.w, side / r.h, Math.sqrt((MAX_PIXELS * view.s * view.s) / (r.w * r.h)));
     c.width = Math.ceil(r.w * k); c.height = Math.ceil(r.h * k);
     g.setTransform(k, 0, 0, k, -r.x * k, -r.y * k);
     L.draw(g, spec.from);
