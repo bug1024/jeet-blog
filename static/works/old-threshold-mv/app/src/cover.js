@@ -1,4 +1,5 @@
-// Cover and poster: the three of us coming out of the covered bridge, me in front, with the title.
+// Cover and poster: the four of us coming out of the covered bridge, me in front, my sister just behind me,
+// then my brother, then him, just clear of the bridge's mouth; with the title.
 // Drawn at 1920 x 1080, then cropped to the shape asked for.
 import { W, H } from './core.js';
 import { CAST, drawFigure, gait, groundShadow } from './figure.js';
@@ -7,9 +8,9 @@ import { finish, grade } from './gouache.js';
 import { title } from './type.js';
 
 function picture(c, shift = 0) {
-    const x = 2660;
+    const x = 2700;
     drawLand(c, 61, { cx: 2560 - shift, cy: ground(2560) - 120, z: 1.6 }, (cc) => {
-        for (const [cast, h, xx, seed, look] of [[CAST.fatherTeacher, 125, x - 150, 37, 0.08], [CAST.brother, 98, x - 76, 23, 0.06], [CAST.me, 88, x, 11, 0.0]]) {
+        for (const [cast, h, xx, seed, look] of [[CAST.fatherTeacher, 125, x - 200, 37, 0.08], [CAST.brother, 98, x - 134, 23, 0.06], [CAST.sister, 108, x - 68, 29, 0.04], [CAST.me, 88, x, 11, 0.0]]) {
             const p = gait(cast, h, xx, { x0: 0, f: 1, ground, look });
             groundShadow(cc, p, h, 0.18);
             drawFigure(cc, cast, h, p, seed);
